@@ -1,0 +1,113 @@
+@startuml
+ class Pessoa{
+    - id:Integer
+    - nome:String
+    - sobrenome: String
+    - cpf:String
+    - dataNascimento:DateTime
+    --Encriptado--
+    - senha:String
+}
+class Psicologo{
+    - crp: String
+    - valorHora: Float
+    - informacoesFormacao: String
+}
+class Paciente{}
+class Endereco{
+    - id:Integer
+    - cep:String
+    - bairro:String
+    - rua:String
+    - numero:String
+    - complemento:String
+}
+class Cidade{
+    - id: Integer
+    - nome:String
+}
+class Estado{
+    - id:Integer
+    - nome:String
+    - sigla:String
+}
+class Telefone{
+    - id:Integer
+    - codigoPais:String
+    - ddd:String
+    - numero:String
+}
+class Consultorio{
+    - id:Integer
+    - nome:String
+}
+
+
+class RegistroSessao{
+    - id:Integer
+    - dataHora: DateTime
+    - descricao: String
+    - cancelado:boolean
+    - valor:double
+
+}
+
+'HorarioAtendimento
+' cadastro de horario por psicologo
+'Agendamento "1" --> "1" HorarioAtendimento
+
+class Agendamento {
+    - hora:int
+    - diaDaSemana:int
+    - valorSessao:double
+}
+
+class Pagamento{
+    - id:Integer
+    - total:Float
+}
+class Pix{
+    - id:Integer
+    - chavePix:String
+}
+class Cartao{
+    - id:Integer
+    - nomeTitular:String
+    - numeroDaConta:String
+    --Encriptado--
+    - cvv:String
+    - vencimento:String
+}
+
+enum TipoPix{
+    + CPF
+    + TELEFONE
+    + CHAVEALEATORIA
+}
+
+Psicologo "1" --> "1" Pessoa
+Paciente "1" --> "1" Pessoa
+
+Pessoa "1" *--> "*" Endereco
+Pessoa "1" *--> "*" Telefone
+
+Endereco "*" o--> "1" Cidade
+Cidade "*" --> "1" Estado
+
+RegistroSessao "*" --> "1" Paciente
+RegistroSessao "*" --> "1" Psicologo
+Psicologo "*" <--o "*" Consultorio
+
+Consultorio "1" *--> "1" Endereco
+Consultorio "1" *--> "*" Telefone
+
+Pagamento <|-- Cartao
+Pagamento <|-- Pix
+Pix "*" --> "1" TipoPix
+
+Pagamento "1" o--> "*" RegistroSessao
+
+
+Agendamento "*" --> "1" Paciente
+Agendamento "*"--> "1" Psicologo
+@enduml
