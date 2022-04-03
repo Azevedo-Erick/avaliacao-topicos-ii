@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Login</title>
+	<link rel="stylesheet" href="./resources/css/reset.css" />
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="nav">
+			<nav class="flex flex-row justify-content-evenly align-items-center">
+				<div class="logo"></div>
+				<div class="buttons">
+					
+				</div>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+		<div class="card-wrapper">
+			<div class="card">
+				<p:tabView dynamic="true" cache="true">
+					<p:tab title="Entrar">
+						<h:form class="login-form flex flex-column justify-content-evenly">
+							<div class="login-form flex flex-column">
+								<p:outputLabel value="Email " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-inbox"></i></div>
+				                    <p:inputText placeholder="Email"/>
+				                </div>
+							</div>
+							<div class="login-form flex flex-column" style="margin:10px 0;">
+								<p:outputLabel value="Senha " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+				                    <p:inputText placeholder="Senha"/>
+				                </div>
+							</div>
+							<center>
+							<p:commandButton style="margin:10px 0;width:50%;" value="Entrar" icon="pi pi-key" styleClass="ui-button-raised" />
+							</center>
+						</h:form>
+
+							<div style="margin:10px 0;">
+								<p:link  value="Não sou paciente"></p:link>
+							</div>
+					</p:tab>
+					<p:tab title="Criar conta">
+						<h:form class="login-form flex flex-column justify-content-evenly">
+						<div class="login-form flex flex-column">
+								<p:outputLabel value="Nome " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+				                    <p:inputText placeholder="Nome"/>
+				                </div>
+							</div>
+							<div class="login-form flex flex-column" style="margin:10px 0;">
+								<p:outputLabel value="CPF " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-tags"></i></div>
+				                    <p:inputText placeholder="Email"/>
+				                </div>
+							</div>
+							<div class="login-form flex flex-column" >
+								<p:outputLabel value="Email " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-inbox"></i></div>
+				                    <p:inputText placeholder="Email"/>
+				                </div>
+							</div>
+							<div class="login-form flex flex-column" style="margin:10px 0;">
+								<p:outputLabel value="Senha " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
+				                    <p:inputText placeholder="Senha"/>
+				                </div>
+							</div>
+							<center>
+							<p:commandButton style="margin:10px 0;width:50%;" value="Cadastrar" icon="pi pi-unlock" styleClass="ui-button-raised" />
+							</center>
+						</h:form>
+					</p:tab>
+				</p:tabView>
+			</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+	<div class="footer"></div>
+
+</h:body>
+</html>

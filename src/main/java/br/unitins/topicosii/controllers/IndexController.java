@@ -1,4 +1,4 @@
-package br.unitins.getconsul.controllers;
+package br.unitins.topicosii.controllers;
 
 import java.io.Serializable;
 

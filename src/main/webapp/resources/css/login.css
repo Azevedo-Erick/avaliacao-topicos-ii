@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Nunito&family=Open+Sans&family=Roboto&family=Zen+Kurenaido&display=swap');
+
+.login-main-content{
+	height: 70vh;
+	padding:10px 0px;
+	font-family: 'Roboto', sans-serif;
+}
+.login-container{
+	padding:20px;
+	width: 25vw;	
+}
+.login-form-wrapper{
+	border-radius: 5px;
+	box-shadow:2px 2px 12px 1px rgba(000,000,000,0.6);
+	padding:15px;
+	height: 30vw;	
+	display: flex;
+	flex-direction:column;
+	justify-content: space-between;
+}
+.login-form{
+	height: 150px;
+	
+}
+.footer{
+	background-color: #010101;
+	height:300px;
+}
+.black{
+		background-image:url("../images/moment.svg");
+		background-size: contain; ;
+    	background-attachment: scroll;
+    	background-repeat: no-repeat;
+		width: 55vw;	
+		height: 66vh;
+}

@@ -1,0 +1,22 @@
+.footer{
+	background-color: #010101;
+	height:300px;
+}
+.logo{
+	background-image: url(../images/logo.svg);	
+	width: 96px ;
+	height: 96px;
+	background-size:  cover;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+}
+nav{
+	height:60px;
+	background-color: #005377;
+}
+.center-content{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 20px
+}
