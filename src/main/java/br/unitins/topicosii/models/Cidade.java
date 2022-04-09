@@ -1,5 +1,6 @@
 package br.unitins.topicosii.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -8,7 +9,7 @@ import javax.persistence.ManyToOne;
 public class Cidade extends DefaultEntity{
 	private String nome;
 		
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Estado estado;
 
 	public String getNome() {
@@ -20,10 +21,13 @@ public class Cidade extends DefaultEntity{
 	}
 
 	public Estado getEstado() {
+		if(this.estado==null)
+			this.estado=new Estado();
 		return estado;
 	}
 
 	public void setEstado(Estado estado) {
+		
 		this.estado = estado;
 	}
 	

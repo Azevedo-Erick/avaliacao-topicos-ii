@@ -1,5 +1,8 @@
 package br.unitins.topicosii.models;
 
-public class Pagamento {
+import javax.persistence.Entity;
+
+@Entity
+public class Pagamento extends DefaultEntity{
 
 }

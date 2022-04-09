@@ -1,5 +1,6 @@
 package br.unitins.topicosii.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -12,7 +13,7 @@ public class Endereco extends DefaultEntity{
 	private String rua;
 	private String numero;
 	private String complemento;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Cidade cidade;
 	public String getCep() {
 		return cep;
@@ -45,6 +46,8 @@ public class Endereco extends DefaultEntity{
 		this.complemento = complemento;
 	}
 	public Cidade getCidade() {
+		if(this.cidade==null)
+			this.cidade=new Cidade();
 		return cidade;
 	}
 	public void setCidade(Cidade cidade) {

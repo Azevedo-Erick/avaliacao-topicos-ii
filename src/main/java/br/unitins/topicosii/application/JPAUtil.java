@@ -12,7 +12,7 @@ public class JPAUtil {
 	
 	public static EntityManager getEntityManager() {
 		if(emf==null) {
-			emf = Persistence.createEntityManagerFactory("crudJpa");
+			emf = Persistence.createEntityManagerFactory("Topicos2-A2");
 		}
 		return emf.createEntityManager();
 	}

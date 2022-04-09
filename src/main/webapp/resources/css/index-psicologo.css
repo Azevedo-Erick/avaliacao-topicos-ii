@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Nunito&family=Open+Sans&family=Roboto&family=Zen+Kurenaido&display=swap');
+
+.card{
+	border-radius: 15px;
+	box-shadow: 2px 2px 6px 2px #d9d9d9;
+	padding:5px;
+	min-height: 550px;
+	width: 95%;	
+	font-family: Nunito;
+}
+.card-wrapper{
+	min-width: 90vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+.card>.container{
+		min-width: 80%;	
+}
+.card-wrapper>div>.navegation>a{
+	border-color: #2196F3;
+	border-bottom: 2px solid #2196F3;
+	padding:20px;
+	margin:0 5px 0 0;
+}

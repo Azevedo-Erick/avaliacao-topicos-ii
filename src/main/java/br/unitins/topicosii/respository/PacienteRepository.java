@@ -11,11 +11,11 @@ public class PacienteRepository extends Repository<Paciente>{
 	public List<Paciente> findByNome(String nome) throws RepositoryException{
 		try {
 			StringBuffer jpsql = new StringBuffer();
-			jpsql.append("SELECT");
-			jpsql.append("u");
-			jpsql.append("FROM");
-			jpsql.append("Usuario u");
-			jpsql.append("WHERE");
+			jpsql.append("SELECT ");
+			jpsql.append("u ");
+			jpsql.append("FROM ");
+			jpsql.append("Paciente u ");
+			jpsql.append("WHERE ");
 			jpsql.append("u.nome like :nome");
 			
 			Query query = getEntityManager().createQuery(jpsql.toString());
@@ -25,6 +25,22 @@ public class PacienteRepository extends Repository<Paciente>{
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao executar o findByNome");
+		}
+	}
+	
+	public List<Paciente> findAll() throws RepositoryException{
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("u ");
+			jpsql.append("FROM ");
+			jpsql.append("Paciente u");
+			
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao buscar os pacientes");
 		}
 	}
 }

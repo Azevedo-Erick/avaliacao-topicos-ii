@@ -1,8 +1,13 @@
 package br.unitins.topicosii.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -13,6 +18,30 @@ public class Pessoa extends DefaultEntity{
 	private String cpf;
 	private LocalDateTime dataNascimento;
 	private String senha;
+	@OneToMany(cascade=CascadeType.PERSIST)
+	private List<Telefone> telefone;
+	@OneToOne(cascade=CascadeType.PERSIST)
+	private Endereco endereco;
+	public Endereco getEndereco() {
+		if(endereco==null) {
+			this.setEndereco(new Endereco());
+		}
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+	
+	public List<Telefone> getTelefone() {
+		if(this.telefone==null) {
+			this.setTelefone(new ArrayList<Telefone>());
+			this.telefone.add(new Telefone());
+			}
+		return telefone;
+	}
+	public void setTelefone(List<Telefone> telefone) {
+		this.telefone = telefone;
+	}
 	public String getNome() {
 		return nome;
 	}
