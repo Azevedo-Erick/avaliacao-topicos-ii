@@ -74,7 +74,6 @@ public class Repository<T extends DefaultEntity> {
 		getEntityManager().getTransaction().begin();
 		getEntityManager().remove(getEntityManager().merge(entity));
 		getEntityManager().getTransaction().commit();
-		Util.addInfoMessage("Paciente Excluído");
 		}catch (Exception e) {
 			System.out.println("Houveram problemas ao excluir");
 			try {

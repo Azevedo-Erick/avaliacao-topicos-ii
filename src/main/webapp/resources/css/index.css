@@ -87,4 +87,11 @@ nav{
 	align-items: center;	
 }
 
+.card-login-wrapper{
+	min-width: 25vw;
+	max-height: 450px; 
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+}
 

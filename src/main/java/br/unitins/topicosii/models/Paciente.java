@@ -6,7 +6,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Paciente extends DefaultEntity{
-	@OneToOne(cascade=CascadeType.MERGE)
+	@OneToOne(cascade=CascadeType.ALL, orphanRemoval = true)
 	private Pessoa pessoa;
 
 	public Pessoa getPessoa() {

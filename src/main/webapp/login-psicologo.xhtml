@@ -22,7 +22,7 @@
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-		<div class="card-wrapper">
+		<div class="card-login-wrapper">
 			<div class="card">
 				<p:tabView dynamic="true" cache="true">
 					<p:tab title="Entrar">
@@ -54,7 +54,7 @@
 						</h:form>
 
 							<div style="margin:10px 0;">
-								<p:link  value="Não sou psicologo"></p:link>
+								<p:commandButton value="Não sou Psicologo"  actionListener="#{loginPsicologoController.redirect('/login-paciente.xhtml')}"></p:commandButton>
 							</div>
 					</p:tab>
 					<p:tab title="Criar conta">

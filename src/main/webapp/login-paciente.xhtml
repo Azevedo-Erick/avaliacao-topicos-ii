@@ -22,66 +22,75 @@
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-		<div class="card-wrapper">
+		<div class="card-login-wrapper">
 			<div class="card">
 				<p:tabView dynamic="true" cache="true">
 					<p:tab title="Entrar">
 						<h:form class="login-form flex flex-column justify-content-evenly">
+						  <p:growl id="growl"  />
 							<div class="login-form flex flex-column">
 								<p:outputLabel value="Email " />
 								<div class="ui-inputgroup">
 				                    <div class="ui-inputgroup-addon"><i class="pi pi-inbox"></i></div>
-				                    <p:inputText placeholder="Email"/>
+				                    <p:inputText placeholder="Email" value="#{loginPacienteController.paciente.pessoa.email}"/>
 				                </div>
 							</div>
 							<div class="login-form flex flex-column" style="margin:10px 0;">
 								<p:outputLabel value="Senha " />
 								<div class="ui-inputgroup">
 				                    <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
-				                    <p:inputText placeholder="Senha"/>
+				                    <p:inputText placeholder="Senha" value="#{loginPacienteController.paciente.pessoa.senha}"/>
 				                </div>
 							</div>
 							<center>
-							<p:commandButton style="margin:10px 0;width:50%;" value="Entrar" icon="pi pi-key" styleClass="ui-button-raised" />
+							<p:commandButton style="margin:10px 0;width:50%;" update="@form" value="Entrar" icon="pi pi-key" styleClass="ui-button-raised" actionListener="#{loginPacienteController.login()}"/>
 							</center>
 						</h:form>
 
 							<div style="margin:10px 0;">
-								<p:link  value="Não sou paciente"></p:link>
+									<p:commandButton value="Não sou paciente"  actionListener="#{loginPacienteController.redirect('/login-psicologo.xhtml')}"></p:commandButton>
 							</div>
 					</p:tab>
 					<p:tab title="Criar conta">
 						<h:form class="login-form flex flex-column justify-content-evenly">
+						 <p:growl id="growl"  />
 						<div class="login-form flex flex-column">
 								<p:outputLabel value="Nome " />
 								<div class="ui-inputgroup">
 				                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-				                    <p:inputText placeholder="Nome"/>
+				                    <p:inputText placeholder="Nome" value="#{loginPacienteController.paciente.pessoa.nome}"/>
+				                </div>
+							</div>
+							<div class="login-form flex flex-column">
+								<p:outputLabel value="Sobrenome " />
+								<div class="ui-inputgroup">
+				                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+				                    <p:inputText placeholder="Nome" value="#{loginPacienteController.paciente.pessoa.sobrenome}"/>
 				                </div>
 							</div>
 							<div class="login-form flex flex-column" style="margin:10px 0;">
 								<p:outputLabel value="CPF " />
 								<div class="ui-inputgroup">
 				                    <div class="ui-inputgroup-addon"><i class="pi pi-tags"></i></div>
-				                    <p:inputText placeholder="Email"/>
+				                    <p:inputText placeholder="CPF" value="#{loginPacienteController.paciente.pessoa.cpf}"/>
 				                </div>
 							</div>
 							<div class="login-form flex flex-column" >
 								<p:outputLabel value="Email " />
 								<div class="ui-inputgroup">
 				                    <div class="ui-inputgroup-addon"><i class="pi pi-inbox"></i></div>
-				                    <p:inputText placeholder="Email"/>
+				                    <p:inputText placeholder="Email" value="#{loginPacienteController.paciente.pessoa.email}"/>
 				                </div>
 							</div>
 							<div class="login-form flex flex-column" style="margin:10px 0;">
 								<p:outputLabel value="Senha " />
 								<div class="ui-inputgroup">
 				                    <div class="ui-inputgroup-addon"><i class="pi pi-lock"></i></div>
-				                    <p:inputText placeholder="Senha"/>
+				                    <p:inputText placeholder="Senha" value="#{loginPacienteController.paciente.pessoa.senha}"/>
 				                </div>
 							</div>
 							<center>
-							<p:commandButton style="margin:10px 0;width:50%;" value="Cadastrar" icon="pi pi-unlock" styleClass="ui-button-raised" />
+							<p:commandButton update="@form" style="margin:10px 0;width:50%;" value="Cadastrar" icon="pi pi-unlock" styleClass="ui-button-raised" actionListener="#{loginPacienteController.cadastro()}" />
 							</center>
 						</h:form>
 					</p:tab>

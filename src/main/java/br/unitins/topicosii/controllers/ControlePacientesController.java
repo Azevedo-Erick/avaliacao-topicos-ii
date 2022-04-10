@@ -52,14 +52,30 @@ public class ControlePacientesController implements Serializable{
 	public void selecionarPaciente(Paciente obj) {
 		this.setPacienteForm(obj);
 	}
-	public void incluir() {
+	public void salvar() {
 		PacienteRepository repository = new PacienteRepository();
 		try {
 			repository.save(this.getPacienteForm());
 			Util.addInfoMessage("Inclusão realizada com sucesso");
+			this.limpar();
 		}catch(RepositoryException e){
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}
+	}
+	
+	public void remover(Paciente paciente) {
+		PacienteRepository repository = new PacienteRepository();
+		try {
+			repository.remove(this.getPacienteForm());
+			Util.addInfoMessage("Remoção realizada com sucesso");
+			this.limpar();
+		}catch(RepositoryException e){
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
+		}
+	}
+	public void limpar() {
+		this.setPacienteForm(null);
 	}
 }

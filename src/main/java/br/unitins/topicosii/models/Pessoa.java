@@ -1,5 +1,6 @@
 package br.unitins.topicosii.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ public class Pessoa extends DefaultEntity{
 	private String sobrenome;
 	private String email;
 	private String cpf;
-	private LocalDateTime dataNascimento;
+	private LocalDate dataNascimento;
 	private String senha;
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Telefone> telefone;
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.ALL)
 	private Endereco endereco;
 	public Endereco getEndereco() {
 		if(endereco==null) {
@@ -66,10 +67,10 @@ public class Pessoa extends DefaultEntity{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public LocalDateTime getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(LocalDateTime dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public String getSenha() {
