@@ -5,28 +5,50 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
-import br.unitins.topicosii.models.DefaultEntity;
-import br.unitins.topicosii.respository.Repository;
+import br.unitins.topicosii.listing.EstadoListing;
+import br.unitins.topicosii.models.Estado;
+import br.unitins.topicosii.respository.EstadoRepository;
 
 @Named
 @ViewScoped
-public abstract class Controller<T extends DefaultEntity> implements Serializable{
+public class CrudEstadoController implements Serializable{
 	
+	
+	private Estado entity;
 
 	private static final long serialVersionUID = 1L;
-	private Repository<T> repository;
-	protected T entity;
 	
-	public Controller(Repository<T> repository) {
-		super();
-		this.repository=repository;
+	public void abrirEstadoListing() {
+		EstadoListing listing = new EstadoListing();
+		listing.open();
 	}
 	
+	
+
+	public Estado getEntity() {
+		if (entity == null)
+			entity = new Estado();
+		return entity;
+	}
+	
+	public void obterEstadoListing(SelectEvent<Estado> event) {
+		System.out.println("get estado");
+		this.setEntity(event.getObject());
+	}
+
+
+
+	public void setEntity(Estado entity) {
+		this.entity = entity;
+	}
 	public void salvar() {
+		EstadoRepository repo = new EstadoRepository();
 		try {
-			getRepository().save(getEntity());
+			repo.save(getEntity());
 			Util.addInfoMessage("Salvo com sucesso");
 			limpar();
 		}catch(RepositoryException e){
@@ -36,8 +58,9 @@ public abstract class Controller<T extends DefaultEntity> implements Serializabl
 	}
 	
 	public void editar() {
+		EstadoRepository repo = new EstadoRepository();
 		try {
-			getRepository().save(entity);
+			repo.save(entity);
 			Util.addInfoMessage("Edição realizada com sucesso");
 			limpar();
 		}catch(RepositoryException e) {
@@ -47,8 +70,9 @@ public abstract class Controller<T extends DefaultEntity> implements Serializabl
 	}
 	
 	public void excluir() {
+		EstadoRepository repo = new EstadoRepository();
 		try {
-			getRepository().remove(entity);
+			repo.remove(entity);
 			Util.addInfoMessage("Exclusão realizada com sucesso");
 			limpar();
 		}catch(RepositoryException e) {
@@ -60,18 +84,5 @@ public abstract class Controller<T extends DefaultEntity> implements Serializabl
 	public void limpar() {
 		this.setEntity(null);
 	}
-	
-	public Repository<T> getRepository() {
-		return repository;
-	}
 
-	public void setRepository(Repository<T> repository) {
-		this.repository = repository;
-	}
-
-	public abstract T getEntity();
-
-	public void setEntity(T entity) {
-		this.entity = entity;
-	}
 }

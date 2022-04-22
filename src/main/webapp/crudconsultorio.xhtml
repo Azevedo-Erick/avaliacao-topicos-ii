@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="nav">
+			<nav class="flex flex-row justify-content-evenly align-items-center">
+				<div class="logo"></div>
+				<div class="buttons"></div>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<div class="card-wrapper">
+				<div class="card flex flex-row">
+					<components:PsicoNavBar></components:PsicoNavBar>
+					<div class="container">
+
+						<h:form id="form-paciente">
+							<p:growl id="growl" showDetail="true" />
+
+							<div class="flex flex-column" style="width: 50%; height: 200px;">
+								<div class="flex flex-row">
+									<div class="flex flex-column" style="width: 50%">
+										<h:outputText value="Nome: *" />
+										<div class="ui-inputgroup">
+											<p:inputText label="Nome:"
+												value="#{crudConsultorioController.entity.nome}" />
+											<p:commandButton icon="pi pi-search"
+												actionListener="#{crudConsultorioController.abrirConsultorioListing()}">
+												<p:ajax event="dialogReturn"
+													listener="#{crudConsultorioController.obterConsultorioListing}"
+													update="@form" />
+											</p:commandButton>
+										</div>
+
+									</div>
+
+								</div>
+
+								<div class="flex flex-row">
+									<div class="flex flex-column">
+										<h:outputText value="CEP: *" />
+										<p:inputText label="CEP" id="inputTextCep"
+											value="#{crudConsultorioController.entity.endereco.cep}" />
+									</div>
+									<div class="flex flex-column">
+										<h:outputText value="Numero: *" />
+										<p:inputText label="Numero:"
+											value="#{crudConsultorioController.entity.endereco.numero}" />
+									</div>
+								</div>
+								<div class="flex flex-column">
+									<h:outputText value="Bairro: *" />
+									<p:inputText label="Bairro:"
+										value="#{crudConsultorioController.entity.endereco.bairro}" />
+								</div>
+
+								<div class="flex flex-column">
+									<h:outputText value="Rua: *" />
+									<p:inputText label="Rua"
+										value="#{crudConsultorioController.entity.endereco.rua}" />
+								</div>
+
+
+
+								<div class="flex flex-column">
+									<h:outputText value="Complemento: *" />
+									<p:inputText label="Complemento"
+										value="#{crudConsultorioController.entity.endereco.complemento}" />
+								</div>
+
+								<div class="flex flex-column">
+									<h:outputText value="Cidade *" />
+									<p:selectOneMenu id="option"
+										value="#{crudConsultorioController.entity.endereco.cidade.id}">
+										<f:selectItems value="#{crudConsultorioController.cidades}"
+											 var="obj" itemValue="#{obj.id}"></f:selectItems>
+									</p:selectOneMenu>
+								</div>
+							<div class="flex flex-row">
+								<p:commandButton value="Salvar" update="@form"
+									actionListener="#{crudConsultorioController.salvar()}"
+									icon="pi pi-pencil" styleClass="ui-button-success" />
+								<p:commandButton value="Excluir" update="@form"
+									actionListener="#{crudConsultorioController.excluir()}"
+									icon="pi pi-trash" styleClass="ui-button-warning" />
+								<p:commandButton value="Limpar" update="@form"
+									actionListener="#{crudConsultorioController.limpar()}"
+									icon="pi pi-times" styleClass="ui-button-danger" />
+							</div>
+							</div>
+
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

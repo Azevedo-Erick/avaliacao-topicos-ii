@@ -1,5 +1,6 @@
 package br.unitins.topicosii.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -7,7 +8,7 @@ import javax.persistence.OneToOne;
 public class Consultorio extends DefaultEntity{
 	private String nome;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Endereco endereco;
 
 	public String getNome() {
@@ -19,6 +20,9 @@ public class Consultorio extends DefaultEntity{
 	}
 
 	public Endereco getEndereco() {
+		if(this.endereco==null) {
+			this.setEndereco(new Endereco());
+		}
 		return endereco;
 	}
 

@@ -12,16 +12,21 @@ import br.unitins.topicosii.models.Pessoa;
 public class PacienteRepository extends Repository<Paciente>{
 	public List<Paciente> findByNome(String nome) throws RepositoryException{
 		try {
+			PessoaRepository repo = new PessoaRepository();
+			Pessoa pessoa = repo.findByNome(nome).get(0);
+			
 			StringBuffer jpsql = new StringBuffer();
 			jpsql.append("SELECT ");
-			jpsql.append("u ");
+			jpsql.append("p ");
 			jpsql.append("FROM ");
-			jpsql.append("Paciente u ");
+			jpsql.append("Paciente p, ");
+			jpsql.append("Pessoa pes ");
 			jpsql.append("WHERE ");
-			jpsql.append("u.nome like :nome");
-			
+			jpsql.append("p.pessoa_id = 1 ");
+			jpsql.append("AND ");
+			jpsql.append("p.pessoa_id = pes.id");
 			Query query = getEntityManager().createQuery(jpsql.toString());
-			query.setParameter("nome", "%" + nome + "%");
+			//query.setParameter("id", pessoa.getId());
 			
 			return query.getResultList();
 		}catch (Exception e) {

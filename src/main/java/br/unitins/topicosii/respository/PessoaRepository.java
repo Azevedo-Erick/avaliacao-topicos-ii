@@ -6,10 +6,31 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.unitins.topicosii.application.RepositoryException;
+import br.unitins.topicosii.models.Consultorio;
 import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.models.Pessoa;
 
 public class PessoaRepository extends Repository<Pessoa>{
+	public List<Pessoa> findByNome(String nome) throws RepositoryException{
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("p ");
+			jpsql.append("FROM ");
+			jpsql.append("Pessoa p ");
+			jpsql.append("WHERE ");
+			jpsql.append("p.nome like :nome");
+			
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			query.setParameter("nome", "%" + nome + "%");
+			
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao executar o findByNome");
+		}
+	}
+	
 	public List<Pessoa> findAll() throws RepositoryException{
 		try {
 			StringBuffer jpsql = new StringBuffer();

@@ -30,6 +30,11 @@ public class Cidade extends DefaultEntity{
 		
 		this.estado = estado;
 	}
+
+	@Override
+	public String toString() {
+		return nome + " - " + this.getEstado().getNome();
+	}
 	
 	
 	

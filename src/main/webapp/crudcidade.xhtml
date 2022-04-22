@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="nav">
+			<nav class="flex flex-row justify-content-evenly align-items-center">
+				<div class="logo"></div>
+				<div class="buttons"></div>
+			</nav>
+		</ui:define>
+		<ui:define name="content">
+			<div class="card-wrapper">
+				<div class="card flex flex-row">
+					<components:PsicoNavBar></components:PsicoNavBar>
+					<div class="container">
+
+						<h:form id="form-paciente">
+							<p:growl id="growl" showDetail="true" />
+
+							<div class="flex flex-column" style="width: 50%; height: 200px;">
+								<div class="flex flex-column" style="width: 50%">
+									<h:outputText value="Nome: *" />
+									<div class="ui-inputgroup">
+										<p:inputText label="Nome:"
+											value="#{crudCidadeController.entity.nome}" />
+										<p:commandButton icon="pi pi-search"
+											actionListener="#{crudCidadeController.abrirCidadeListing()}">
+											<p:ajax event="dialogReturn"
+												listener="#{crudCidadeController.obterCidadeListing}"
+												update="@form" />
+										</p:commandButton>
+									</div>
+								</div>
+
+								<div class="flex flex-column" style="width: 50%">
+									<h:outputText value="Estado *" />
+									<p:selectOneMenu id="option"
+										value="#{crudCidadeController.entity.estado.id}">
+										<f:selectItems value="#{crudCidadeController.estados}" var="obj" itemValue="#{obj.id}"></f:selectItems>
+										
+										<!-- <f:facet name="footer">
+											<p:divider styleClass="p-mt-0" />
+											<h:outputText value="3 options" style="font-weight:bold;" />
+										</f:facet> -->
+									</p:selectOneMenu>
+								</div>
+							</div>
+							<p:commandButton value="Salvar" update="@form"
+								actionListener="#{crudCidadeController.salvar()}"
+								icon="pi pi-pencil" styleClass="ui-button-success" />
+							<p:commandButton value="Excluir" update="@form"
+								actionListener="#{crudCidadeController.excluir()}"
+								icon="pi pi-trash" styleClass="ui-button-warning" />
+							<p:commandButton value="Limpar" update="@form"
+								actionListener="#{crudCidadeController.limpar()}"
+								icon="pi pi-times" styleClass="ui-button-danger" />
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
