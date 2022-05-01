@@ -14,48 +14,66 @@
 <h:body>
 	<ui:composition template="./template.xhtml">
 		<ui:define name="nav">
-			<nav class="flex flex-row justify-content-evenly align-items-center">
-				<div class="logo"></div>
-				<div class="buttons"></div>
+			<nav class="bg-gray-800">
+				<div class="relative flex items-center justify-between h-16">
+					<div class="hidden sm:block sm:ml-6">
+						<div class="flex space-x-4">
+							<div class="logo"></div>
+							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+							<h:commandButton
+								class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
+								aria-current="page" value="Agenda"></h:commandButton>
+							<h:commandButton
+								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+								value="Controle de Pacientes"></h:commandButton>
+							<h:commandButton
+								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+								value="Editar Perfil"></h:commandButton>
+						</div>
+
+					</div>
+					<h:commandButton class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
+						role="menuitem"  id="user-menu-item-2" value="Sair"></h:commandButton>
+
+				</div>
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-			<div class="card-wrapper">
-				<div class="card flex flex-row">
-					<components:PsicoNavBar></components:PsicoNavBar>
-					<div class="container">
+				<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
+				
+			
 						<h:form>
 
 								<p:wizard>
 									<p:tab id="Pessoal" title="Pessoal">
 										<p:panel header="Personal Details">
 											<p:messages />
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Primeiro nome: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Sobrenome: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="CPF: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Email: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="DDD: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Celular: *" />
 												<p:inputText label="Firstname" />
 											</div>
@@ -66,37 +84,37 @@
 									<p:tab id="Endereco" title="Endereco">
 										<p:panel header="Detalhes de endereco">
 											<p:messages />
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="CEP: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Bairro: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Rua: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Numero: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Complemento: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="UF: *" />
 												<p:inputText label="Firstname" />
 											</div>
 
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Cidade: *" />
 												<p:inputText label="Firstname" />
 											</div>
@@ -107,7 +125,7 @@
 									<p:tab id="outras" title="Extras">
 										<p:panel header="Informações extras">
 											<p:messages />
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Informações formação:" />
 												<p:inputText label="Firstname" />
 											</div>
@@ -119,7 +137,7 @@
 									<p:tab id="pagamento" title="Pagamento">
 										<p:panel header="Informações relativas a pagamento">
 											<p:messages />
-											<div class="flex flex-column">
+											<div class="flex flex-col">
 												<h:outputText value="Informações formação:" />
 												<p:inputText label="Firstname" />
 											</div>
@@ -130,11 +148,10 @@
 
 								</p:wizard>
 								</h:form>
-								</div>
 								
 					</div>
 
-				</div>
+
 		</ui:define>
 	</ui:composition>
 	<div class="footer"></div>

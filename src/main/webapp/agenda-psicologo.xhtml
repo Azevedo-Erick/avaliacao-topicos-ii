@@ -14,204 +14,104 @@
 <h:body>
 	<ui:composition template="./template.xhtml">
 		<ui:define name="nav">
-			<nav class="flex flex-row justify-content-start align-items-center">
-				<div class="logo"></div>
-				<div class="buttons"></div>
+			<nav class="bg-gray-800">
+				<div class="relative flex items-center justify-between h-16">
+					<div class="hidden sm:block sm:ml-6">
+						<div class="flex space-x-4">
+							<div class="logo"></div>
+							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+							<h:commandButton
+								class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
+								aria-current="page" value="Agenda"></h:commandButton>
+							<h:commandButton
+								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+								value="Controle de Pacientes"></h:commandButton>
+							<h:commandButton
+								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+								value="Editar Perfil"></h:commandButton>
+						</div>
+
+					</div>
+					<h:commandButton class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
+						role="menuitem"  id="user-menu-item-2" value="Sair"></h:commandButton>
+
+				</div>
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-			<div class="card-wrapper">
-				<div class="card flex flex-row">
-					<components:PsicoNavBar></components:PsicoNavBar>
+			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
 
 
-					<div class="container flex flex-column">
-						<div class="flex flex-row align-items-end  justify-content-end"
-							style="margin: 5px;">
-							<p:commandButton value="Marcar consulta"
-								onclick="PF('dialogMarcarConsulta').show()" />
-						</div>
-						<p:schedule id="agenda" value="#{indexPsicologo.model}"
-							widgetVar="agenda" leftHeaderTemplate="prev,next today"
+	
+						<p:commandButton value="Marcar consulta"
+							class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+							onclick="PF('dialogMarcarConsulta').show()"
+							style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
+
+						<p:schedule id="agenda" value="#{agendaPsicologo.model}"
+							styleClass="agenda" widgetVar="agenda"
+							leftHeaderTemplate="prev,next today"
 							rightHeaderTemplate="timeGridWeek,timeGridDay"
 							timeZone="America/Fortaleza" view="agendaWeek" timeFormat="HH:mm"
 							axisFormat="H:mm" minTime="6:00" maxTime="19:00"
-							style="width: 100%; height: 700px;">
+							style="min-width: 100%;">
 
 						</p:schedule>
-					</div>
+		
 
 				</div>
 
-			</div>
+	
 			<!-- Marcar consultas -->
 			<p:dialog header="Agendar consulta" widgetVar="dialogMarcarConsulta"
 				draggable="false" minHeight="40" width="900" modal="true"
 				showEffect="fade">
 				<h:form id="form-marcar">
 
-					<div class="flex flex-column">
+					<div class="flex flex-col content-center justify-center items-center">
 						<p:outputLabel value="Dia da consulta" />
 
 						<p:selectOneButton
-							value="#{indexPsicologo.diaSelecionadoParaConsulta}">
-							<f:selectItems value="#{indexPsicologo.dia}" var="day"
+							value="#{agendaPsicologo.diaSelecionadoParaConsulta}">
+							<f:selectItems value="#{agendaPsicologo.dia}" var="day"
 								itemLabel="#{day.label}" itemValue="#{day}" />
 						</p:selectOneButton>
-						<p:outputLabel value="Horário" />
-						<p:datePicker value="#{indexPsicologo.horarioSelecionado}"
-							timeOnly="true" pattern="HH:mm" />
-						<p:outputLabel value="Paciente:" />
-						<div class="ui-inputgroup">
-							<p:inputText disabled="true"
-								value="#{indexPsicologo.pacienteSelecionado.pessoa.nome} #{indexPsicologo.pacienteSelecionado.pessoa.sobrenome}" />
-							<p:commandButton icon="pi pi-search"
-								styleClass="ui-button-primary"
-								onclick="PF('dialogSelecionarPaciente').show()" />
+						<div class="flex flex-row mt-6 content-evenly justify-evenly items-center">
+							<div class="flex flex-col">
+								<p:outputLabel value="Paciente:" />
+								<div class="ui-inputgroup">
+									<p:inputText disabled="true" readonly="true"
+									class="bg-gray-800 h-10 "
+										value="#{agendaPsicologo.pacienteSelecionado.pessoa.nome} #{agendaPsicologo.pacienteSelecionado.pessoa.sobrenome}" />
+									<p:commandButton icon="pi pi-search"
+										class="bg-gray-800 h-10 text-white px-2 py-2 rounded-md text-sm font-medium "
+										style="background-color:rgb(17 24 39)!important;border:0px !important;"
+										actionListener="#{agendaPsicologo.abrirPacienteListing()}">
+										<p:ajax event="dialogReturn"
+											listener="#{agendaPsicologo.obterPacienteListing()}"
+											update="@form" />
+									</p:commandButton>
+								</div>
+							</div>
+							<div class="flex flex-col mx-8">
+								<p:outputLabel value="Quantidade de semanas: " />
+								<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}" />
+							</div>
+							<div class="flex flex-col">
+								<p:outputLabel value="Horário" />
+								<p:datePicker value="#{agendaPsicologo.horarioSelecionado}"
+									timeOnly="true" pattern="HH:mm" />
+							</div>
 						</div>
-						<p:outputLabel value="Quantidade de semanas para agendar: " />
-						<p:inputNumber value="#{indexPsicologo.quantidadeSemanas}" />
+						<div class="mt-6">
+						<p:commandButton class="bg-gray-800  text-white px-2 py-2 rounded-md text-sm font-medium"
+										style="background-color:rgb(17 24 39)!important;border:0px !important;" styleClass="ui-button-primary" value="Criar"
+							actionListener="#{agendaPsicologo.incluirAgendamentos()}" />
+						</div>
 					</div>
-					<p:commandButton styleClass="ui-button-primary" value="Criar"
-						actionListener="#{indexPsicologo.incluirAgendamentos()}" />
+
 				</h:form>
-			</p:dialog>
-			<!-- Selecionar paciente -->
-			<p:dialog header="Selecione o paciente" draggable="false"
-				widgetVar="dialogSelecionarPaciente" minHeight="40"
-				id="selecionarPaciente" width="650" showEffect="fade" modal="true">
-				<div>
-					<p:commandButton value="Novo paciente"
-						onclick="PF('dialogCadastrarPaciente').show()" />
-					<p:dataTable value="#{indexPsicologo.pacientes}" var="obj"
-						id="dataTable">
-						<p:column headerText="Nome">
-							<p:outputLabel value="#{obj.pessoa.nome} #{obj.pessoa.sobrenome}" />
-						</p:column>
-						<p:column headerText="CPF">
-							<p:outputLabel value="#{obj.pessoa.cpf}" />
-						</p:column>
-						<p:column headerText="Data Nascimento">
-							<p:outputLabel value="#{obj.pessoa.dataNascimento}" />
-						</p:column>
-						<p:column headerText="Ação">
-							<p:commandButton value="Selecionar" update="form-marcar"
-								actionListener="#{indexPsicologo.selecionarPaciente(obj)}" />
-						</p:column>
-					</p:dataTable>
-				</div>
-			</p:dialog>
-			<!-- Cadastrar novo paciente -->
-			<p:dialog header="Cadastrar novo paciente" draggable="false"
-				widgetVar="dialogCadastrarPaciente" maxHeight="70vh" maxWidth="850"
-				modal="true" showEffect="fade">
-				<div>
-					<h:form>
-						<p:growl id="growl" showDetail="true" />
-						<p:wizard>
-							<p:tab id="Pessoal" title="Pessoal">
-								<p:panel header="Informações pessoais">
-									<div class="flex flex-row">
-										<div class="flex flex-column" style="width: 50%">
-											<h:outputText value="Primeiro nome: *" />
-											<p:inputText label="Primeiro nome:"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.nome}" />
-										</div>
 
-										<div class="flex flex-column" style="width: 50%">
-											<h:outputText value="Sobrenome: *" />
-											<p:inputText label="Sobrenome"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.sobrenome}" />
-										</div>
-									</div>
-
-									<div class="flex flex-column">
-										<h:outputText value="CPF: *" />
-										<p:inputText label="CPF"
-											value="#{indexPsicologo.pacienteFormIncluir.pessoa.cpf}" />
-									</div>
-
-									<div class="flex flex-column">
-										<p:outputLabel value="Data de nascimento" />
-										<p:datePicker
-											value="#{indexPsicologo.pacienteFormIncluir.pessoa.dataNascimento}" />
-									</div>
-									<div class="flex flex-column">
-										<h:outputText value="Email: *" />
-										<p:inputText label="Email:"
-											value="#{indexPsicologo.pacienteFormIncluir.pessoa.email}" />
-									</div>
-									<div class="flex flex-row justify-content-between"
-										style="width: 90%">
-										<div class="flex flex-column" style="width: 30%">
-											<h:outputText value="DDD: *" />
-											<p:inputText label="DDD"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.telefone.get(0).ddd}" />
-
-										</div>
-										<div class="flex flex-column" style="width: 60%">
-											<h:outputText value="Celular: *" />
-											<p:inputText label="Celular:" />
-										</div>
-									</div>
-								</p:panel>
-							</p:tab>
-							<p:tab id="endereco" title="Endereco">
-								<p:panel header="Detalhes de endereco">
-									<p:messages />
-									<div class="flex flex-row">
-										<div class="flex flex-column">
-											<h:outputText value="CEP: *" />
-											<p:inputText label="CEP"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.cep}" />
-										</div>
-										<div class="flex flex-column">
-											<h:outputText value="Numero: *" />
-											<p:inputText label="Numero:"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.numero}" />
-										</div>
-									</div>
-									<div class="flex flex-column">
-										<h:outputText value="Bairro: *" />
-										<p:inputText label="Bairro:"
-											value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.bairro}" />
-									</div>
-
-									<div class="flex flex-column">
-										<h:outputText value="Rua: *" />
-										<p:inputText label="Rua"
-											value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.rua}" />
-									</div>
-
-
-
-									<div class="flex flex-column">
-										<h:outputText value="Complemento: *" />
-										<p:inputText label="Complemento"
-											value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.complemento}" />
-									</div>
-									<div class="flex flex-row">
-										<div class="flex flex-column">
-											<h:outputText value="UF: *" />
-											<p:inputText label="UF"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.cidade.estado.sigla}" />
-										</div>
-
-										<div class="flex flex-column">
-											<h:outputText value="Cidade: *" />
-											<p:inputText label="Cidade:"
-												value="#{indexPsicologo.pacienteFormIncluir.pessoa.endereco.cidade.nome}" />
-										</div>
-									</div>
-									<p:commandButton value="Cadastrar"
-										update="selecionarPaciente @form"
-										actionListener="#{indexPsicologo.incluir()}" />
-								</p:panel>
-							</p:tab>
-
-						</p:wizard>
-					</h:form>
-				</div>
 			</p:dialog>
 
 		</ui:define>

@@ -21,55 +21,83 @@
 		</ui:define>
 		<ui:define name="content">
 			<div class="card-wrapper">
+			<div class="flex flex-row">
+				<p:commandLink
+					actionListener="#{agendaPsicologo.redirect('/crudcidade.xhtml')}">
+					<div class="navegation-button">
+						<h:outputText value="Crud Cidade" />
+					</div>
+				</p:commandLink>
+				<p:commandLink
+					actionListener="#{agendaPsicologo.redirect('/crudconsultorio.xhtml')}">
+					<div class="navegation-button">
+						<h:outputText value="Crud Consultorio" />
+					</div>
+				</p:commandLink>
+				<p:commandLink
+					actionListener="#{agendaPsicologo.redirect('/crudestado.xhtml')}">
+					<div class="navegation-button">
+						<h:outputText value="Crud Estado" />
+					</div>
+				</p:commandLink>
+			</div>
 				<div class="card flex flex-row">
-					<components:PsicoNavBar></components:PsicoNavBar>
-					<div class="container">
+					<div
+						class="container flex justify-content-center align-items-center">
+						<!-- <div class="form-container"> -->
+						<h:form class="flex flex-column">
+							<p:panel header="Cadastro de cidade">
+								<p:growl id="growl" showDetail="true" />
+								<div class="flex align-items-center justify-content-center"
+									style="width: 100%; margin: 5px 0 0"></div>
+								<div class="justify-content-evenly" style="height: 200px">
+									<div class="flex flex-column">
+										<h:outputText value="Nome: *" />
+										<div class="ui-inputgroup">
+											<p:inputText label="Nome:"
+												value="#{crudCidadeController.entity.nome}" />
+											<p:commandButton icon="pi pi-search"
+												actionListener="#{crudCidadeController.abrirCidadeListing()}">
+												<p:ajax event="dialogReturn"
+													listener="#{crudCidadeController.obterCidadeListing}"
+													update="@form" />
+											</p:commandButton>
+										</div>
+									</div>
 
-						<h:form id="form-paciente">
-							<p:growl id="growl" showDetail="true" />
+									<div class="flex flex-column">
+										<h:outputText value="Estado *" />
+										<p:selectOneMenu id="option"
+											value="#{crudCidadeController.entity.estado.id}">
+											<f:selectItems value="#{crudCidadeController.estados}"
+												var="obj" itemValue="#{obj.id}"></f:selectItems>
 
-							<div class="flex flex-column" style="width: 50%; height: 200px;">
-								<div class="flex flex-column" style="width: 50%">
-									<h:outputText value="Nome: *" />
-									<div class="ui-inputgroup">
-										<p:inputText label="Nome:"
-											value="#{crudCidadeController.entity.nome}" />
-										<p:commandButton icon="pi pi-search"
-											actionListener="#{crudCidadeController.abrirCidadeListing()}">
-											<p:ajax event="dialogReturn"
-												listener="#{crudCidadeController.obterCidadeListing}"
-												update="@form" />
-										</p:commandButton>
+										</p:selectOneMenu>
 									</div>
 								</div>
+								<f:facet name="footer">
+									<center>
+										<p:commandButton value="Salvar" update="@form"
+											actionListener="#{crudCidadeController.salvar()}"
+											icon="pi pi-pencil" styleClass="ui-button-success" />
+										<p:commandButton value="Excluir" update="@form"
+											actionListener="#{crudCidadeController.excluir()}"
+											icon="pi pi-trash" styleClass="ui-button-warning"
+											disabled="#{crudCidadeController.entity.id==null}" />
+										<p:commandButton value="Limpar" update="@form"
+											actionListener="#{crudCidadeController.limpar()}"
+											icon="pi pi-times" styleClass="ui-button-danger"
+											disabled="#{crudCidadeController.entity.id==null}" />
+									</center>
 
-								<div class="flex flex-column" style="width: 50%">
-									<h:outputText value="Estado *" />
-									<p:selectOneMenu id="option"
-										value="#{crudCidadeController.entity.estado.id}">
-										<f:selectItems value="#{crudCidadeController.estados}" var="obj" itemValue="#{obj.id}"></f:selectItems>
-										
-										<!-- <f:facet name="footer">
-											<p:divider styleClass="p-mt-0" />
-											<h:outputText value="3 options" style="font-weight:bold;" />
-										</f:facet> -->
-									</p:selectOneMenu>
-								</div>
-							</div>
-							<p:commandButton value="Salvar" update="@form"
-								actionListener="#{crudCidadeController.salvar()}"
-								icon="pi pi-pencil" styleClass="ui-button-success" />
-							<p:commandButton value="Excluir" update="@form"
-								actionListener="#{crudCidadeController.excluir()}"
-								icon="pi pi-trash" styleClass="ui-button-warning" />
-							<p:commandButton value="Limpar" update="@form"
-								actionListener="#{crudCidadeController.limpar()}"
-								icon="pi pi-times" styleClass="ui-button-danger" />
+								</f:facet>
+							</p:panel>
 						</h:form>
-
 					</div>
+
 				</div>
 			</div>
+			<!-- </div> -->
 		</ui:define>
 	</ui:composition>
 </h:body>

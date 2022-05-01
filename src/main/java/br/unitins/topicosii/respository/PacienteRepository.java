@@ -17,16 +17,16 @@ public class PacienteRepository extends Repository<Paciente>{
 			
 			StringBuffer jpsql = new StringBuffer();
 			jpsql.append("SELECT ");
-			jpsql.append("p ");
+			jpsql.append("paciente ");
 			jpsql.append("FROM ");
-			jpsql.append("Paciente p, ");
-			jpsql.append("Pessoa pes ");
+			jpsql.append("Paciente paciente, ");
+			jpsql.append("Pessoa pesssoa ");
 			jpsql.append("WHERE ");
-			jpsql.append("p.pessoa_id = 1 ");
+			jpsql.append("paciente.pessoa = pessoa ");
 			jpsql.append("AND ");
-			jpsql.append("p.pessoa_id = pes.id");
+			jpsql.append("pessoa.nome like :nome");
 			Query query = getEntityManager().createQuery(jpsql.toString());
-			//query.setParameter("id", pessoa.getId());
+			query.setParameter("nome", "%" + nome + "%");
 			
 			return query.getResultList();
 		}catch (Exception e) {

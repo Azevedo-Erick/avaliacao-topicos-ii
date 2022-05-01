@@ -14,6 +14,7 @@ import br.unitins.topicosii.listing.ConsultorioListing;
 import br.unitins.topicosii.listing.PessoaListing;
 import br.unitins.topicosii.models.Cidade;
 import br.unitins.topicosii.models.Consultorio;
+import br.unitins.topicosii.models.Endereco;
 import br.unitins.topicosii.models.Pessoa;
 import br.unitins.topicosii.respository.CidadeRepository;
 import br.unitins.topicosii.respository.ConsultorioRepository;
@@ -38,7 +39,8 @@ public class CrudConsultorioController implements Serializable{
 	public void obterConsultorioListing(SelectEvent<Consultorio> event) {
 		this.setEntity(event.getObject());
 	}
-
+	
+	
 
 	public Consultorio getEntity() {
 		if(this.entity==null)

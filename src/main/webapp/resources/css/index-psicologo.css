@@ -5,7 +5,7 @@
 	box-shadow: 2px 2px 6px 2px #d9d9d9;
 	padding:5px;
 	min-height: 550px;
-	width: 95%;	
+	width: 100%;	
 	font-family: Nunito;
 }
 .card-wrapper{
@@ -16,11 +16,15 @@
 }
 
 .card>.container{
-		min-width: 80%;	
+		min-width: 100%;	
 }
 .card-wrapper>div>.navegation>a{
 	border-color: #2196F3;
 	border-bottom: 2px solid #2196F3;
 	padding:20px;
 	margin:0 5px 0 0;
+}
+buttom{
+	background-color:rgb(17 24 39)!important;
+	border:0px !important;
 }

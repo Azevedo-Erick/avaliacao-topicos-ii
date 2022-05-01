@@ -40,29 +40,7 @@
 	background-color: #03416B;
 	
 }
-.logo{
-	background-image: url(../images/logo.svg);	
-	width: 96px ;
-	height: 96px;
-	background-size:  cover;
-    background-attachment: scroll;
-    background-repeat: no-repeat;
-}
-.local-navegation{
-	width: 70%;
-	color: #FCFCFC;
-	font-family: Nunito;
-	font-size: 21px;
-	text-shadow: 1px 1px 1px #000;
-}
-.local-navegation>p{
-	cursor: pointer;
-	padding: 5px 10px;
-}
-nav{
-	height:60px;
-	background-color: #005377;
-}
+
 .custom-marker {
         display: flex;
         width: 2rem;

@@ -20,47 +20,81 @@
 			</nav>
 		</ui:define>
 		<ui:define name="content">
+
 			<div class="card-wrapper">
+			
+				<div class="flex flex-row">
+					<p:commandLink
+						actionListener="#{agendaPsicologo.redirect('/crudcidade.xhtml')}">
+						<div class="navegation-button">
+							<h:outputText value="Crud Cidade" />
+						</div>
+					</p:commandLink>
+					<p:commandLink
+						actionListener="#{agendaPsicologo.redirect('/crudconsultorio.xhtml')}">
+						<div class="navegation-button">
+							<h:outputText value="Crud Consultorio" />
+						</div>
+					</p:commandLink>
+					<p:commandLink
+						actionListener="#{agendaPsicologo.redirect('/crudestado.xhtml')}">
+						<div class="navegation-button">
+							<h:outputText value="Crud Estado" />
+						</div>
+					</p:commandLink>
+				</div>
 				<div class="card flex flex-row">
-					<components:PsicoNavBar></components:PsicoNavBar>
-					<div class="container">
+					<div
+						class="container flex justify-content-center align-items-center">
+						<div class="form-container ">
+							<h:form id="form-paciente">
+								<p:panel header="Cadastrar Estado">
+									<div class="flex align-items-center justify-content-center"
+										style="width: 100%; margin: 5px 0 0"></div>
+									<p:growl id="growl" showDetail="true" />
 
-						<h:form id="form-paciente">
-							<p:growl id="growl" showDetail="true" />
-							
-							<div class="flex flex-column" style="width: 50%; height: 200px;">
-								<div class="flex flex-column" style="width: 50%">
-									<h:outputText value="Nome: *" />
-									<div class="ui-inputgroup">
-									<p:inputText label="Nome:"
-										value="#{crudEstadoController.entity.nome}" />
-										<p:commandButton icon="pi pi-search"
-											actionListener="#{crudEstadoController.abrirEstadoListing()}" >
-											<p:ajax 
-				                    		event="dialogReturn" 
-				                    		listener="#{crudEstadoController.obterEstadoListing}" 
-				                    		update="@form"/>
-											</p:commandButton>
+									<div class="flex flex-column"
+										style="width: 50%; margin-top: 20px; height: 200px;">
+										<div class="flex flex-column" style="width: 50%">
+											<h:outputText value="Nome: *" />
+											<div class="ui-inputgroup">
+												<p:inputText label="Nome:"
+													value="#{crudEstadoController.entity.nome}" />
+												<p:commandButton icon="pi pi-search"
+													actionListener="#{crudEstadoController.abrirEstadoListing()}">
+													<p:ajax event="dialogReturn"
+														listener="#{crudEstadoController.obterEstadoListing}"
+														update="@form" />
+												</p:commandButton>
+											</div>
+										</div>
+
+										<div class="flex flex-column"
+											style="width: 50%; margin-top: 20px;">
+											<h:outputText value="Sigla *" />
+											<p:inputText label="Sigla"
+												value="#{crudEstadoController.entity.sigla}" />
+										</div>
 									</div>
-								</div>
+									<f:facet name="footer">
+										<center>
+											<p:commandButton value="Salvar" update="@form"
+												actionListener="#{crudEstadoController.salvar()}"
+												icon="pi pi-pencil" styleClass="ui-button-success" />
+											<p:commandButton value="Excluir" update="@form"
+												actionListener="#{crudEstadoController.excluir()}"
+												icon="pi pi-trash" styleClass="ui-button-warning"
+												disabled="#{crudEstadoController.entity.id==null}" />
+											<p:commandButton value="Limpar" update="@form"
+												actionListener="#{crudEstadoController.limpar()}"
+												icon="pi pi-times" styleClass="ui-button-danger"
+												disabled="#{crudEstadoController.entity.id==null}" />
+										</center>
 
-								<div class="flex flex-column" style="width: 50%">
-									<h:outputText value="Sigla *" />
-									<p:inputText label="Sigla"
-										value="#{crudEstadoController.entity.sigla}" />
-								</div>
-							</div>
-							<p:commandButton value="Salvar" update="@form"
-								actionListener="#{crudEstadoController.salvar()}"
-								icon="pi pi-pencil" styleClass="ui-button-success" />
-							<p:commandButton value="Excluir" update="@form"
-								actionListener="#{crudEstadoController.excluir()}"
-								icon="pi pi-trash" styleClass="ui-button-warning" />
-							<p:commandButton value="Limpar" update="@form"
-								actionListener="#{crudEstadoController.limpar()}"
-								icon="pi pi-times" styleClass="ui-button-danger" />
-						</h:form>
-
+									</f:facet>
+								</p:panel>
+							</h:form>
+						</div>
 					</div>
 				</div>
 			</div>

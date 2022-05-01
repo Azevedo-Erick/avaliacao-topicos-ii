@@ -21,90 +21,121 @@
 		</ui:define>
 		<ui:define name="content">
 			<div class="card-wrapper">
+			<div class="flex flex-row">
+				<p:commandLink
+					actionListener="#{agendaPsicologo.redirect('/crudcidade.xhtml')}">
+					<div class="navegation-button">
+						<h:outputText value="Crud Cidade" />
+					</div>
+				</p:commandLink>
+				<p:commandLink
+					actionListener="#{agendaPsicologo.redirect('/crudconsultorio.xhtml')}">
+					<div class="navegation-button">
+						<h:outputText value="Crud Consultorio" />
+					</div>
+				</p:commandLink>
+				<p:commandLink
+					actionListener="#{agendaPsicologo.redirect('/crudestado.xhtml')}">
+					<div class="navegation-button">
+						<h:outputText value="Crud Estado" />
+					</div>
+				</p:commandLink>
+				</div>
 				<div class="card flex flex-row">
-					<components:PsicoNavBar></components:PsicoNavBar>
-					<div class="container">
+					<div
+						class="container flex justify-content-center align-items-center">
+						<div class="form-container ">
+							<h:form>
+								<p:panel header="Cadastro de Consultorio">
+									<p:growl id="growl" showDetail="true" />
+									<div class="flex align-items-center justify-content-center"
+										style="width: 100%; margin: 5px 0 0">
+										<p
+											style="font-weight: bold; font-size: 24px; text-transform: uppercase;"></p>
+									</div>
 
-						<h:form id="form-paciente">
-							<p:growl id="growl" showDetail="true" />
+									<div class="flex flex-row">
+										<div class="flex flex-column" style="width: 50%">
+											<h:outputText value="Nome: *" />
+											<div class="ui-inputgroup">
+												<p:inputText label="Nome:"
+													value="#{crudConsultorioController.entity.nome}" />
+												<p:commandButton icon="pi pi-search"
+													actionListener="#{crudConsultorioController.abrirConsultorioListing()}">
+													<p:ajax event="dialogReturn"
+														listener="#{crudConsultorioController.obterConsultorioListing}"
+														update="@form" />
+												</p:commandButton>
+											</div>
 
-							<div class="flex flex-column" style="width: 50%; height: 200px;">
-								<div class="flex flex-row">
-									<div class="flex flex-column" style="width: 50%">
-										<h:outputText value="Nome: *" />
-										<div class="ui-inputgroup">
-											<p:inputText label="Nome:"
-												value="#{crudConsultorioController.entity.nome}" />
-											<p:commandButton icon="pi pi-search"
-												actionListener="#{crudConsultorioController.abrirConsultorioListing()}">
-												<p:ajax event="dialogReturn"
-													listener="#{crudConsultorioController.obterConsultorioListing}"
-													update="@form" />
-											</p:commandButton>
 										</div>
 
 									</div>
 
-								</div>
+									<div class="flex flex-row">
+										<div class="flex flex-column">
+											<h:outputText value="CEP: *" />
+											<p:inputText label="CEP" class="inputTextCep"
+												value="#{crudConsultorioController.entity.endereco.cep}" />
 
-								<div class="flex flex-row">
-									<div class="flex flex-column">
-										<h:outputText value="CEP: *" />
-										<p:inputText label="CEP" id="inputTextCep"
-											value="#{crudConsultorioController.entity.endereco.cep}" />
+										</div>
+										<div class="flex flex-column">
+											<h:outputText value="Numero: *" />
+											<p:inputText label="Numero:"
+												value="#{crudConsultorioController.entity.endereco.numero}" />
+										</div>
 									</div>
 									<div class="flex flex-column">
-										<h:outputText value="Numero: *" />
-										<p:inputText label="Numero:"
-											value="#{crudConsultorioController.entity.endereco.numero}" />
+										<h:outputText value="Bairro: *" />
+										<p:inputText label="Bairro:"
+											value="#{crudConsultorioController.entity.endereco.bairro}" />
 									</div>
-								</div>
-								<div class="flex flex-column">
-									<h:outputText value="Bairro: *" />
-									<p:inputText label="Bairro:"
-										value="#{crudConsultorioController.entity.endereco.bairro}" />
-								</div>
 
-								<div class="flex flex-column">
-									<h:outputText value="Rua: *" />
-									<p:inputText label="Rua"
-										value="#{crudConsultorioController.entity.endereco.rua}" />
-								</div>
+									<div class="flex flex-column">
+										<h:outputText value="Rua: *" />
+										<p:inputText label="Rua"
+											value="#{crudConsultorioController.entity.endereco.rua}" />
+									</div>
 
 
 
-								<div class="flex flex-column">
-									<h:outputText value="Complemento: *" />
-									<p:inputText label="Complemento"
-										value="#{crudConsultorioController.entity.endereco.complemento}" />
-								</div>
+									<div class="flex flex-column">
+										<h:outputText value="Complemento: *" />
+										<p:inputText label="Complemento"
+											value="#{crudConsultorioController.entity.endereco.complemento}" />
+									</div>
 
-								<div class="flex flex-column">
-									<h:outputText value="Cidade *" />
-									<p:selectOneMenu id="option"
-										value="#{crudConsultorioController.entity.endereco.cidade.id}">
-										<f:selectItems value="#{crudConsultorioController.cidades}"
-											 var="obj" itemValue="#{obj.id}"></f:selectItems>
-									</p:selectOneMenu>
-								</div>
-							<div class="flex flex-row">
-								<p:commandButton value="Salvar" update="@form"
-									actionListener="#{crudConsultorioController.salvar()}"
-									icon="pi pi-pencil" styleClass="ui-button-success" />
-								<p:commandButton value="Excluir" update="@form"
-									actionListener="#{crudConsultorioController.excluir()}"
-									icon="pi pi-trash" styleClass="ui-button-warning" />
-								<p:commandButton value="Limpar" update="@form"
-									actionListener="#{crudConsultorioController.limpar()}"
-									icon="pi pi-times" styleClass="ui-button-danger" />
-							</div>
-							</div>
+									<div class="flex flex-column">
+										<h:outputText value="Cidade *" />
+										<p:selectOneMenu id="option"
+											value="#{crudConsultorioController.entity.endereco.cidade.id}">
+											<f:selectItems value="#{crudConsultorioController.cidades}"
+												var="obj" itemValue="#{obj.id}"></f:selectItems>
+										</p:selectOneMenu>
+									</div>
+									<f:facet name="footer">
+										<center>
+											<p:commandButton value="Salvar" update="@form"
+												actionListener="#{crudConsultorioController.salvar()}"
+												icon="pi pi-pencil" styleClass="ui-button-success" />
+											<p:commandButton value="Excluir" update="@form"
+												actionListener="#{crudConsultorioController.excluir()}"
+												icon="pi pi-trash" styleClass="ui-button-warning"
+												disabled="#{crudConsultorioController.entity.id==null}" />
+											<p:commandButton value="Limpar" update="@form"
+												actionListener="#{crudConsultorioController.limpar()}"
+												icon="pi pi-times" styleClass="ui-button-danger"
+												disabled="#{crudConsultorioController.entity.id==null}" />
+										</center>
+									</f:facet>
 
-						</h:form>
-
+								</p:panel>
+							</h:form>
+						</div>
 					</div>
 				</div>
 			</div>
+			<script type="text/javascript" src="./resources/js/getcep.js"></script>
 		</ui:define>
 	</ui:composition>
 </h:body>

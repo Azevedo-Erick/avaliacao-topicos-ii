@@ -20,7 +20,7 @@ public class Pessoa extends DefaultEntity{
 	private LocalDate dataNascimento;
 	private String senha;
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Telefone> telefone;
+	private List<Telefone> telefones;
 	@OneToOne(cascade=CascadeType.ALL)
 	private Endereco endereco;
 	public Endereco getEndereco() {
@@ -33,15 +33,15 @@ public class Pessoa extends DefaultEntity{
 		this.endereco = endereco;
 	}
 	
-	public List<Telefone> getTelefone() {
-		if(this.telefone==null) {
-			this.setTelefone(new ArrayList<Telefone>());
-			this.telefone.add(new Telefone());
+	public List<Telefone> getTelefones() {
+		if(this.telefones==null) {
+			this.setTelefones(new ArrayList<Telefone>());
+			this.telefones.add(new Telefone());
 			}
-		return telefone;
+		return telefones;
 	}
-	public void setTelefone(List<Telefone> telefone) {
-		this.telefone = telefone;
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
 	}
 	public String getNome() {
 		return nome;

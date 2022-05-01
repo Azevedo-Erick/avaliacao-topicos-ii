@@ -4,17 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.exolab.castor.types.DateTime;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
@@ -22,15 +19,15 @@ import org.primefaces.model.ScheduleModel;
 import br.unitins.topicosii.application.CustomScheduleEvent;
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
+import br.unitins.topicosii.listing.PacienteListing;
 import br.unitins.topicosii.models.Agendamento;
 import br.unitins.topicosii.models.DiasDaSemana;
 import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.respository.AgendamentoRepository;
-import br.unitins.topicosii.respository.PacienteRepository;
 
 @Named
 @ViewScoped
-public class IndexPsicologo  implements Serializable {
+public class AgendaPsicologo  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private List<CustomScheduleEvent> scheduleEvents;
@@ -38,9 +35,6 @@ public class IndexPsicologo  implements Serializable {
 	private Agendamento agendamento;
 	private ScheduleEvent<Agendamento> event;
 	private List<DiasDaSemana> dia;
-	private List<Paciente> pacientes;
-	//Formulario de inclusao
-	private Paciente pacienteFormIncluir;
 	//Formulario de marcar consulta
 	private int quantidadeSemanas;
 	private Paciente pacienteSelecionado;
@@ -116,29 +110,7 @@ public class IndexPsicologo  implements Serializable {
 	public void setHorarioSelecionado(LocalTime horarioSelecionado) {
 		this.horarioSelecionado = horarioSelecionado;
 	}
-	public Paciente getPacienteFormIncluir() {
-		if(this.pacienteFormIncluir==null) {
-			this.setPacienteFormIncluir(new Paciente());
-		}
-		return pacienteFormIncluir;
-	}
 
-	public void incluir() {
-		PacienteRepository repository = new PacienteRepository();
-		try {
-			repository.save(this.getPacienteFormIncluir());
-			Util.addInfoMessage("Inclusão realizada com sucesso");
-		}catch(RepositoryException e){
-			e.printStackTrace();
-			Util.addErrorMessage(e.getMessage());
-		}
-	}
-	
-	
-	
-	public void setPacienteFormIncluir(Paciente pacienteFormIncluir) {
-		this.pacienteFormIncluir = pacienteFormIncluir;
-	}
 
 	public List<DiasDaSemana> getDia() {
 		if(this.dia==null) {
@@ -174,20 +146,7 @@ public class IndexPsicologo  implements Serializable {
 			return null;
 		}
 	}
-	/*
-	 * public void init() {
-		event = new CustomScheduleEvent();
-		model = new DefaultScheduleModel();
-		agendamento = new Agendamento();
-		for (Agendamento agendamento : this.gerarDados()) {
-			CustomScheduleEvent evento = new CustomScheduleEvent("Titulo aaa", agendamento.getHoraInicio(),
-					agendamento.getHoraFim(), false, agendamento);
-			this.getScheduleEvents().add(evento);
-			this.model.addEvent(evento);
-		}
-	}
-	 */
-	
+
 	public void setDia(List<DiasDaSemana> dia) {
 		this.dia = dia;
 	}
@@ -219,24 +178,18 @@ public class IndexPsicologo  implements Serializable {
 	}
 
 	
+	public void abrirPacienteListing() {
+		PacienteListing listing = new PacienteListing();
+		listing.open();
+	}
 	
 
-	public List<Paciente> getPacientes() {
-		PacienteRepository repository = new PacienteRepository();
-		if(this.pacientes==null) {
-			try {
-				this.setPacientes( repository.findAll());
-				
-			}catch (RepositoryException e) {
-				Util.addErrorMessage(e.getMessage());
-			}
-		}
-		return pacientes;
+	
+	public void obterPacienteListing(SelectEvent<Paciente> event) {
+		this.setPacienteSelecionado(event.getObject());
 	}
 
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
+
 
 	public List<CustomScheduleEvent> getScheduleEvents() {
 		if (this.scheduleEvents == null) {
@@ -251,24 +204,7 @@ public class IndexPsicologo  implements Serializable {
 		Util.redirect(page);
 	}
 	
-	public List<Agendamento> gerarDados() {
-		List<Agendamento> listaAgendamento = new ArrayList<Agendamento>();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		listaAgendamento.add(new Agendamento(LocalDateTime.parse("2022-03-03 09:00", formatter),
-				LocalDateTime.parse("2022-03-03 10:00", formatter), 2, 355f));
-		listaAgendamento.add(new Agendamento(LocalDateTime.parse("2022-03-03 10:00", formatter),
-				LocalDateTime.parse("2022-03-03 11:00", formatter), 2, 355f));
-		listaAgendamento.add(new Agendamento(LocalDateTime.parse("2022-03-03 12:00", formatter),
-				LocalDateTime.parse("2022-03-03 13:00", formatter), 2, 355f));
-		listaAgendamento.add(new Agendamento(LocalDateTime.parse("2022-03-04 09:00", formatter),
-				LocalDateTime.parse("2022-03-04 10:00", formatter), 2, 355f));
-		listaAgendamento.add(new Agendamento(LocalDateTime.parse("2022-03-04 10:00", formatter),
-				LocalDateTime.parse("2022-03-04 11:00", formatter), 2, 355f));
-		listaAgendamento.add(new Agendamento(LocalDateTime.parse("2022-03-05 09:00", formatter),
-				LocalDateTime.parse("2022-03-05 10:00", formatter), 2, 355f));
-
-		return listaAgendamento;
-	}
+	
 
 	public void setScheduleEvents(List<CustomScheduleEvent> scheduleEvents) {
 		this.scheduleEvents = scheduleEvents;
