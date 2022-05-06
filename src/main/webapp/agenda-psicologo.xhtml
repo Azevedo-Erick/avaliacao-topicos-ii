@@ -17,19 +17,23 @@
 			<nav class="bg-gray-800">
 				<div class="relative flex items-center justify-between h-16">
 					<div class="hidden sm:block sm:ml-6">
+						<h:form>
 						<div class="flex space-x-4">
 							<div class="logo"></div>
 							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+							
 							<h:commandButton
 								class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
-								aria-current="page" value="Agenda"></h:commandButton>
+								aria-current="page" value="Agenda" actionListener="#{agendaPsicologo.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
 							<h:commandButton
 								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Controle de Pacientes"></h:commandButton>
+								value="Controle de Pacientes" actionListener="#{agendaPsicologo.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
 							<h:commandButton
 								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Editar Perfil"></h:commandButton>
+								value="Editar Perfil"  actionListener="#{agendaPsicologo.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
 						</div>
+
+						</h:form>
 
 					</div>
 					<h:commandButton class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"

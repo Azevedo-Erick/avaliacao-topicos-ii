@@ -7,8 +7,14 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
+import br.unitins.topicosii.listing.CidadeListing;
+import br.unitins.topicosii.listing.EstadoListing;
+import br.unitins.topicosii.models.Cidade;
+import br.unitins.topicosii.models.Estado;
 import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.respository.PacienteRepository;
 @Named
@@ -78,4 +84,19 @@ public class ControlePacientesController implements Serializable{
 	public void limpar() {
 		this.setPacienteForm(null);
 	}
+	
+	public void abrirCidadeListing() {
+		CidadeListing listing = new CidadeListing();
+		listing.open();
+	}
+	
+	
+	public void obterCidadeListing(SelectEvent<Cidade> event) {
+		this.getPacienteForm().getPessoa().getEndereco().setCidade(event.getObject());
+	}
+	public void redirect(String page) {
+		Util.redirect(page);
+	}
+
+	
 }

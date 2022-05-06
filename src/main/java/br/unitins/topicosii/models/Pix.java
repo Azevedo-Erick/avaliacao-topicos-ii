@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 
 
 @Entity
-public class Pix extends DefaultEntity{
+public class Pix extends Pagamento{
 	private String chavePix;
 	@Enumerated(EnumType.ORDINAL)
 	private TIPOPIX tipopix;

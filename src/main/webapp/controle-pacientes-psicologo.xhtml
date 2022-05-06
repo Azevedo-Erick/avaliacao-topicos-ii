@@ -17,19 +17,23 @@
 			<nav class="bg-gray-800">
 				<div class="relative flex items-center justify-between h-16">
 					<div class="hidden sm:block sm:ml-6">
+						<h:form>
 						<div class="flex space-x-4">
 							<div class="logo"></div>
 							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+							
+							<h:commandButton
+								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+								aria-current="page" value="Agenda" actionListener="#{controlePacientesController.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
 							<h:commandButton
 								class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
-								aria-current="page" value="Agenda"></h:commandButton>
+								value="Controle de Pacientes" actionListener="#{controlePacientesController.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
 							<h:commandButton
 								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Controle de Pacientes"></h:commandButton>
-							<h:commandButton
-								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Editar Perfil"></h:commandButton>
+								value="Editar Perfil"  actionListener="#{controlePacientesController.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
 						</div>
+
+						</h:form>
 
 					</div>
 					<h:commandButton
@@ -75,132 +79,137 @@
 					</p:dataTable>
 				</h:form>
 			</div>
-			<p:dialog header="Header" widgetVar="dialogPaciente" maxHeight="70vh"
-				width="850" modal="true" draggable="false" showEffect="fade">
+			<p:dialog header="Detalhes" widgetVar="dialogPaciente"
+				maxHeight="70vh" width="850" modal="true" draggable="false"
+				showEffect="fade">
 				<div>
 					<h:form id="form-paciente">
 						<p:growl id="growl" showDetail="true" />
-						<p:wizard>
-							<p:tab id="Pessoal" title="Pessoal">
-								<p:panel header="Informações pessoais">
-									<div class="flex flex-row">
-										<div class="flex flex-col" style="width: 50%">
-											<h:outputText value="Primeiro nome: *" />
-											<p:inputText label="Primeiro nome:"
-												value="#{controlePacientesController.pacienteForm.pessoa.nome}" />
-										</div>
-
-										<div class="flex flex-col" style="width: 50%">
-											<h:outputText value="Sobrenome: *" />
-											<p:inputText label="Sobrenome"
-												value="#{controlePacientesController.pacienteForm.pessoa.sobrenome}" />
-										</div>
+						<p:tabView >
+							<p:tab title="Pessoal">
+								<div class="flex flex-row justify-between">
+									<div class="flex flex-col w-1/3" >
+										<h:outputText value="Primeiro nome: *" />
+										<p:inputText label="Primeiro nome:"
+											value="#{controlePacientesController.pacienteForm.pessoa.nome}" />
 									</div>
 
-									<div class="flex flex-col">
-										<h:outputText value="CPF: *" />
-										<p:inputText label="CPF"
-											value="#{controlePacientesController.pacienteForm.pessoa.cpf}" />
+									<div class="flex flex-col w-3/5">
+										<h:outputText value="Sobrenome: *" />
+										<p:inputText label="Sobrenome"
+											value="#{controlePacientesController.pacienteForm.pessoa.sobrenome}" />
 									</div>
+								</div>
 
-									<div class="flex flex-col">
-										<p:outputLabel value="Data de nascimento" />
-										<p:datePicker
-											value="#{controlePacientesController.pacienteForm.pessoa.dataNascimento}" />
-									</div>
-									<div class="flex flex-col">
-										<h:outputText value="Email: *" />
-										<p:inputText label="Email:"
-											value="#{controlePacientesController.pacienteForm.pessoa.email}" />
-									</div>
-
-								</p:panel>
+							<div class="flex flex-row justify-between my-3"> 
+								<div class="flex flex-col w-1/5">
+									<h:outputText value="CPF: *" />
+									<p:inputText label="CPF"
+										value="#{controlePacientesController.pacienteForm.pessoa.cpf}" />
+								</div>
+								<div class="flex flex-col w-1/4">
+									<p:outputLabel value="Data de nascimento" />
+									<p:datePicker
+										value="#{controlePacientesController.pacienteForm.pessoa.dataNascimento}" />
+								</div>
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Email: *" />
+									<p:inputText label="Email:"
+										value="#{controlePacientesController.pacienteForm.pessoa.email}" />
+								</div>
+							</div>
 							</p:tab>
-							<p:tab id="endereco" title="Endereco">
-								<p:panel header="Detalhes de endereco">
-									<p:messages />
-									<div class="flex flex-row">
-										<div class="flex flex-col">
-											<h:outputText value="CEP: *" />
-											<p:inputText label="CEP" id="inputTextCep"
-												value="#{controlePacientesController.pacienteForm.pessoa.endereco.cep}" />
-										</div>
-										<div class="flex flex-col">
-											<h:outputText value="Numero: *" />
-											<p:inputText label="Numero:"
-												value="#{controlePacientesController.pacienteForm.pessoa.endereco.numero}" />
-										</div>
+							<p:tab title="Endereço">
+								<div class="flex flex-row justify-between ">
+									<div class="flex flex-col">
+										<h:outputText value="CEP: *" />
+										<p:inputText label="CEP" id="inputTextCep"
+											value="#{controlePacientesController.pacienteForm.pessoa.endereco.cep}" />
 									</div>
 									<div class="flex flex-col">
+										<h:outputText value="Numero: *" />
+										<p:inputText label="Numero:"
+											value="#{controlePacientesController.pacienteForm.pessoa.endereco.numero}" />
+									</div>
+									<div class="flex flex-col  ">
+									<h:outputText value="Cidade: *" />
+									<div class="ui-inputgroup h-10">
+										<p:inputText label="Nome:" readonly="true"
+											value="#{controlePacientesController.pacienteForm.pessoa.endereco.cidade.nome}" />
+										<p:commandButton icon="pi pi-search"
+											style="background-color:rgb(17 24 39)!important;border:0px !important;"
+											class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+											actionListener="#{controlePacientesController.abrirCidadeListing()}">
+											<p:ajax event="dialogReturn"
+												listener="#{controlePacientesController.obterCidadeListing}"
+												update="@form" />
+										</p:commandButton>
+									</div>
+								</div>
+								</div>
+								<div class="flex flex-row justify-between my-3">
+									<div class="flex flex-col w-1/3">
 										<h:outputText value="Bairro: *" />
 										<p:inputText label="Bairro:"
 											value="#{controlePacientesController.pacienteForm.pessoa.endereco.bairro}" />
 									</div>
-
-									<div class="flex flex-col">
+	
+									<div class="flex flex-col w-3/5">
 										<h:outputText value="Rua: *" />
 										<p:inputText label="Rua"
+										class=""
 											value="#{controlePacientesController.pacienteForm.pessoa.endereco.rua}" />
 									</div>
+								</div>
 
 
 
-									<div class="flex flex-col">
-										<h:outputText value="Complemento: *" />
-										<p:inputText label="Complemento"
-											value="#{controlePacientesController.pacienteForm.pessoa.endereco.complemento}" />
-									</div>
-									<div class="flex flex-row">
-										<div class="flex flex-col">
-											<h:outputText value="UF: *" />
-											<p:inputText label="UF"
-												value="#{controlePacientesController.pacienteForm.pessoa.endereco.cidade.estado.sigla}" />
-										</div>
-
-										<div class="flex flex-col">
-											<h:outputText value="Cidade: *" />
-											<p:inputText label="Cidade:"
-												value="#{controlePacientesController.pacienteForm.pessoa.endereco.cidade.nome}" />
-										</div>
-									</div>
-									<p:commandButton value="Cadastrar"
-										update="selecionarPaciente @form"
-										actionListener="#{controlePacientesController.salvar()}" />
-								</p:panel>
+								<div class="flex flex-col">
+									<h:outputText value="Complemento: *" />
+									<p:inputText label="Complemento"
+										value="#{controlePacientesController.pacienteForm.pessoa.endereco.complemento}" />
+								</div>
+								
 							</p:tab>
+							<!-- <p:tab title="Telefone">
+								<h:form>
+									<div class="flex flex-row justify-content-between">
+										<div class="flex flex-col" style="width: 30%">
+											<h:outputText value="DDD: *" />
+											<p:inputText label="DDD"
+												value="#{controlePacientesController.pacienteForm.pessoa.telefones.get(0).ddd}" />
 
-						</p:wizard>
+										</div>
+										<div class="flex flex-col" style="width: 60%">
+											<h:outputText value="Celular: *" />
+											<p:inputText label="Celular:" />
+										</div>
+									</div>
+								</h:form>
+								<h:form>
+									<p:dataTable
+										value="#{controlePacientesController.pacienteForm.pessoa.telefones}"
+										var="obj">
+										<p:column headerText="DDD">
+											<p:outputLabel value="#{obj.ddd}" />
+										</p:column>
+										<p:column headerText="Telefone">
+											<p:outputLabel value="#{obj.numero}" />
+										</p:column>
+									</p:dataTable>
+								</h:form>
+							</p:tab>
+							 -->
+						</p:tabView>
+						<p:commandButton value="Cadastrar"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+							update="selecionarPaciente @form"
+							actionListener="#{controlePacientesController.salvar()}" />
 					</h:form>
 				</div>
 			</p:dialog>
-			<div>
-			<p:dialog>
-			<h:form>
-				<div class="flex flex-row justify-content-between">
-					<div class="flex flex-col" style="width: 30%">
-						<h:outputText value="DDD: *" />
-						<p:inputText label="DDD"
-							value="#{controlePacientesController.pacienteForm.pessoa.telefones.get(0).ddd}" />
 
-					</div>
-					<div class="flex flex-col" style="width: 60%">
-						<h:outputText value="Celular: *" />
-						<p:inputText label="Celular:" />
-					</div>
-				</div>
-			</h:form>
-			<h:form>
-				<p:dataTable value="#{controlePacientesController.pacienteForm.pessoa.telefones}" var="obj">
-					<p:column headerText="DDD">
-							<p:outputLabel value="#{obj.ddd}" />
-						</p:column>
-						<p:column headerText="Telefone">
-							<p:outputLabel value="#{obj.numero}" />
-							</p:column>
-				</p:dataTable>
-			</h:form>
-			</p:dialog>
-			</div>
 
 
 		</ui:define>

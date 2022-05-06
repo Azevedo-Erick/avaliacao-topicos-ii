@@ -2,7 +2,9 @@ package br.unitins.topicosii.models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -12,6 +14,7 @@ public class Psicologo extends DefaultEntity{
 	private float valorHora;
 	private String informacoesFormacao;
 	@OneToOne
+	@JoinColumn(unique = true)
 	private Pessoa pessoa;
 	@ManyToMany
 	private List<Consultorio> consultorios;

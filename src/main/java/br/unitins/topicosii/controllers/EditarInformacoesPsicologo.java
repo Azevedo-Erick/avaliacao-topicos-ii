@@ -38,6 +38,8 @@ public class EditarInformacoesPsicologo implements Serializable{
 		}
 	}
 	
-	
+	public void redirect(String page) {
+		Util.redirect(page);
+	}
 
 }

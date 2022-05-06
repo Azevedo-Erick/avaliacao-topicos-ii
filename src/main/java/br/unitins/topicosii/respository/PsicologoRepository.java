@@ -2,9 +2,11 @@ package br.unitins.topicosii.respository;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.unitins.topicosii.application.RepositoryException;
+import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.models.Pessoa;
 import br.unitins.topicosii.models.Psicologo;
 
@@ -22,6 +24,32 @@ public class PsicologoRepository extends Repository<Psicologo>{
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao buscar os pacientes");
+		}
+	}
+	
+	public Paciente findByEmailESenha(Psicologo psicologo) throws RepositoryException {
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("u ");
+			jpsql.append("FROM ");
+			jpsql.append("Psicologo u ");
+			jpsql.append("WHERE ");
+			jpsql.append("u.pessoa.email = :email ");
+			jpsql.append("AND ");
+			jpsql.append("u.pessoa.senha = :senha");
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			
+			query.setParameter("email", psicologo.getPessoa().getEmail());
+			query.setParameter("senha", psicologo.getPessoa().getSenha());
+			System.out.println(query.getResultList().size());
+			return (Paciente)query.getSingleResult();
+		}catch (NoResultException e){
+			System.out.println("Erro ao fazer o login");
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao buscar email e senha");
 		}
 	}
 	

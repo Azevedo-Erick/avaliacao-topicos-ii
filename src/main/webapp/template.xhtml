@@ -21,17 +21,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   	<script src="https://cdn.tailwindcss.com"></script>
   </h:head>
-  <h:body>
+  <h:body class="h-screen flex flex-col justify-between">
    <link rel="stylesheet" href="./resources/css/index-psicologo.css" />
     <ui:insert name="nav"> </ui:insert>
   	<div class="justify-center flex">
       <ui:insert name="content"> </ui:insert>
   	</div>
   
-    <div class="footer"></div>
+    <div class="h-32 bg-gray-800 justify-self-end"></div> 
   </h:body>
-  <script
-    type="text/javascript"
-    src="./resources/js/dropDownNavegationBar.js"
-  ></script>
 </html>

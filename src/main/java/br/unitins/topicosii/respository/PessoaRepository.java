@@ -47,7 +47,7 @@ public class PessoaRepository extends Repository<Pessoa>{
 		}
 	}
 	
-	public Pessoa findByEmailESenha(Paciente paciente) throws RepositoryException {
+	public Pessoa findByEmailESenha(Pessoa pessoa) throws RepositoryException {
 		try {
 			StringBuffer jpsql = new StringBuffer();
 			jpsql.append("SELECT ");
@@ -59,8 +59,8 @@ public class PessoaRepository extends Repository<Pessoa>{
 			jpsql.append("AND ");
 			jpsql.append("senha = :senha");
 			Query query = getEntityManager().createQuery(jpsql.toString());
-			query.setParameter("email", paciente.getPessoa().getEmail());
-			query.setParameter("senha", paciente.getPessoa().getSenha());
+			query.setParameter("email", pessoa.getEmail());
+			query.setParameter("senha", pessoa.getSenha());
 			
 			return (Pessoa) query.getSingleResult();
 		}catch (NoResultException e){

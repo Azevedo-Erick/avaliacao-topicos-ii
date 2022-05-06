@@ -14,52 +14,79 @@
 <h:body>
 	<ui:composition template="./template.xhtml">
 		<ui:define name="nav">
-			<nav class="flex flex-row justify-content-start align-items-center">
-				<div class="logo"></div>
-				<div class="buttons"></div>
+			<nav class="bg-gray-800">
+				<div class="relative flex items-center justify-between h-16">
+					<div class="hidden sm:block sm:ml-6">
+						<h:form>
+							<div class="flex space-x-4">
+								<div class="logo"></div>
+								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
+								<h:commandButton
+									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
+									aria-current="page" value="Agenda"
+									actionListener="#{controlePacientesController.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
+								<h:commandButton
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									value="Pagamentos Pendentes"
+									actionListener="#{controlePacientesController.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
+								<h:commandButton
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									value="Editar Perfil"
+									actionListener="#{controlePacientesController.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
+							</div>
+
+						</h:form>
+
+					</div>
+					<h:commandButton
+						class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
+						role="menuitem" id="user-menu-item-2" value="Sair"></h:commandButton>
+
+				</div>
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-			<div class="card-wrapper">
-				<div class="card flex flex-row">
-					<components:PsicoNavBar></components:PsicoNavBar>
 
 
-					<div class="container flex flex-column">
-						<div class="flex flex-row align-items-end  justify-content-end"
-							style="margin: 5px;">
-							<p:commandButton value="Marcar consulta"
-								onclick="PF('dialogMarcarConsulta').show()" />
-						</div>
-						<p:dataTable value="" var="obj" style="width: 100%; height: 700px;">
-							
-						</p:dataTable>
-							<p:column headerText="Dia da semana">
-								<p:outputLabel value="#{obj.diaSemana}" />
-							</p:column>
-							<p:column headerText="Inicio">
-								<p:outputLabel value="#{obj.horainicio}" />
-							</p:column>
-							<p:column headerText="Fim">
-								<p:outputLabel value="#{obj.horafim}" />
-							</p:column>
-							<p:column headerText="Valor">
-								<p:outputLabel value="#{obj.valorsessao}" />
-							</p:column>
-							<p:column headerText="Psicologo">
-								<p:outputLabel value="#{obj.psicologo.pessoa.nome}" />
-							</p:column>
-							<p:column headerText="Ações">
-								<p:commandButton value="Cancelar"
-										update="@form"
-										/>
-							</p:column>
-						</p:schedule>
-					</div>
 
-				</div>
+			<div
+				class="shadow-2xl  shadow-gray-700 rounded-lg p-5 max-h-96 h-5/6 w-10/12 my-6 overflow-y-scroll">
 
+				<p:dataTable value="#{agendaPacienteController.agendamentos}"
+					var="obj" style="width: 100%; height: 700px;">
+
+
+					<p:column headerText="Dia da semana">
+						<p:outputLabel
+							value="#{agendaPacienteController.getDiaSemanaString(obj.diaSemana)}" />
+					</p:column>
+					<p:column headerText="Data">
+						<p:outputLabel value="#{agendaPacienteController.getDateFormatted(obj.horaInicio)}"></p:outputLabel>
+					
+					</p:column>
+					<p:column headerText="Inicio - Fim">
+					<p:outputLabel value="#{agendaPacienteController.getTimeFormatted(obj.horaInicio)}  - #{agendaPacienteController.getTimeFormatted(obj.horaFim)}"></p:outputLabel>
+
+					
+				
+					</p:column>
+					<p:column headerText="Valor">
+						<p:outputLabel value="#{obj.valorSessao}" />
+					</p:column>
+					<p:column headerText="Psicologo">
+						<p:outputLabel value="#{obj.psicologo.pessoa.nome}" />
+					</p:column>
+					<p:column headerText="Ações">
+						<p:commandButton
+							class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							value="Cancelar" ></p:commandButton>
+					</p:column>
+				</p:dataTable>
 			</div>
+
+
 
 		</ui:define>
 	</ui:composition>

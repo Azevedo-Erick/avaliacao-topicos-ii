@@ -1,12 +1,15 @@
 package br.unitins.topicosii.models;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Paciente extends DefaultEntity{
-	@OneToOne(cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(unique = true)
 	private Pessoa pessoa;
 
 	public Pessoa getPessoa() {

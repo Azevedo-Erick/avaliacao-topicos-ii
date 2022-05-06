@@ -2,7 +2,6 @@ package br.unitins.topicosii.models;
 
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -63,5 +62,6 @@ public class Agendamento extends DefaultEntity{
 	public void setPsicologo(Psicologo psicologo) {
 		this.psicologo = psicologo;
 	}
+	
 	
 }
