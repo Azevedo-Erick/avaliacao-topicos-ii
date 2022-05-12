@@ -41,7 +41,7 @@
 									</div>
 									<p:inputText placeholder="Email"
 									class="w-full"
-										value="#{loginPacienteController.pessoa.email}"  />
+										value="#{loginController.pessoa.email}"  />
 								</div>
 							</div>
 							<div class="flex flex-row items-center">
@@ -53,18 +53,18 @@
 										</div>
 										<p:inputText placeholder="Senha"
 										class="w-9/12"
-											value="#{loginPacienteController.pessoa.senha}" />
+											value="#{loginController.pessoa.senha}" />
 									</div>
 								</div>
 								<div class="flex flex-col" style="margin: 10px 0;">
 								<p:outputLabel value="Psicologo?" />
-								<p:selectBooleanButton onLabel="Não, sou Paciente" offLabel="Sim, sou Psicologo" value="#{loginPacienteController.logarComoPaciente}" class="h-7/8" />
+								<p:selectBooleanButton onLabel="Não, sou Paciente" offLabel="Sim, sou Psicologo" value="#{loginController.logarComoPaciente}" class="h-7/8" />
 								</div>
 							</div>
 							<center>
 								<p:commandButton style="margin:10px 0;width:50%;" update="@form"
 									value="Entrar" icon="pi pi-key" styleClass="ui-button-raised"
-									actionListener="#{loginPacienteController.login()}" />
+									actionListener="#{loginController.login()}" />
 							</center>
 						</h:form>
 
@@ -81,7 +81,7 @@
 											<i class="pi pi-user"></i>
 										</div>
 										<p:inputText placeholder="Nome"
-											value="#{loginPacienteController.pessoa.nome}" />
+											value="#{loginController.pessoa.nome}" />
 									</div>
 								</div>
 								<div class="login-form flex flex-col">
@@ -91,7 +91,7 @@
 											<i class="pi pi-user"></i>
 										</div>
 										<p:inputText placeholder="Nome"
-											value="#{loginPacienteController.pessoa.sobrenome}" />
+											value="#{loginController.pessoa.sobrenome}" />
 									</div>
 								</div>
 							</div>
@@ -102,7 +102,7 @@
 										<i class="pi pi-tags"></i>
 									</div>
 									<p:inputText placeholder="CPF"
-										value="#{loginPacienteController.pessoa.cpf}" />
+										value="#{loginController.pessoa.cpf}" />
 								</div>
 							</div>
 							<div class="login-form flex flex-col">
@@ -112,7 +112,7 @@
 										<i class="pi pi-inbox"></i>
 									</div>
 									<p:inputText placeholder="Email"
-										value="#{loginPacienteController.pessoa.email}" />
+										value="#{loginController.pessoa.email}" />
 								</div>
 							</div>
 							<div class="login-form flex flex-col" style="margin: 10px 0;">
@@ -122,14 +122,14 @@
 										<i class="pi pi-lock"></i>
 									</div>
 									<p:inputText placeholder="Senha"
-										value="#{loginPacienteController.pessoa.senha}" />
+										value="#{loginController.pessoa.senha}" />
 								</div>
 							</div>
 							<center>
 								<p:commandButton update="@form" style="margin:10px 0;width:50%;"
 									value="Cadastrar" icon="pi pi-unlock"
 									styleClass="ui-button-raised"
-									actionListener="#{loginPacienteController.cadastrar()}" />
+									actionListener="#{loginController.cadastrar()}" />
 							</center>
 						</h:form>
 					</p:tab>

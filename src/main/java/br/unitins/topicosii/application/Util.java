@@ -7,6 +7,10 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
+import br.unitins.topicosii.models.Pessoa;
+
 public class Util {
 
 	private static void addMessage(String msg, Severity severity) {
@@ -34,5 +38,12 @@ public class Util {
 			System.out.println("Não foi possível realizar o redirecionamento.");
 			e.printStackTrace();
 		}
+	}
+	
+	private static String hash(String valor) {
+		return DigestUtils.sha256Hex(valor);
+	}
+	public static String hash(Pessoa usuario) {
+		return hash(usuario.getId()+usuario.getSenha());
 	}
 }

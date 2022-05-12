@@ -18,7 +18,7 @@ import br.unitins.topicosii.respository.PsicologoRepository;
 
 @Named
 @ViewScoped
-public class LoginPacienteController implements Serializable {
+public class LoginController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Pessoa pessoa;
@@ -26,6 +26,7 @@ public class LoginPacienteController implements Serializable {
 	private boolean logarComoPaciente=true;
 	
 	public void login() {
+		this.pessoa.setSenha(Util.hash(pessoa));
 		if(logarComoPaciente) {
 			this.loginAsPaciente();
 		}else {
@@ -39,8 +40,9 @@ public class LoginPacienteController implements Serializable {
 		paciente.setPessoa(pessoa);
 		paciente.getPessoa().setTelefones(new ArrayList<Telefone>());
 		try {
-			if (pacienteRepository.findByEmailESenha(paciente) != null) {
-				Session.getInstance().set("pacientelogado", paciente);
+			paciente = pacienteRepository.findByEmailESenha(paciente);
+			if (paciente != null) {
+				Session.getInstance().set("pacienteLogado", paciente);
 				this.redirect("/agenda-paciente.xhtml");
 			} else {
 				Util.addWarnMessage("Informações incorretas");
@@ -59,8 +61,10 @@ public class LoginPacienteController implements Serializable {
 		psicologo.setPessoa(pessoa);
 		psicologo.getPessoa().setTelefones(new ArrayList<Telefone>());
 		try {
-			if (repository.findByEmailESenha(psicologo) != null) {
-				Session.getInstance().set("psicologologado", psicologo);
+			psicologo=repository.findByEmailESenha(psicologo);
+			if (psicologo != null) {
+				System.out.println(psicologo.getPessoa().getNome());
+				Session.getInstance().set("psicologoLogado", psicologo);
 				this.redirect("/agenda-psicologo.xhtml");
 			} else {
 				Util.addWarnMessage("Informações incorretas");
@@ -76,11 +80,14 @@ public class LoginPacienteController implements Serializable {
 	public void cadastrar() {
 		PacienteRepository pacienteRepository = new PacienteRepository();
 		Paciente paciente = new Paciente();
+		this.pessoa.setSenha(Util.hash(pessoa));
 		paciente.setPessoa(pessoa);
 		paciente.getPessoa().setTelefones(new ArrayList<Telefone>());
 		try {
 			if (pacienteRepository.findByEmailESenha(paciente) == null) {
 				pacienteRepository.save(paciente);
+				this.pessoa=null;
+				Util.addInfoMessage("Cadastro feito com sucesso");
 			} else {
 				Util.addErrorMessage("Já há um cadastro");
 			}

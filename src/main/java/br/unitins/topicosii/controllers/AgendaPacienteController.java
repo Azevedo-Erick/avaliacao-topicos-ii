@@ -32,6 +32,7 @@ public class AgendaPacienteController implements Serializable{
 		}
 		return agendamentos;
 	}
+	
 	public void setAgendamentos(List<Agendamento> agendamentos) {
 		this.agendamentos = agendamentos;
 	}

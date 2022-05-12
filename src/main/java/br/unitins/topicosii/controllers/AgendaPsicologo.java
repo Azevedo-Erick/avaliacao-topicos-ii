@@ -16,13 +16,16 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import br.unitins.topicosii.application.Converters;
 import br.unitins.topicosii.application.CustomScheduleEvent;
 import br.unitins.topicosii.application.RepositoryException;
+import br.unitins.topicosii.application.Session;
 import br.unitins.topicosii.application.Util;
 import br.unitins.topicosii.listing.PacienteListing;
 import br.unitins.topicosii.models.Agendamento;
 import br.unitins.topicosii.models.DiasDaSemana;
 import br.unitins.topicosii.models.Paciente;
+import br.unitins.topicosii.models.Psicologo;
 import br.unitins.topicosii.respository.AgendamentoRepository;
 
 @Named
@@ -40,6 +43,34 @@ public class AgendaPsicologo  implements Serializable {
 	private Paciente pacienteSelecionado;
 	private DiasDaSemana diaSelecionadoParaConsulta;
 	private LocalTime horarioSelecionado;
+	private float valor;
+	private Psicologo psicologoLogado;
+
+	public Psicologo getPsicologoLogado() {
+		if(this.psicologoLogado==null) {
+			this.psicologoLogado= (Psicologo) Session.getInstance().get("psicologoLogado");
+			System.out.println(this.psicologoLogado.getPessoa().getNome());
+		}
+			
+		return psicologoLogado;
+	}
+
+	
+	public void encerrarSessao() {
+		Session.getInstance().invalidateSession();
+		Util.redirect("/pages/login.xhtml");
+	}
+	public void setPsicologoLogado(Psicologo psicologoLogado) {
+		this.psicologoLogado = psicologoLogado;
+	}
+
+	public float getValor() {
+		return valor;
+	}
+
+	public void setValor(float valor) {
+		this.valor = valor;
+	}
 
 	public List<Agendamento> gerarAgendamentos() {
 		//Primeira consulta gerada
@@ -61,24 +92,63 @@ public class AgendaPsicologo  implements Serializable {
 			agendamentoPaciente.setHoraFim(dataHoraFimConsulta);
 			agendamentoPaciente.setHoraInicio(dataHoraInicioConsulta);
 			agendamentoPaciente.setPaciente(pacienteSelecionado);
-			agendamento.setValorSessao(200f);
+			agendamentoPaciente.setValorSessao(valor);
+			agendamentoPaciente.setPsicologo(psicologoLogado);
 			agendamentosPaciente.add(agendamentoPaciente);
 		}
 		return agendamentosPaciente;
 	}
+	public void excluirAgendamento() {
+		AgendamentoRepository repository = new AgendamentoRepository();
+		try {
+			repository.remove(event.getData());
+			
+			Util.addInfoMessage("Agendamento excluído");
+		}catch (RepositoryException e) {
+			
+		}
+	}
+	public void cancelarAgendamento() {
+		AgendamentoRepository repository = new AgendamentoRepository();
+		try {
+			event.getData().setCancelado(true);
+			repository.save(event.getData());
+			Util.addInfoMessage("Agendamento cancelado");
+		}catch (RepositoryException e) {
+			
+		}
+	}
+	public void concluirAgendamento() {
+		AgendamentoRepository repository = new AgendamentoRepository();
+		try {
+			repository.save(event.getData());
+			Util.addInfoMessage("Concluído");
+		}catch (RepositoryException e) {
+			
+		}
+	}
+	
 	public void incluirAgendamentos(){
 		AgendamentoRepository repository = new AgendamentoRepository();
 		List<Agendamento> agendamentosGerados = this.gerarAgendamentos();
 		try {
 			for(int i = 0;i<agendamentosGerados.size();i++) {
-				repository.save(agendamentosGerados.get(i));
+				if(repository.checkInterval(agendamentosGerados.get(i).getHoraInicio().minus(1, ChronoUnit.MINUTES), agendamentosGerados.get(i).getHoraFim().plus(1, ChronoUnit.MINUTES))) {
+					Util.addErrorMessage("Não foi possível angendar para o dia " + Converters.getDateFormatted(agendamentosGerados.get(i).getHoraInicio()));
+				}else {
+					repository.save(agendamentosGerados.get(i));					
+					Util.addInfoMessage("Agendamentos gerados com sucesso");
+				}
 			}
-			Util.addInfoMessage("Agendamentos gerados com sucesso");
 		}catch(RepositoryException e){
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}
 	}
+	
+	public void onEventSelect(SelectEvent<ScheduleEvent<Agendamento>> selectEvent) {
+        event = selectEvent.getObject();
+    }
 	
 	public void selecionarPaciente(Paciente obj) {
 		this.setPacienteSelecionado(obj);
@@ -112,6 +182,7 @@ public class AgendaPsicologo  implements Serializable {
 	}
 
 
+	
 	public List<DiasDaSemana> getDia() {
 		if(this.dia==null) {
 			this.dia= new ArrayList<DiasDaSemana>();
@@ -127,9 +198,7 @@ public class AgendaPsicologo  implements Serializable {
 		model = new DefaultScheduleModel();
 		agendamento = new Agendamento();
 		for (Agendamento agendamento : this.getAgendamentos()) {
-			System.out.println(agendamento.getHoraInicio());
-			System.out.println(agendamento.getHoraFim());
-			CustomScheduleEvent evento = new CustomScheduleEvent("Titulo aaa", agendamento.getHoraInicio(),
+			CustomScheduleEvent evento = new CustomScheduleEvent(agendamento.getPaciente().getPessoa().getNome() + " " +agendamento.getPaciente().getPessoa().getSobrenome(), agendamento.getHoraInicio(),
 					agendamento.getHoraFim(), false, agendamento);
 			this.getScheduleEvents().add(evento);
 			this.model.addEvent(evento);
@@ -139,11 +208,11 @@ public class AgendaPsicologo  implements Serializable {
 	public List<Agendamento> getAgendamentos() {
 		AgendamentoRepository repository = new AgendamentoRepository();
 		try {
-			return repository.findAll();
+			return repository.findAllForPsicologo(this.getPsicologoLogado().getId());
 		}catch(RepositoryException e){
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
-			return null;
+			return new ArrayList<Agendamento>();
 		}
 	}
 

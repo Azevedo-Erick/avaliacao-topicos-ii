@@ -16,7 +16,6 @@
 		<class>br.unitins.topicosii.models.Pessoa</class>
 		<class>br.unitins.topicosii.models.Pix</class>
 		<class>br.unitins.topicosii.models.Psicologo</class>
-		<class>br.unitins.topicosii.models.RegistroSessao</class>
 		<class>br.unitins.topicosii.models.Telefone</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 
@@ -42,7 +41,7 @@
 				value="org.hibernate.dialect.PostgreSQLDialect" />
 
 			<!-- create / create-drop / update / none -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="update " />
 
 			<!-- Show SQL in console -->
 			<property name="hibernate.show_sql" value="true" />

@@ -14,6 +14,20 @@ public class Agendamento extends DefaultEntity{
 	private LocalDateTime horaFim;
 	private int diaSemana;
 	private float valorSessao;
+	private String descricao;
+	private boolean cancelado;
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	public boolean isCancelado() {
+		return cancelado;
+	}
+	public void setCancelado(boolean cancelado) {
+		this.cancelado = cancelado;
+	}
 	@ManyToOne
 	private Paciente paciente;
 	@ManyToOne

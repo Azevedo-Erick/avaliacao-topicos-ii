@@ -18,26 +18,31 @@
 				<div class="relative flex items-center justify-between h-16">
 					<div class="hidden sm:block sm:ml-6">
 						<h:form>
-						<div class="flex space-x-4">
-							<div class="logo"></div>
-							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-							
-							<h:commandButton
-								class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
-								aria-current="page" value="Agenda" actionListener="#{agendaPsicologo.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
-							<h:commandButton
-								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Controle de Pacientes" actionListener="#{agendaPsicologo.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
-							<h:commandButton
-								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Editar Perfil"  actionListener="#{agendaPsicologo.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
-						</div>
+
+							<div class="flex space-x-4">
+								<div class="logo"></div>
+								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
+								<h:commandButton
+									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
+									aria-current="page" value="Agenda"
+									actionListener="#{agendaPsicologo.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
+								<h:commandButton
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									value="Controle de Pacientes"
+									actionListener="#{agendaPsicologo.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
+								<h:commandButton
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									value="Editar Perfil"
+									actionListener="#{agendaPsicologo.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
+							</div>
 
 						</h:form>
 
 					</div>
-					<h:commandButton class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
-						role="menuitem"  id="user-menu-item-2" value="Sair"></h:commandButton>
+					<h:commandButton
+						class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
+						role="menuitem" id="user-menu-item-2" actionListener="#{agendaPsicologo.encerrarSessao()}" value="Sair"></h:commandButton>
 
 				</div>
 			</nav>
@@ -46,33 +51,77 @@
 			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
 
 
-	
-						<p:commandButton value="Marcar consulta"
-							class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-							onclick="PF('dialogMarcarConsulta').show()"
-							style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
 
-						<p:schedule id="agenda" value="#{agendaPsicologo.model}"
-							styleClass="agenda" widgetVar="agenda"
-							leftHeaderTemplate="prev,next today"
-							rightHeaderTemplate="timeGridWeek,timeGridDay"
-							timeZone="America/Fortaleza" view="agendaWeek" timeFormat="HH:mm"
-							axisFormat="H:mm" minTime="6:00" maxTime="19:00"
-							style="min-width: 100%;">
+				<p:commandButton value="Marcar consulta"
+					class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+					onclick="PF('dialogMarcarConsulta').show()"
+					style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
+				<h:form id="agendamento">
+					<p:growl id="growl" showDetail="true" />
+					<p:schedule id="agenda" value="#{agendaPsicologo.model}"
+						styleClass="agenda" widgetVar="agenda"
+						leftHeaderTemplate="prev,next today"
+						rightHeaderTemplate="timeGridWeek,timeGridDay"
+						timeZone="America/Fortaleza" view="agendaWeek" timeFormat="HH:mm"
+						axisFormat="H:mm" minTime="6:00" maxTime="19:00"
+						style="min-width: 100%;">
+						<p:ajax event="eventSelect"
+							listener="#{agendaPsicologo.onEventSelect}"
+							update="dialogEditarConsulta"
+							oncomplete="PF('dialogEditarConsulta').show();" />
+					</p:schedule>
+				</h:form>
 
-						</p:schedule>
-		
 
-				</div>
+			</div>
+			<p:dialog header="Detalhes" widgetVar="dialogEditarConsulta"
+				id="dialogEditarConsulta" draggable="false" minHeight="40"
+				height="70vh" width="900" modal="true" showEffect="fade">
+				<h:form id="form-editar">
+					<div class="flex flex-col">
+						<p:outputLabel>Paciente: #{agendaPsicologo.event.data.paciente.pessoa.nome} #{agendaPsicologo.event.data.paciente.pessoa.sobrenome}</p:outputLabel>
+						<p:outputLabel>Data: #{agendaPsicologo.event.data.horaInicio}</p:outputLabel>
+						<p:outputLabel>Inicio:  #{agendaPsicologo.event.data.horaInicio}</p:outputLabel>
+						<p:outputLabel>Fim:  #{agendaPsicologo.event.data.horaFim}</p:outputLabel>
+						<p:outputLabel>Valor:  #{agendaPsicologo.event.data.valorSessao}</p:outputLabel>
+						<p:outputLabel>Conclusões do Psicologo:  </p:outputLabel>
+						<p:textEditor secure='false'
+							disabled="#{agendaPsicologo.event.data.cancelado==true}"
+							value="#{agendaPsicologo.event.data.descricao}">
+							<f:facet name="toolbar">
+								<span class="ql-formats">
+									<button class="ql-bold"></button>
+									<button class="ql-italic"></button>
+									<button class="ql-underline"></button>
+									<button class="ql-strike"></button>
+								</span>
+								<span class="ql-formats"> <select class="ql-font"></select>
+									<select class="ql-size"></select>
+								</span>
+							</f:facet>
+						</p:textEditor>
+						<div class="flex flex-row">
+							<p:commandButton value="Cancelar"
+								disabled="#{agendaPsicologo.event.data.cancelado==true}"
+								actionListener="#{agendaPsicologo.cancelarAgendamento()}"></p:commandButton>
+							<p:commandButton value="Concluir"
+								disabled="#{agendaPsicologo.event.data.cancelado==true}"
+								actionListener="#{agendaPsicologo.concluirAgendamento()}"></p:commandButton>
+							<p:commandButton value="Excluir"
+								actionListener="#{agendaPsicologo.excluirAgendamento()}"></p:commandButton>
+						</div>
+					</div>
+				</h:form>
+			</p:dialog>
 
-	
 			<!-- Marcar consultas -->
 			<p:dialog header="Agendar consulta" widgetVar="dialogMarcarConsulta"
 				draggable="false" minHeight="40" width="900" modal="true"
 				showEffect="fade">
 				<h:form id="form-marcar">
 
-					<div class="flex flex-col content-center justify-center items-center">
+					<div
+						class="flex flex-col content-center justify-center items-center">
 						<p:outputLabel value="Dia da consulta" />
 
 						<p:selectOneButton
@@ -80,37 +129,52 @@
 							<f:selectItems value="#{agendaPsicologo.dia}" var="day"
 								itemLabel="#{day.label}" itemValue="#{day}" />
 						</p:selectOneButton>
-						<div class="flex flex-row mt-6 content-evenly justify-evenly items-center">
+						<div
+							class="flex flex-row mt-6 content-evenly w-full justify-evenly items-center">
 							<div class="flex flex-col">
-								<p:outputLabel value="Paciente:" />
-								<div class="ui-inputgroup">
-									<p:inputText disabled="true" readonly="true"
-									class="bg-gray-800 h-10 "
-										value="#{agendaPsicologo.pacienteSelecionado.pessoa.nome} #{agendaPsicologo.pacienteSelecionado.pessoa.sobrenome}" />
-									<p:commandButton icon="pi pi-search"
-										class="bg-gray-800 h-10 text-white px-2 py-2 rounded-md text-sm font-medium "
-										style="background-color:rgb(17 24 39)!important;border:0px !important;"
-										actionListener="#{agendaPsicologo.abrirPacienteListing()}">
-										<p:ajax event="dialogReturn"
-											listener="#{agendaPsicologo.obterPacienteListing()}"
-											update="@form" />
-									</p:commandButton>
+
+								<div class="flex flex-col">
+									<p:outputLabel value="Paciente:" />
+									<div class="ui-inputgroup my-2">
+										<p:inputText disabled="true" readonly="true"
+											class="bg-gray-800 h-10 "
+											value="#{agendaPsicologo.pacienteSelecionado.pessoa.nome} #{agendaPsicologo.pacienteSelecionado.pessoa.sobrenome}" />
+										<p:commandButton icon="pi pi-search"
+											class="bg-gray-800 h-10 text-white px-2 py-2 rounded-md text-sm font-medium "
+											style="background-color:rgb(17 24 39)!important;border:0px !important;"
+											actionListener="#{agendaPsicologo.abrirPacienteListing()}">
+											<p:ajax event="dialogReturn"
+												listener="#{agendaPsicologo.obterPacienteListing}"
+												update="@form" />
+										</p:commandButton>
+									</div>
+									<div
+										class="flex flex-col w-full justify-self-center self-center">
+										<p:outputLabel value="Valor" />
+										<p:inputNumber value="#{agendaPsicologo.valor}" />
+									</div>
 								</div>
 							</div>
-							<div class="flex flex-col mx-8">
-								<p:outputLabel value="Quantidade de semanas: " />
-								<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}" />
+							<div class="flex flex-col ">
+								<div class="flex flex-col my-2">
+									<p:outputLabel value="Quantidade de semanas: " />
+									<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}" />
+								</div>
+								<div class="flex flex-col ">
+									<p:outputLabel value="Horário" />
+									<p:datePicker value="#{agendaPsicologo.horarioSelecionado}"
+										timeOnly="true" pattern="HH:mm" />
+								</div>
 							</div>
-							<div class="flex flex-col">
-								<p:outputLabel value="Horário" />
-								<p:datePicker value="#{agendaPsicologo.horarioSelecionado}"
-									timeOnly="true" pattern="HH:mm" />
-							</div>
+
 						</div>
 						<div class="mt-6">
-						<p:commandButton class="bg-gray-800  text-white px-2 py-2 rounded-md text-sm font-medium"
-										style="background-color:rgb(17 24 39)!important;border:0px !important;" styleClass="ui-button-primary" value="Criar"
-							actionListener="#{agendaPsicologo.incluirAgendamentos()}" />
+							<p:commandButton
+								class="bg-gray-800  text-white px-2 py-2 rounded-md text-sm font-medium"
+								style="background-color:rgb(17 24 39)!important;border:0px !important;"
+								styleClass="ui-button-primary" value="Criar"
+								update="agendamento"
+								actionListener="#{agendaPsicologo.incluirAgendamentos()}" />
 						</div>
 					</div>
 

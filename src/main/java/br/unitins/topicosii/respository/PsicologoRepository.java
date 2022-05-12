@@ -27,7 +27,7 @@ public class PsicologoRepository extends Repository<Psicologo>{
 		}
 	}
 	
-	public Paciente findByEmailESenha(Psicologo psicologo) throws RepositoryException {
+	public Psicologo findByEmailESenha(Psicologo psicologo) throws RepositoryException {
 		try {
 			StringBuffer jpsql = new StringBuffer();
 			jpsql.append("SELECT ");
@@ -43,7 +43,7 @@ public class PsicologoRepository extends Repository<Psicologo>{
 			query.setParameter("email", psicologo.getPessoa().getEmail());
 			query.setParameter("senha", psicologo.getPessoa().getSenha());
 			System.out.println(query.getResultList().size());
-			return (Paciente)query.getSingleResult();
+			return (Psicologo)query.getSingleResult();
 		}catch (NoResultException e){
 			System.out.println("Erro ao fazer o login");
 			return null;
