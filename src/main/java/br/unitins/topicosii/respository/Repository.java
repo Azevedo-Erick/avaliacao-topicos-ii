@@ -27,11 +27,12 @@ public class Repository<T extends DefaultEntity> {
 		this.entityManager = entityManager;
 	}
 
-	public void save(T entity) throws RepositoryException, VersionException {
+	public T save(T entity) throws RepositoryException, VersionException {
 		try {
 			getEntityManager().getTransaction().begin();
-			getEntityManager().merge(entity);
+			T ent = getEntityManager().merge(entity);
 			getEntityManager().getTransaction().commit();
+			return ent;
 		} catch (OptimisticLockException e) {
 			// excecao do @version
 			System.out.println("Problema com o controle de concorrencia.");
@@ -46,6 +47,7 @@ public class Repository<T extends DefaultEntity> {
 			System.out.println("Problema ao executar o save.");
 			e.printStackTrace();
 		}
+		return null;
 
 	}
 

@@ -102,20 +102,6 @@ public class LoginController implements Serializable {
 
 	}
 
-	public void cadastro() {
-		/*
-		 * PessoaRepository repository = new PessoaRepository(); PacienteRepository
-		 * pacienteRepository = new PacienteRepository(); Pessoa pessoaLogin = null; try
-		 * { pessoaLogin = repository.findByEmailESenha(paciente); } catch
-		 * (RepositoryException e) {
-		 * 
-		 * } try { if (pessoaLogin == null) {
-		 * 
-		 * pacienteRepository.save(paciente); Util.addInfoMessage("Cadastrado"); } else
-		 * { Util.addWarnMessage("Essa pessoa já está cadastrada"); } } catch
-		 * (RepositoryException e) { Util.addErrorMessage(e.getMessage()); }
-		 */
-	}
 
 	public void redirect(String page) {
 		Util.redirect(page);

@@ -21,11 +21,20 @@ public class Pessoa extends DefaultEntity{
 	private String cpf;
 	private LocalDate dataNascimento;
 	private String senha;
+
+	private String imagem;
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(nullable = true)
 	private List<Telefone> telefones;
 	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(unique = true)
 	private Endereco endereco;
+	public String getImagem() {
+		return imagem;
+	}
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
 	public Endereco getEndereco() {
 		if(endereco==null) {
 			this.setEndereco(new Endereco());
