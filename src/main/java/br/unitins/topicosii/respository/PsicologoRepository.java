@@ -27,6 +27,7 @@ public class PsicologoRepository extends Repository<Psicologo>{
 		}
 	}
 	
+	
 	public Psicologo findByEmailESenha(Psicologo psicologo) throws RepositoryException {
 		try {
 			StringBuffer jpsql = new StringBuffer();
@@ -52,7 +53,31 @@ public class PsicologoRepository extends Repository<Psicologo>{
 			throw new RepositoryException("Erro ao buscar email e senha");
 		}
 	}
-	
+	public Psicologo findByEmailESenha(String email, String senha) throws RepositoryException {
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("u ");
+			jpsql.append("FROM ");
+			jpsql.append("Psicologo u ");
+			jpsql.append("WHERE ");
+			jpsql.append("u.pessoa.email = :email ");
+			jpsql.append("AND ");
+			jpsql.append("u.pessoa.senha = :senha");
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			
+			query.setParameter("email",email);
+			query.setParameter("senha", senha);
+			System.out.println(query.getResultList().size());
+			return (Psicologo)query.getSingleResult();
+		}catch (NoResultException e){
+			System.out.println("Erro ao fazer o login");
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao buscar email e senha");
+		}
+	}
 	public List<Psicologo> findByNome(String nome) throws RepositoryException {
 		try {
 			PessoaRepository repo = new PessoaRepository();

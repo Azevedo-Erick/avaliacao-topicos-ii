@@ -13,24 +13,25 @@
 </h:head>
 <h:body>
 	<ui:composition template="./template.xhtml">
-<ui:define name="nav">
+		<ui:define name="nav">
 			<nav class="bg-gray-800">
 				<div class="relative flex items-center justify-start h-16">
-	
-						<div class="flex space-x-4">
-							<div class="logo"></div>
-							</div>
 
-							
+					<div class="flex space-x-4">
+						<div class="logo"></div>
+					</div>
+
+
 				</div>
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 min-w-fit my-6">
+			<div
+				class="shadow-2xl  shadow-gray-700 rounded-lg p-5 min-w-fit my-6">
 
 				<p:tabView dynamic="true" cache="true">
 					<p:tab title="Login">
-					 
+
 						<h:form class=" flex flex-col justify-content-evenly">
 							<p:growl id="growl" />
 							<div class="flex flex-col">
@@ -39,26 +40,28 @@
 									<div class="ui-inputgroup-addon">
 										<i class="pi pi-inbox"></i>
 									</div>
-									<p:inputText placeholder="Email"
-									class="w-full"
-										value="#{loginController.pessoa.email}"  />
+									<p:inputText placeholder="Email" class="w-full"
+										value="#{loginController.pessoa.email}" />
 								</div>
 							</div>
 							<div class="flex flex-row items-center">
 								<div class="flex flex-col" style="margin: 10px 0;">
 									<p:outputLabel value="Senha " />
-									<div class="ui-inputgroup">
-										<div class="ui-inputgroup-addon">
-											<i class="pi pi-lock"></i>
+									<div class="flex flex-row items-center">
+										<div class="ui-inputgroup">
+											<div class="ui-inputgroup-addon">
+												<i class="pi pi-lock"></i>
+											</div>
+											<p:inputText placeholder="Senha" class="w-9/12"
+												value="#{loginController.pessoa.senha}" />
 										</div>
-										<p:inputText placeholder="Senha"
-										class="w-9/12"
-											value="#{loginController.pessoa.senha}" />
+									<div class="flex flex-row items-center justify-between"
+										style="margin: 10px 0;">
+										<p:outputLabel value="Psicologo" />
+										<p:toggleSwitch value="#{loginController.logarComoPaciente}" />
+										<p:outputLabel value="Paciente" />
 									</div>
-								</div>
-								<div class="flex flex-col" style="margin: 10px 0;">
-								<p:outputLabel value="Psicologo?" />
-								<p:selectBooleanButton onLabel="Não, sou Paciente" offLabel="Sim, sou Psicologo" value="#{loginController.logarComoPaciente}" class="h-7/8" />
+									</div>
 								</div>
 							</div>
 							<center>
@@ -68,7 +71,7 @@
 							</center>
 						</h:form>
 
-						
+
 					</p:tab>
 					<p:tab title="Criar conta">
 						<h:form class="login-form flex flex-col justify-content-evenly">

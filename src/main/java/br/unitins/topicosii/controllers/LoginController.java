@@ -9,6 +9,7 @@ import javax.inject.Named;
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Session;
 import br.unitins.topicosii.application.Util;
+import br.unitins.topicosii.application.VersionException;
 import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.models.Pessoa;
 import br.unitins.topicosii.models.Psicologo;
@@ -32,6 +33,7 @@ public class LoginController implements Serializable {
 		}else {
 			this.loginAsPsicologo();
 		}
+		this.getPessoa().setSenha("");
 		
 	}
 	private void loginAsPaciente() {
@@ -92,6 +94,9 @@ public class LoginController implements Serializable {
 				Util.addErrorMessage("Já há um cadastro");
 			}
 		} catch (RepositoryException e) {
+			Util.addErrorMessage(e.getMessage());
+		}catch(VersionException e) {
+			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}
 

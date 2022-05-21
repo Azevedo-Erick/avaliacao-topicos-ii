@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
+import br.unitins.topicosii.application.VersionException;
 import br.unitins.topicosii.models.DefaultEntity;
 import br.unitins.topicosii.respository.Repository;
 
@@ -32,6 +33,9 @@ public abstract class Controller<T extends DefaultEntity> implements Serializabl
 		}catch(RepositoryException e){
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
+		}catch(VersionException e) {
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
 		}
 	}
 	
@@ -41,6 +45,9 @@ public abstract class Controller<T extends DefaultEntity> implements Serializabl
 			Util.addInfoMessage("Edição realizada com sucesso");
 			limpar();
 		}catch(RepositoryException e) {
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
+		}catch(VersionException e) {
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}

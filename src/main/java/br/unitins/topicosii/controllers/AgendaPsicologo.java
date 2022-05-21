@@ -21,6 +21,7 @@ import br.unitins.topicosii.application.CustomScheduleEvent;
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Session;
 import br.unitins.topicosii.application.Util;
+import br.unitins.topicosii.application.VersionException;
 import br.unitins.topicosii.listing.PacienteListing;
 import br.unitins.topicosii.models.Agendamento;
 import br.unitins.topicosii.models.DiasDaSemana;
@@ -116,6 +117,9 @@ public class AgendaPsicologo  implements Serializable {
 			Util.addInfoMessage("Agendamento cancelado");
 		}catch (RepositoryException e) {
 			
+		}catch(VersionException e) {
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
 		}
 	}
 	public void concluirAgendamento() {
@@ -125,6 +129,9 @@ public class AgendaPsicologo  implements Serializable {
 			Util.addInfoMessage("Concluído");
 		}catch (RepositoryException e) {
 			
+		}catch(VersionException e) {
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
 		}
 	}
 	
@@ -141,6 +148,9 @@ public class AgendaPsicologo  implements Serializable {
 				}
 			}
 		}catch(RepositoryException e){
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
+		}catch(VersionException e) {
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}

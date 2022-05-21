@@ -11,6 +11,7 @@ import org.primefaces.event.SelectEvent;
 
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
+import br.unitins.topicosii.application.VersionException;
 import br.unitins.topicosii.listing.CidadeListing;
 import br.unitins.topicosii.listing.EstadoListing;
 import br.unitins.topicosii.models.Cidade;
@@ -65,6 +66,9 @@ public class ControlePacientesController implements Serializable{
 			Util.addInfoMessage("Inclusão realizada com sucesso");
 			this.limpar();
 		}catch(RepositoryException e){
+			e.printStackTrace();
+			Util.addErrorMessage(e.getMessage());
+		}catch(VersionException e) {
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}

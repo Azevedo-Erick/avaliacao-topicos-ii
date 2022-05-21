@@ -18,20 +18,23 @@
 				<div class="relative flex items-center justify-between h-16">
 					<div class="hidden sm:block sm:ml-6">
 						<h:form>
-						<div class="flex space-x-4">
-							<div class="logo"></div>
-							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-							
-							<h:commandButton
-								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								aria-current="page" value="Agenda" actionListener="#{agendaPsicologo.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
-							<h:commandButton
-								class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Controle de Pacientes" actionListener="#{agendaPsicologo.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
-							<h:commandButton
-								class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
-								value="Editar Perfil"  actionListener="#{agendaPsicologo.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
-						</div>
+							<div class="flex space-x-4">
+								<div class="logo"></div>
+								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
+								<h:commandButton
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									aria-current="page" value="Agenda"
+									actionListener="#{agendaPsicologo.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
+								<h:commandButton
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									value="Controle de Pacientes"
+									actionListener="#{agendaPsicologo.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
+								<h:commandButton
+									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
+									value="Editar Perfil"
+									actionListener="#{agendaPsicologo.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
+							</div>
 
 						</h:form>
 					</div>
@@ -44,23 +47,25 @@
 		</ui:define>
 		<ui:define name="content">
 			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
-
+					<div>
+					
+					</div>
 
 				<h:form>
-					<p:growl id="growl" showDetail="true" />
+
 					<p:tabView>
 						<p:tab title="Pessoal">
 							<div class="flex flex-row justify-between">
 								<div class="flex flex-col w-1/3">
 									<h:outputText value="Primeiro nome: *" />
 									<p:inputText label="Primeiro nome:"
-										value="#{controlePacientesController.pacienteForm.pessoa.nome}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.nome}" />
 								</div>
 
 								<div class="flex flex-col w-3/5">
 									<h:outputText value="Sobrenome: *" />
 									<p:inputText label="Sobrenome"
-										value="#{controlePacientesController.pacienteForm.pessoa.sobrenome}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}" />
 								</div>
 							</div>
 
@@ -68,17 +73,17 @@
 								<div class="flex flex-col w-1/5">
 									<h:outputText value="CPF: *" />
 									<p:inputText label="CPF"
-										value="#{controlePacientesController.pacienteForm.pessoa.cpf}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.cpf}" />
 								</div>
 								<div class="flex flex-col w-1/4">
 									<p:outputLabel value="Data de nascimento" />
 									<p:datePicker
-										value="#{controlePacientesController.pacienteForm.pessoa.dataNascimento}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.dataNascimento}" />
 								</div>
 								<div class="flex flex-col w-1/3">
 									<h:outputText value="Email: *" />
 									<p:inputText label="Email:"
-										value="#{controlePacientesController.pacienteForm.pessoa.email}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.email}" />
 								</div>
 							</div>
 						</p:tab>
@@ -87,24 +92,24 @@
 								<div class="flex flex-col">
 									<h:outputText value="CEP: *" />
 									<p:inputText label="CEP" id="inputTextCep"
-										value="#{controlePacientesController.pacienteForm.pessoa.endereco.cep}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cep}" />
 								</div>
 								<div class="flex flex-col">
 									<h:outputText value="Numero: *" />
 									<p:inputText label="Numero:"
-										value="#{controlePacientesController.pacienteForm.pessoa.endereco.numero}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.numero}" />
 								</div>
 								<div class="flex flex-col  ">
 									<h:outputText value="Cidade: *" />
 									<div class="ui-inputgroup h-10">
 										<p:inputText label="Nome:" readonly="true"
-											value="#{controlePacientesController.pacienteForm.pessoa.endereco.cidade.nome}" />
+											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cidade.nome}" />
 										<p:commandButton icon="pi pi-search"
 											style="background-color:rgb(17 24 39)!important;border:0px !important;"
 											class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-											actionListener="#{controlePacientesController.abrirCidadeListing()}">
+											actionListener="#{editarInformacoesPsicologo.abrirCidadeListing()}">
 											<p:ajax event="dialogReturn"
-												listener="#{controlePacientesController.obterCidadeListing}"
+												listener="#{editarInformacoesPsicologo.obterCidadeListing}"
 												update="@form" />
 										</p:commandButton>
 									</div>
@@ -114,13 +119,13 @@
 								<div class="flex flex-col w-1/3">
 									<h:outputText value="Bairro: *" />
 									<p:inputText label="Bairro:"
-										value="#{controlePacientesController.pacienteForm.pessoa.endereco.bairro}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.bairro}" />
 								</div>
 
 								<div class="flex flex-col w-3/5">
 									<h:outputText value="Rua: *" />
 									<p:inputText label="Rua" class=""
-										value="#{controlePacientesController.pacienteForm.pessoa.endereco.rua}" />
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.rua}" />
 								</div>
 							</div>
 
@@ -129,7 +134,7 @@
 							<div class="flex flex-col">
 								<h:outputText value="Complemento: *" />
 								<p:inputText label="Complemento"
-									value="#{controlePacientesController.pacienteForm.pessoa.endereco.complemento}" />
+									value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.complemento}" />
 							</div>
 
 						</p:tab>
@@ -137,33 +142,34 @@
 							<div class="flex flex-row justify-between ">
 								<div class="flex flex-col">
 									<h:outputText value="CRP: *" />
-									<p:inputText label="CEP"  />
+									<p:inputText label="CRP"
+										value="#{editarInformacoesPsicologo.psicologo.crp}" />
 								</div>
 								<div class="flex flex-col">
 									<h:outputText value="Informações Formação *" />
 									<p:inputText label="Informações Formação:"
-										 />
+										value="#{editarInformacoesPsicologo.psicologo.informacoesFormacao}" />
 								</div>
 								<div class="flex flex-col">
 									<h:outputText value="Valor Hora:*" />
 									<p:inputText label="Valor Hora:"
-										/>
+										value="#{editarInformacoesPsicologo.psicologo.valorHora}" />
 								</div>
 							</div>
 						</p:tab>
-			
 
 
 
 
 
-			<!-- <p:tab title="Telefone">
+
+						<!-- <p:tab title="Telefone">
 								<h:form>
 									<div class="flex flex-row justify-content-between">
 										<div class="flex flex-col" style="width: 30%">
 											<h:outputText value="DDD: *" />
 											<p:inputText label="DDD"
-												value="#{controlePacientesController.pacienteForm.pessoa.telefones.get(0).ddd}" />
+												value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones.get(0).ddd}" />
 
 										</div>
 										<div class="flex flex-col" style="width: 60%">
@@ -174,7 +180,7 @@
 								</h:form>
 								<h:form>
 									<p:dataTable
-										value="#{controlePacientesController.pacienteForm.pessoa.telefones}"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones}"
 										var="obj">
 										<p:column headerText="DDD">
 											<p:outputLabel value="#{obj.ddd}" />
@@ -186,14 +192,38 @@
 								</h:form>
 							</p:tab>
 							 -->
-			</p:tabView>
-			<p:commandButton value="Cadastrar"
-				style="background-color:rgb(17 24 39)!important;border:0px !important;"
-				class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-				actionListener="#{controlePacientesController.salvar()}" />
-			</h:form>
-		</div>
+					</p:tabView>
+					<center>
+						<p:commandButton value="Atualizar"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							onclick="PF('dialog').show()"
+							class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium" />
+					</center>
 
+			<p:dialog draggable="false" global="true" showEffect="fade"
+				hideEffect="fade" widgetVar="dialog" responsive="true"
+				resizable="false" header="Autentique-se" modal="true" width="350">
+
+				<p:growl id="growl" showDetail="true" />
+				<div class="flex flex-col mb-4">
+					<h:outputText value="Confirme sua senha *" />
+
+					<p:inputText label="Insira sua senha"
+						value="#{editarInformacoesPsicologo.senha}" required="true	"></p:inputText>
+				</div>
+				<f:facet name="footer">
+					<p:commandButton value="Cancelar" type="button"
+						styleClass="ui-button-danger ui-button-flat"
+						onclick="PF('dialog').hide()" />
+					<h:commandButton value="Confirmar"
+						actionListener="#{editarInformacoesPsicologo.salvar()}"
+						update="@form"
+						styleClass="rounded-button ui-button-success" />
+						
+				</f:facet>
+			</p:dialog>
+			</h:form>
+			</div>
 
 
 		</ui:define>
