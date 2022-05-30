@@ -27,7 +27,6 @@ public class PsicologoRepository extends Repository<Psicologo>{
 		}
 	}
 	
-	
 	public Psicologo findByEmailESenha(Psicologo psicologo) throws RepositoryException {
 		try {
 			StringBuffer jpsql = new StringBuffer();

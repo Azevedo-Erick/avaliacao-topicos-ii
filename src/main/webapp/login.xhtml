@@ -15,89 +15,96 @@
 	<ui:composition template="./template.xhtml">
 		<ui:define name="nav">
 			<nav class="bg-gray-800">
-				<div class="relative flex items-center justify-start h-16">
+				<div class="relative flex items-center justify-between h-16">
 
 					<div class="flex space-x-4">
 						<div class="logo"></div>
 					</div>
-
+					<div class="flex flex-row ">
+						<p:commandButton type="button" value="Login" id="botaoLogin"
+							icon="pi pi-key" class="ui-button-outlined " />
+						<div class="mr-4"></div>
+						<p:commandButton type="button" value="Cadastrar"
+							id="botaoCadastro" icon="pi pi-user-edit"
+							class="ui-button-outlined-secondary " />
+						<div class="mr-4"></div>
+					</div>
 
 				</div>
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-			<div
-				class="shadow-2xl  shadow-gray-700 rounded-lg p-5 min-w-fit my-6">
+			<div class="shadow-2xl  shadow-gray-700 min-w-fit my-6 h-">
 
-				<p:tabView dynamic="true" cache="true">
-					<p:tab title="Login">
 
-						<h:form class=" flex flex-col justify-content-evenly">
-							<p:growl id="growl" />
-							<div class="flex flex-col">
-								<p:outputLabel value="Email " />
+				<p:panel header="Login" id="panelLogin" style="display:block">
+					<h:form class=" flex flex-col justify-content-evenly">
+						<p:growl id="growl" />
+						<div class="flex flex-col">
+							<p:outputLabel value="Email " />
+
+							<p:inputText placeholder="Email" class="w-full"
+								value="#{loginController.pessoa.email}" />
+
+						</div>
+						<div class="flex flex-row items-center">
+							<div class="flex flex-col" style="margin: 10px 0;">
+								<p:outputLabel value="Senha " />
+								<div class="flex flex-row w-full items-center">
+
+									<p:password value="#{loginController.pessoa.senha}"
+										toggleMask="true" redisplay="true" />
+
+
+								</div>
+								<div class="flex flex-row items-center justify-between"
+									style="margin: 10px 0;">
+									<p:outputLabel value="Psicologo" />
+									<p:toggleSwitch value="#{loginController.logarComoPaciente}" />
+									<p:outputLabel value="Paciente" />
+								</div>
+							</div>
+						</div>
+						<center>
+							<p:commandButton style="margin:10px 0;width:50%;" update="@form"
+								value="Entrar" icon="pi pi-key" styleClass="ui-button-raised"
+								actionListener="#{loginController.login()}" />
+						</center>
+					</h:form>
+					<f:facet name="footer">
+						<p:commandLink style="margin:10px 0;width:50%;"
+							value="Esqueci a senha"
+							actionListener="#{templateController.redirect('/esqueceusenhacodigo.xhtml')}" />
+					</f:facet>
+				</p:panel>
+
+				<p:panel header="Cadastro" id="panelCadastro" style="display:none">
+					<h:form class="login-form flex flex-col justify-content-evenly">
+						<p:growl id="growl" />
+						<div class="flex flex-row">
+
+							<div class="login-form flex flex-col">
+								<p:outputLabel value="Nome " />
 								<div class="ui-inputgroup">
 									<div class="ui-inputgroup-addon">
-										<i class="pi pi-inbox"></i>
+										<i class="pi pi-user"></i>
 									</div>
-									<p:inputText placeholder="Email" class="w-full"
-										value="#{loginController.pessoa.email}" />
+									<p:inputText placeholder="Nome"
+										value="#{loginController.pessoa.nome}" />
 								</div>
 							</div>
-							<div class="flex flex-row items-center">
-								<div class="flex flex-col" style="margin: 10px 0;">
-									<p:outputLabel value="Senha " />
-									<div class="flex flex-row items-center">
-										<div class="ui-inputgroup">
-											<div class="ui-inputgroup-addon">
-												<i class="pi pi-lock"></i>
-											</div>
-											<p:inputText placeholder="Senha" class="w-9/12"
-												value="#{loginController.pessoa.senha}" />
-										</div>
-									<div class="flex flex-row items-center justify-between"
-										style="margin: 10px 0;">
-										<p:outputLabel value="Psicologo" />
-										<p:toggleSwitch value="#{loginController.logarComoPaciente}" />
-										<p:outputLabel value="Paciente" />
+							<div class="login-form flex flex-col">
+								<p:outputLabel value="Sobrenome " />
+								<div class="ui-inputgroup">
+									<div class="ui-inputgroup-addon">
+										<i class="pi pi-user"></i>
 									</div>
-									</div>
+									<p:inputText placeholder="Nome"
+										value="#{loginController.pessoa.sobrenome}" />
 								</div>
 							</div>
-							<center>
-								<p:commandButton style="margin:10px 0;width:50%;" update="@form"
-									value="Entrar" icon="pi pi-key" styleClass="ui-button-raised"
-									actionListener="#{loginController.login()}" />
-							</center>
-						</h:form>
-
-
-					</p:tab>
-					<p:tab title="Criar conta">
-						<h:form class="login-form flex flex-col justify-content-evenly">
-							<p:growl id="growl" />
-							<div class="flex flex-row">
-								<div class="login-form flex flex-col">
-									<p:outputLabel value="Nome " />
-									<div class="ui-inputgroup">
-										<div class="ui-inputgroup-addon">
-											<i class="pi pi-user"></i>
-										</div>
-										<p:inputText placeholder="Nome"
-											value="#{loginController.pessoa.nome}" />
-									</div>
-								</div>
-								<div class="login-form flex flex-col">
-									<p:outputLabel value="Sobrenome " />
-									<div class="ui-inputgroup">
-										<div class="ui-inputgroup-addon">
-											<i class="pi pi-user"></i>
-										</div>
-										<p:inputText placeholder="Nome"
-											value="#{loginController.pessoa.sobrenome}" />
-									</div>
-								</div>
-							</div>
+						</div>
+						<div class="flex flex-row">
 							<div class="login-form flex flex-col" style="margin: 10px 0;">
 								<p:outputLabel value="CPF " />
 								<div class="ui-inputgroup">
@@ -118,26 +125,39 @@
 										value="#{loginController.pessoa.email}" />
 								</div>
 							</div>
-							<div class="login-form flex flex-col" style="margin: 10px 0;">
-								<p:outputLabel value="Senha " />
-								<div class="ui-inputgroup">
-									<div class="ui-inputgroup-addon">
-										<i class="pi pi-lock"></i>
-									</div>
-									<p:inputText placeholder="Senha"
-										value="#{loginController.pessoa.senha}" />
-								</div>
+						</div>
+						<div class="login-form flex flex-col" style="margin: 10px 0;">
+							<p:outputLabel value="Senha " />
+							<div class="w-full">
+								<p:password value="#{loginController.pessoa.senha}"
+									toggleMask="true" redisplay="true" />
+
 							</div>
-							<center>
-								<p:commandButton update="@form" style="margin:10px 0;width:50%;"
-									value="Cadastrar" icon="pi pi-unlock"
-									styleClass="ui-button-raised"
-									actionListener="#{loginController.cadastrar()}" />
-							</center>
-						</h:form>
-					</p:tab>
-				</p:tabView>
+						</div>
+						<center>
+							<p:commandButton update="@form" style="margin:10px 0;width:50%;"
+								value="Cadastrar" icon="pi pi-unlock"
+								styleClass="ui-button-raised"
+								actionListener="#{loginController.cadastrar()}" />
+						</center>
+					</h:form>
+				</p:panel>
 			</div>
+			<script>
+				const botaoLogin = document.getElementById('botaoLogin');
+				const botaoCadastro = document.getElementById('botaoCadastro');
+				const panelLogin = document.getElementById('panelLogin');
+				const panelCadastro = document.getElementById('panelCadastro');
+				botaoLogin.addEventListener('click', ()=>{
+					panelLogin.style.display = "block";
+					panelCadastro.style.display = "none";
+				})
+				botaoCadastro.addEventListener('click', ()=>{
+					panelLogin.style.display = "none";
+					panelCadastro.style.display = "block";
+				})
+				
+			</script>
 
 		</ui:define>
 	</ui:composition>

@@ -4,6 +4,7 @@ package br.unitins.topicosii.models;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 
@@ -16,6 +17,10 @@ public class Agendamento extends DefaultEntity{
 	private float valorSessao;
 	private String descricao;
 	private boolean cancelado;
+	@ManyToOne
+	private Paciente paciente;
+	@ManyToOne
+	private Psicologo psicologo;
 	public String getDescricao() {
 		return descricao;
 	}
@@ -28,10 +33,7 @@ public class Agendamento extends DefaultEntity{
 	public void setCancelado(boolean cancelado) {
 		this.cancelado = cancelado;
 	}
-	@ManyToOne
-	private Paciente paciente;
-	@ManyToOne
-	private Psicologo psicologo;
+	
 	public Agendamento(){}
 	public Agendamento(LocalDateTime horaInicio, LocalDateTime horaFim, int diaSemana, float valorSessao) {
 		super();

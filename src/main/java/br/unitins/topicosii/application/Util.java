@@ -48,6 +48,9 @@ public class Util {
 	private static String hash(String valor) {
 		return DigestUtils.sha256Hex(valor);
 	}
+	public static String hash(String id, String senha) {
+		return hash(id+senha);
+	}
 	public static String hash(Pessoa usuario) {
 		return hash(usuario.getId()+usuario.getSenha());
 	}

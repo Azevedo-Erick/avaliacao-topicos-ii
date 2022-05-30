@@ -1,26 +1,55 @@
 package br.unitins.topicosii.models;
 
+import java.time.LocalTime;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Psicologo extends DefaultEntity{
 	private String crp;
 	private float valorHora;
 	private String informacoesFormacao;
+	private LocalTime inicioExpediente;
+	private LocalTime fimExpediente;
+	
 	@OneToOne
 	@JoinColumn(unique = true)
+	@Cascade(CascadeType.ALL)
 	private Pessoa pessoa;
 	@ManyToMany
 	private List<Consultorio> consultorios;
+	
+	
+	
+	
+
+	public LocalTime getInicioExpediente() {
+		return inicioExpediente;
+	}
+
+	public void setInicioExpediente(LocalTime inicioExpediente) {
+		this.inicioExpediente = inicioExpediente;
+	}
+
+	public LocalTime getFimExpediente() {
+		return fimExpediente;
+	}
+
+	public void setFimExpediente(LocalTime fimExpediente) {
+		this.fimExpediente = fimExpediente;
+	}
+
 	public String getCrp() {
 		return crp;
 	}
+	
 	public void setCrp(String crp) {
 		this.crp = crp;
 	}

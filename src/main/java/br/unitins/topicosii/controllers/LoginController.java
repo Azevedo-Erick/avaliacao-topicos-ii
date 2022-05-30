@@ -15,6 +15,7 @@ import br.unitins.topicosii.models.Pessoa;
 import br.unitins.topicosii.models.Psicologo;
 import br.unitins.topicosii.models.Telefone;
 import br.unitins.topicosii.respository.PacienteRepository;
+import br.unitins.topicosii.respository.PessoaRepository;
 import br.unitins.topicosii.respository.PsicologoRepository;
 
 @Named
@@ -27,7 +28,9 @@ public class LoginController implements Serializable {
 	private boolean logarComoPaciente=true;
 	
 	public void login() {
-		this.pessoa.setSenha(Util.hash(pessoa));
+		Pessoa pessoaLogar = this.buscarPorEmail();
+		String senhaLoginComHash = Util.hash(pessoaLogar.getId().toString(), this.pessoa.getSenha());
+		this.pessoa.setSenha(senhaLoginComHash);
 		if(logarComoPaciente) {
 			this.loginAsPaciente();
 		}else {
@@ -36,6 +39,17 @@ public class LoginController implements Serializable {
 		this.getPessoa().setSenha("");
 		
 	}
+	
+	private Pessoa buscarPorEmail() {
+		PessoaRepository repo = new PessoaRepository();
+		try {
+			return repo.findByEmail(this.pessoa.getEmail());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	private void loginAsPaciente() {
 		PacienteRepository pacienteRepository = new PacienteRepository();
 		Paciente paciente = new Paciente();
@@ -44,6 +58,7 @@ public class LoginController implements Serializable {
 		try {
 			paciente = pacienteRepository.findByEmailESenha(paciente);
 			if (paciente != null) {
+				
 				Session.getInstance().set("pacienteLogado", paciente);
 				this.redirect("/agenda-paciente.xhtml");
 			} else {
@@ -82,12 +97,14 @@ public class LoginController implements Serializable {
 	public void cadastrar() {
 		PacienteRepository pacienteRepository = new PacienteRepository();
 		Paciente paciente = new Paciente();
-		this.pessoa.setSenha(Util.hash(pessoa));
+		paciente.getPessoa().setSenha(Util.hash("1",""));
 		paciente.setPessoa(pessoa);
 		paciente.getPessoa().setTelefones(new ArrayList<Telefone>());
 		try {
 			if (pacienteRepository.findByEmailESenha(paciente) == null) {
-				pacienteRepository.save(paciente);
+				Paciente pac = pacienteRepository.save(paciente);
+				pac.getPessoa().setSenha(Util.hash(pac.getPessoa().getId().toString(), this.pessoa.getSenha()));
+				pacienteRepository.save(pac);
 				this.pessoa=null;
 				Util.addInfoMessage("Cadastro feito com sucesso");
 			} else {

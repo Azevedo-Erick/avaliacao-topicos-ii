@@ -23,17 +23,14 @@
 								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
 								<h:commandButton
-									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
+									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
 									aria-current="page" value="Agenda"
-									actionListener="#{controlePacientesController.redirect('/agenda-psicologo.xhtml')}"></h:commandButton>
+									actionListener="#{agendaPsicologo.redirect('/agenda-paciente.xhtml')}"></h:commandButton>
+
 								<h:commandButton
-									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-									value="Pagamentos Pendentes"
-									actionListener="#{controlePacientesController.redirect('/controle-pacientes-psicologo.xhtml')}"></h:commandButton>
-								<h:commandButton
-									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
 									value="Editar Perfil"
-									actionListener="#{controlePacientesController.redirect('/editar-informacoes-psicologo.xhtml')}"></h:commandButton>
+									actionListener="#{agendaPsicologo.redirect('/editar-informacoes-paciente.xhtml')}"></h:commandButton>
 							</div>
 
 						</h:form>
@@ -50,41 +47,41 @@
 
 
 
-			<div
-				class="shadow-2xl  shadow-gray-700 rounded-lg p-5 max-h-96 h-5/6 w-10/12 my-6 overflow-y-scroll">
+				<div class="shadow-2xl  shadow-gray-700 p-5 max-h-96 w-10/12 my-6 overflow-y-scroll" style="display:grid;grid-gap:15px;grid-template-columns: repeat(auto-fill, minmax(20em,auto));height: 500px;">
+				<p:repeat var="obj" value="#{agendaPacienteController.agendamentos}">
+					<p:card style="width: 20em">
+						<f:facet name="header">
 
-				<p:dataTable value="#{agendaPacienteController.agendamentos}"
-					var="obj" style="width: 100%; height: 700px;">
+						</f:facet>
+						<f:facet name="title">
+						 #{agendaPacienteController.getDiaSemanaString(obj.diaSemana)} - #{agendaPacienteController.getDateFormatted(obj.horaInicio)}
+      	
+    </f:facet>
+						<f:facet name="subtitle">
+						Consulta com #{obj.psicologo.pessoa.nome} #{obj.psicologo.pessoa.sobrenome}
+       
+    </f:facet>
 
+						<p>
+							<i class="pi pi-money-bill"></i> #{obj.valorSessao}
+						</p>
 
-					<p:column headerText="Dia da semana">
-						<p:outputLabel
-							value="#{agendaPacienteController.getDiaSemanaString(obj.diaSemana)}" />
-					</p:column>
-					<p:column headerText="Data">
-						<p:outputLabel value="#{agendaPacienteController.getDateFormatted(obj.horaInicio)}"></p:outputLabel>
-					
-					</p:column>
-					<p:column headerText="Inicio - Fim">
-					<p:outputLabel value="#{agendaPacienteController.getTimeFormatted(obj.horaInicio)}  - #{agendaPacienteController.getTimeFormatted(obj.horaFim)}"></p:outputLabel>
+						<p>
+							<i class="pi pi-clock"></i> Inicio:
+							#{agendaPacienteController.getTimeFormatted(obj.horaInicio)}
+						</p>
+						<p>
+							<i class="pi pi-clock"></i> Fim:
+							#{agendaPacienteController.getTimeFormatted(obj.horaFim)}
+						</p>
 
-					
-				
-					</p:column>
-					<p:column headerText="Valor">
-						<p:outputLabel value="#{obj.valorSessao}" />
-					</p:column>
-					<p:column headerText="Psicologo">
-						<p:outputLabel value="#{obj.psicologo.pessoa.nome}" />
-					</p:column>
-					<p:column headerText="Ações">
-						<p:commandButton
-							class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-							style="background-color:rgb(17 24 39)!important;border:0px !important;"
-							value="Cancelar" ></p:commandButton>
-					</p:column>
-				</p:dataTable>
-			</div>
+						<f:facet name="footer">
+							<p:commandButton icon="pi pi-times" value="Cancelar"
+								styleClass="ui-button-secondary" style="margin-left: .5em" />
+						</f:facet>
+					</p:card>
+				</p:repeat>
+</div>
 
 
 

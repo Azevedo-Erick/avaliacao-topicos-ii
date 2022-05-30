@@ -18,7 +18,7 @@
 				<div class="relative flex items-center justify-between h-16">
 					<div class="hidden sm:block sm:ml-6">
 						<h:form>
-							
+
 							<div class="flex space-x-4">
 								<div class="logo"></div>
 								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
@@ -42,18 +42,19 @@
 					</div>
 					<h:commandButton
 						class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
-						role="menuitem" id="user-menu-item-2" actionListener="#{agendaPsicologo.encerrarSessao()}" value="Sair"></h:commandButton>
+						role="menuitem" id="user-menu-item-2"
+						actionListener="#{agendaPsicologo.encerrarSessao()}" value="Sair"></h:commandButton>
 
 				</div>
 			</nav>
 		</ui:define>
 		<ui:define name="content">
-			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
+			<div class="shadow-2xl  shadow-gray-700  p-5 w-10/12 my-6">
 
 
 
 				<p:commandButton value="Marcar consulta"
-					class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+					class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 text-sm font-medium"
 					onclick="PF('dialogMarcarConsulta').show()"
 					style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
 				<h:form id="agendamento">
@@ -63,7 +64,9 @@
 						leftHeaderTemplate="prev,next today"
 						rightHeaderTemplate="timeGridWeek,timeGridDay"
 						timeZone="America/Fortaleza" view="agendaWeek" timeFormat="HH:mm"
-						axisFormat="H:mm" minTime="6:00" maxTime="19:00"
+						axisFormat="HH:mm"
+						minTime="#{agendaPsicologo.getHorarioExpedientePsicologo(true)}"
+						maxTime="#{agendaPsicologo.getHorarioExpedientePsicologo(false)}"
 						style="min-width: 100%;">
 						<p:ajax event="eventSelect"
 							listener="#{agendaPsicologo.onEventSelect}"
@@ -71,7 +74,6 @@
 							oncomplete="PF('dialogEditarConsulta').show();" />
 					</p:schedule>
 				</h:form>
-
 
 			</div>
 			<p:dialog header="Detalhes" widgetVar="dialogEditarConsulta"
@@ -162,8 +164,12 @@
 								</div>
 								<div class="flex flex-col ">
 									<p:outputLabel value="Horário" />
-									<p:datePicker value="#{agendaPsicologo.horarioSelecionado}"
-										timeOnly="true" pattern="HH:mm" />
+									<p:selectOneMenu value="#{agendaPsicologo.horarioSelecionado}"
+										effect="fold">
+										<f:selectItem itemLabel="Selecione o horário" itemValue="" />
+										<f:selectItems value="#{agendaPsicologo.listaHorarios}" />
+									</p:selectOneMenu>
+									
 								</div>
 							</div>
 
@@ -173,7 +179,7 @@
 								class="bg-gray-800  text-white px-2 py-2 rounded-md text-sm font-medium"
 								style="background-color:rgb(17 24 39)!important;border:0px !important;"
 								styleClass="ui-button-primary" value="Criar"
-								update="agendamento"
+								update="@form agendamento "
 								actionListener="#{agendaPsicologo.incluirAgendamentos()}" />
 						</div>
 					</div>

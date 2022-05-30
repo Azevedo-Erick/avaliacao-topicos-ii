@@ -46,7 +46,24 @@ public class PessoaRepository extends Repository<Pessoa>{
 			throw new RepositoryException("Erro ao buscar os pacientes");
 		}
 	}
-	
+	public Pessoa findByEmail(String email) throws RepositoryException{
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("p ");
+			jpsql.append("FROM ");
+			jpsql.append("Pessoa p ");
+			jpsql.append("WHERE ");
+			jpsql.append("p.email = :email");
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			query.setParameter("email", email);
+			
+			return (Pessoa) query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao executar o findByEmail");
+		}
+	}
 	public Pessoa findByEmailESenha(Pessoa pessoa) throws RepositoryException {
 		try {
 			StringBuffer jpsql = new StringBuffer();

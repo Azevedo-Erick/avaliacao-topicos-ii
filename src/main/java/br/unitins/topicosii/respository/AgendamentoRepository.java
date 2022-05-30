@@ -24,6 +24,24 @@ public class AgendamentoRepository extends Repository<Agendamento>{
 			throw new RepositoryException("Erro ao buscar os pacientes");
 		}
 	}
+	public List<Agendamento> findAllForPaciente(int id) throws RepositoryException{
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("a ");
+			jpsql.append("FROM ");
+			jpsql.append("Agendamento a ");
+			jpsql.append("WHERE ");
+			jpsql.append("a.paciente.id = :id ");
+			
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			query.setParameter("id", id);
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao buscar os pacientes");
+		}
+	}
 	public List<Agendamento> findAllForPsicologo(int id) throws RepositoryException{
 		try {
 			StringBuffer jpsql = new StringBuffer();

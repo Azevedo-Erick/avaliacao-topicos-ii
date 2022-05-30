@@ -29,6 +29,7 @@ public class PacienteRepository extends Repository<Paciente>{
 		}
 	}
 	
+	
 	public Paciente findByEmailESenha(Paciente paciente) throws RepositoryException {
 		try {
 			StringBuffer jpsql = new StringBuffer();
@@ -44,7 +45,6 @@ public class PacienteRepository extends Repository<Paciente>{
 			
 			query.setParameter("email", paciente.getPessoa().getEmail());
 			query.setParameter("senha", paciente.getPessoa().getSenha());
-			System.out.println(query.getResultList().size());
 			return (Paciente)query.getSingleResult();
 		}catch (NoResultException e){
 			System.out.println("Erro ao fazer o login");
