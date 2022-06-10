@@ -26,12 +26,13 @@
 
 			<!-- BD Name -->
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:postgresql://localhost:5432/almoxdb" />
+				value="jdbc:postgresql://localhost:5431/almoxdb" />
 
 			<!-- DB User -->
 			<property name="javax.persistence.jdbc.user"
 				value="topicos2" />
 
+	
 			<!-- DB Password -->
 			<property name="javax.persistence.jdbc.password"
 				value="123456" />
@@ -39,7 +40,7 @@
 			<!-- DB Dialect -->
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.PostgreSQLDialect" />
-
+		
 			<!-- create / create-drop / update / none -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 

@@ -21,8 +21,11 @@ public class Pessoa extends DefaultEntity{
 	private String cpf;
 	private LocalDate dataNascimento;
 	private String senha;
-
 	private String imagem;
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Cartao> cartoes;
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Pix> chavesPix;
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(nullable = true)
 	private List<Telefone> telefones;
@@ -90,6 +93,26 @@ public class Pessoa extends DefaultEntity{
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	public List<Cartao> getCartoes() {
+		if(this.cartoes==null) {
+			this.setCartoes(new ArrayList<Cartao>());
+		}
+		return cartoes;
+	}
+	public void setCartoes(List<Cartao> cartoes) {
+		
+		this.cartoes = cartoes;
+	}
+	public List<Pix> getChavesPix() {
+		if(this.chavesPix==null) {
+			this.setChavesPix(new ArrayList<Pix>());
+		}
+		return chavesPix;
+	}
+	public void setChavesPix(List<Pix> chavesPix) {
+	
+		this.chavesPix = chavesPix;
 	}
 	
 	 

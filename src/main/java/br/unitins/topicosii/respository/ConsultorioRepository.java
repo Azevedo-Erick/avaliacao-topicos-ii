@@ -10,7 +10,7 @@ import br.unitins.topicosii.models.Consultorio;
 import br.unitins.topicosii.models.Paciente;
 
 public class ConsultorioRepository extends Repository<Consultorio>{
-	public List<Consultorio> findByNome(String nome) throws RepositoryException{
+	public List<Consultorio> findByNome(String nome, Integer maxResults) throws RepositoryException{
 		try {
 			StringBuffer jpsql = new StringBuffer();
 			jpsql.append("SELECT ");
@@ -20,7 +20,10 @@ public class ConsultorioRepository extends Repository<Consultorio>{
 			jpsql.append("WHERE ");
 			jpsql.append("c.nome like :nome");
 			
+			
 			Query query = getEntityManager().createQuery(jpsql.toString());
+			if (maxResults != null)
+				query.setMaxResults(maxResults);
 			query.setParameter("nome", "%" + nome + "%");
 			
 			return query.getResultList();
@@ -30,7 +33,9 @@ public class ConsultorioRepository extends Repository<Consultorio>{
 		}
 	}
 	
-	
+	public List<Consultorio> findByNome(String nome) throws RepositoryException {
+		return findByNome(nome, null);
+	}
 	public List<Consultorio> findAll() throws RepositoryException{
 		try {
 			StringBuffer jpsql = new StringBuffer();

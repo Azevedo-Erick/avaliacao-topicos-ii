@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -25,9 +24,11 @@ import br.unitins.topicosii.application.Util;
 import br.unitins.topicosii.application.VersionException;
 import br.unitins.topicosii.listing.CidadeListing;
 import br.unitins.topicosii.models.Cidade;
+import br.unitins.topicosii.models.Consultorio;
 import br.unitins.topicosii.models.Endereco;
 import br.unitins.topicosii.models.Psicologo;
 import br.unitins.topicosii.models.Telefone;
+import br.unitins.topicosii.respository.ConsultorioRepository;
 import br.unitins.topicosii.respository.PsicologoRepository;
 
 @Named
@@ -40,7 +41,7 @@ public class EditarInformacoesPsicologo implements Serializable {
 	private Telefone telefone;
 
 	private List<LocalTime> listaHorarios;
-	
+
 	private InputStream fotoInputStream = null;
 
 	public Telefone getTelefone() {
@@ -92,11 +93,11 @@ public class EditarInformacoesPsicologo implements Serializable {
 	}
 
 	public void onDateSelect(SelectEvent<Date> event) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        this.psicologo.getPessoa().setDataNascimento(LocalDate.parse(format.format(event.getObject())));
-        
-    }
-	
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		this.psicologo.getPessoa().setDataNascimento(LocalDate.parse(format.format(event.getObject())));
+
+	}
+
 	public void abrirCidadeListing() {
 		CidadeListing listing = new CidadeListing();
 		listing.open();
@@ -129,11 +130,12 @@ public class EditarInformacoesPsicologo implements Serializable {
 
 	private boolean autenticar() {
 		PsicologoRepository repo = new PsicologoRepository();
+		System.out.println("Autenticando");
 		String senhaOriginal = null;
 		try {
 			senhaOriginal = repo.findById(this.psicologo.getId()).getPessoa().getSenha();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		String SenhaConfirmacaoComHash = Util.hash(this.psicologo.getPessoa().getId().toString(), senha);
 		if (senhaOriginal != null) {
@@ -153,22 +155,24 @@ public class EditarInformacoesPsicologo implements Serializable {
 	public void salvar() {
 		PsicologoRepository repository = new PsicologoRepository();
 
-		if (getFotoInputStream() != null) {
-			if (!Util.saveImageUsuario(getFotoInputStream(), "png", this.getPsicologo().getPessoa().getId())) {
-				Util.addErrorMessage("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
-				return;
-			}
-		}
-		System.out.println(this.getFotoInputStream());
+//		if (getFotoInputStream() != null) {
+//			if (!Util.saveImageUsuario(getFotoInputStream(), "png", this.getPsicologo().getPessoa().getId())) {
+//				Util.addErrorMessage("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
+//				return;
+//			}
+//		}
+
 		try {
+			System.out.println("Autenticando");
 			if (autenticar()) {
+				System.out.println("Autenticado");
 				System.out.println(this.psicologo.getPessoa().getNome());
 				Psicologo psicologoAtualizado = repository.save(this.psicologo);
 				Session.getInstance().set("psicologoLogado", psicologoAtualizado);
 				this.setPsicologo(null);
 				this.getPsicologo();
 				Util.addInfoMessage("Dados atualizados com sucesso");
-			
+
 			} else {
 				Util.addErrorMessage("Senha incorreta");
 			}
@@ -192,6 +196,7 @@ public class EditarInformacoesPsicologo implements Serializable {
 			return dtf.format(psicologo.getFimExpediente());
 		}
 	}
+
 	public InputStream getFotoInputStream() {
 		return fotoInputStream;
 	}
@@ -203,6 +208,7 @@ public class EditarInformacoesPsicologo implements Serializable {
 	public void redirect(String page) {
 		Util.redirect(page);
 	}
+
 	public List<LocalTime> getListaHorarios() {
 		if (listaHorarios == null)
 			listaHorarios = this.gerarPossiveisHorariosDeConsulta();
@@ -212,16 +218,27 @@ public class EditarInformacoesPsicologo implements Serializable {
 	public void setListaHorarios(List<LocalTime> listaHorarios) {
 		this.listaHorarios = listaHorarios;
 	}
+
 	public List<LocalTime> gerarPossiveisHorariosDeConsulta() {
 		List<LocalTime> lista = new ArrayList<LocalTime>();
 		LocalTime horarioControle = LocalTime.of(6, 0);
-		int inicioExpediente = 6 ;
+		int inicioExpediente = 6;
 		int fimExpediente = 23 + inicioExpediente;
-		
+
 		for (int i = 0; i < fimExpediente; i++) {
 			lista.add(horarioControle);
 			horarioControle = horarioControle.plusMinutes(30);
 		}
 		return lista;
+	}
+
+	public List<Consultorio> completeConsultorio(String filtro) {
+		ConsultorioRepository repo = new ConsultorioRepository();
+		try {
+			return repo.findByNome(filtro, 4);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Consultorio>();
+		}
 	}
 }

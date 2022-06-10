@@ -14,40 +14,16 @@
 <h:body>
 	<ui:composition template="./template.xhtml">
 		<ui:define name="nav">
-			<nav class="bg-gray-800">
-				<div class="relative flex items-center justify-between h-16">
-					<div class="hidden sm:block sm:ml-6">
-						<h:form>
-							<div class="flex space-x-4">
-								<div class="logo"></div>
-								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+			<components:navegationBarPaciente></components:navegationBarPaciente>
 
-								<h:commandButton
-									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-									aria-current="page" value="Agenda"
-									actionListener="#{agendaPsicologo.redirect('/agenda-paciente.xhtml')}"></h:commandButton>
-
-								<h:commandButton
-									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
-									value="Editar Perfil"
-									actionListener="#{agendaPsicologo.redirect('/editar-informacoes-paciente.xhtml')}"></h:commandButton>
-							</div>
-
-						</h:form>
-
-					</div>
-					<h:commandButton
-						class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
-						role="menuitem" id="user-menu-item-2" value="Sair"></h:commandButton>
-
-				</div>
-			</nav>
 		</ui:define>
 		<ui:define name="content">
 
 
 
-				<div class="shadow-2xl  shadow-gray-700 p-5 max-h-96 w-10/12 my-6 overflow-y-scroll" style="display:grid;grid-gap:15px;grid-template-columns: repeat(auto-fill, minmax(20em,auto));height: 500px;">
+			<div
+				class="shadow-2xl  shadow-gray-700 p-5 h-11/12 w-11/12 my-6 overflow-y-scroll"
+				style="display: grid; grid-gap: 15px; grid-template-columns: repeat(auto-fill, minmax(20em, auto));">
 				<p:repeat var="obj" value="#{agendaPacienteController.agendamentos}">
 					<p:card style="width: 20em">
 						<f:facet name="header">
@@ -81,13 +57,13 @@
 						</f:facet>
 					</p:card>
 				</p:repeat>
-</div>
+			</div>
 
 
 
+			
 		</ui:define>
 	</ui:composition>
 	<div class="footer"></div>
-
 </h:body>
 </html>
