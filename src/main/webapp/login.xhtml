@@ -13,70 +13,61 @@
 </h:head>
 <h:body>
 	<ui:composition template="./template.xhtml">
-		<ui:define name="nav">
-			<nav class="bg-gray-800">
-				<div class="relative flex items-center justify-between h-16">
 
-					<div class="flex space-x-4">
-						<div class="logo"></div>
-					</div>
-					<div class="flex flex-row ">
-						<p:commandButton type="button" value="Login" id="botaoLogin"
-							icon="pi pi-key" class="ui-button-outlined " />
-						<div class="mr-4"></div>
-						<p:commandButton type="button" value="Cadastrar"
-							id="botaoCadastro" icon="pi pi-user-edit"
-							class="ui-button-outlined-secondary " />
-						<div class="mr-4"></div>
-					</div>
-
-				</div>
-			</nav>
-		</ui:define>
 		<ui:define name="content">
-			<div class="shadow-2xl  shadow-gray-700 min-w-fit my-6 h-">
+			<div
+				class="bg-gray-800  flex justify-center items-center h-screen w-screen   ">
+
+				<div class="shadow-gray-700 shadow-2xl max-w-min">
+					<p:panel header="Login" id="panelLogin" style="display:block">
+						<h:form class=" flex flex-col justify-content-evenly">
+							<p:growl id="growl" />
+							<div class="flex flex-col">
+								<p:outputLabel value="Email " />
+
+								<p:inputText placeholder="Email" class="w-full" required="true"
+									requiredMessage="Insira seu email"
+									value="#{loginController.pessoa.email}">
+									<f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}"></f:validateRegex>
+								</p:inputText>
+
+							</div>
+							<div class="flex flex-row items-center">
+								<div class="flex flex-col" style="margin: 10px 0;">
+									<p:outputLabel value="Senha " />
+									<div class="flex flex-row w-full items-center">
+
+										<p:password value="#{loginController.pessoa.senha}"
+											required="true" requiredMessage="Insira sua senha"
+											toggleMask="true" redisplay="true" />
 
 
-				<p:panel header="Login" id="panelLogin" style="display:block">
-					<h:form class=" flex flex-col justify-content-evenly">
-						<p:growl id="growl" />
-						<div class="flex flex-col">
-							<p:outputLabel value="Email " />
-
-							<p:inputText placeholder="Email" class="w-full"
-								value="#{loginController.pessoa.email}" />
-
-						</div>
-						<div class="flex flex-row items-center">
-							<div class="flex flex-col" style="margin: 10px 0;">
-								<p:outputLabel value="Senha " />
-								<div class="flex flex-row w-full items-center">
-
-									<p:password value="#{loginController.pessoa.senha}"
-										toggleMask="true" redisplay="true" />
-
-
-								</div>
-								<div class="flex flex-row items-center justify-between"
-									style="margin: 10px 0;">
-									<p:outputLabel value="Psicologo" />
-									<p:toggleSwitch value="#{loginController.logarComoPaciente}" />
-									<p:outputLabel value="Paciente" />
+									</div>
+									<div class="flex flex-row items-center justify-between"
+										style="margin: 10px 0;">
+										<p:outputLabel value="Psicologo" />
+										<p:toggleSwitch value="#{loginController.logarComoPaciente}" />
+										<p:outputLabel value="Paciente" />
+									</div>
 								</div>
 							</div>
-						</div>
-						<center>
-							<p:commandButton style="margin:10px 0;width:50%;" update="@form"
-								value="Entrar" icon="pi pi-key" styleClass="ui-button-raised"
-								actionListener="#{loginController.login()}" />
-						</center>
-					</h:form>
-					<f:facet name="footer">
-						<p:commandLink style="margin:10px 0;width:50%;"
-							value="Esqueci a senha"
-							actionListener="#{templateController.redirect('/esqueceusenhacodigo.xhtml')}" />
-					</f:facet>
-				</p:panel>
+							<center>
+								<p:commandButton style="margin:10px 0;width:50%;" update="@form"
+									value="Entrar" icon="pi pi-key" styleClass="ui-button-raised"
+									actionListener="#{loginController.login()}" />
+							</center>
+						</h:form>
+						<f:facet name="footer">
+							<p:commandLink style="margin:10px 0;width:50%;"
+								value="Esqueci a senha"
+								actionListener="#{templateController.redirect('/esqueceusenhacodigo.xhtml')}" />
+							<p:commandButton type="button" value="Não possuo conta"
+								id="botaoCadastro" icon="pi pi-user-edit"
+								class="ui-button-outlined-secondary " />
+							<div class="mr-4"></div>
+						</f:facet>
+					</p:panel>
+				</div>
 
 				<p:panel header="Cadastro" id="panelCadastro" style="display:none">
 					<h:form class="login-form flex flex-col justify-content-evenly">
@@ -90,6 +81,8 @@
 										<i class="pi pi-user"></i>
 									</div>
 									<p:inputText placeholder="Nome"
+									required="true"
+									requiredMessage="Insira seu nome"
 										value="#{loginController.pessoa.nome}" />
 								</div>
 							</div>
@@ -99,7 +92,9 @@
 									<div class="ui-inputgroup-addon">
 										<i class="pi pi-user"></i>
 									</div>
-									<p:inputText placeholder="Nome"
+									<p:inputText placeholder="Sobrenome"
+									required="true"
+									requiredMessage="Insira seu sobrenome"
 										value="#{loginController.pessoa.sobrenome}" />
 								</div>
 							</div>
@@ -112,7 +107,11 @@
 										<i class="pi pi-tags"></i>
 									</div>
 									<p:inputText placeholder="CPF"
-										value="#{loginController.pessoa.cpf}" />
+									required="true"
+									requiredMessage="Insira seu CPF"
+										value="#{loginController.pessoa.cpf}" >
+										<f:validateRegex pattern="^[0-9]{3}\.*[0-9]{3}\.*[0-9]{3}-*[0-9]{2}}"></f:validateRegex>
+										</p:inputText>
 								</div>
 							</div>
 							<div class="login-form flex flex-col">
@@ -122,7 +121,11 @@
 										<i class="pi pi-inbox"></i>
 									</div>
 									<p:inputText placeholder="Email"
-										value="#{loginController.pessoa.email}" />
+									required="true"
+									requiredMessage="Insira seu email"
+										value="#{loginController.pessoa.email}">
+										<f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}"></f:validateRegex>
+									</p:inputText>
 								</div>
 							</div>
 						</div>
@@ -130,7 +133,7 @@
 							<p:outputLabel value="Senha " />
 							<div class="w-full">
 								<p:password value="#{loginController.pessoa.senha}"
-									toggleMask="true" redisplay="true" />
+									toggleMask="true" required="true" requiredMessage="Insira sua senha" redisplay="true" />
 
 							</div>
 						</div>
@@ -141,6 +144,14 @@
 								actionListener="#{loginController.cadastrar()}" />
 						</center>
 					</h:form>
+					<f:facet name="footer">
+						<div class="flex flex-row ">
+							<p:commandButton type="button" value="Tenho conta"
+								id="botaoLogin" icon="pi pi-key" class="ui-button-outlined " />
+							<div class="mr-4"></div>
+
+						</div>
+					</f:facet>
 				</p:panel>
 			</div>
 			<script>

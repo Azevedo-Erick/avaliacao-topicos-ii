@@ -11,6 +11,7 @@ public class Paciente extends DefaultEntity{
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(unique = true)
 	private Pessoa pessoa;
+	private Perfil perfil = Perfil.PACIENTE;
 
 	public Pessoa getPessoa() {
 		if(this.pessoa==null)
@@ -20,6 +21,14 @@ public class Paciente extends DefaultEntity{
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 	
 	

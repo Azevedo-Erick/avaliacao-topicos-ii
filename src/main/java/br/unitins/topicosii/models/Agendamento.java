@@ -3,20 +3,29 @@ package br.unitins.topicosii.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 
 
 @Entity
 public class Agendamento extends DefaultEntity{
+	@NotNull
 	private LocalDateTime horaInicio;
+	@NotNull
 	private LocalDateTime horaFim;
+	@NotNull
 	private int diaSemana;
+	@NotNull
 	private float valorSessao;
 	private String descricao;
-	private boolean cancelado;
+
+	private boolean cancelado=false;
 	@ManyToOne
 	private Paciente paciente;
 	@ManyToOne

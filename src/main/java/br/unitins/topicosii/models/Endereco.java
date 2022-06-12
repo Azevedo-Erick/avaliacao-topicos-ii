@@ -3,15 +3,21 @@ package br.unitins.topicosii.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 
 
 @Entity
 public class Endereco extends DefaultEntity{
+	@NotNull
 	private String cep;
+	@NotNull
 	private String bairro;
+	@NotNull
 	private String rua;
+	@NotNull
 	private String numero;
+	@NotNull
 	private String complemento;
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Cidade cidade;

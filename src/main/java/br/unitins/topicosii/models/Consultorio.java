@@ -3,12 +3,15 @@ package br.unitins.topicosii.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Consultorio extends DefaultEntity{
+	@NotNull
 	private String nome;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@NotNull
 	private Endereco endereco;
 
 	public String getNome() {

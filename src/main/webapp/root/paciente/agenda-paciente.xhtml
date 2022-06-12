@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="nav">
+			<components:navegationBarPaciente></components:navegationBarPaciente>
+
+		</ui:define>
+		<ui:define name="content">
+
+
+
+			<div
+				class="shadow-2xl  flex flex-col justify-evenly align-center shadow-gray-700 p-5 h-11/12 w-11/12 my-6 overflow-y-scroll"
+				>
+				<h2
+					class="justify-self-center self-center text-4xl antialiased italic font-mono">Meus
+					Agendamentos</h2>
+				<p:dataTable var="obj" size="large"
+					value="#{agendaPacienteController.agendamentos}">
+
+
+					<p:column headerText="Data">
+						 #{agendaPacienteController.getDiaSemanaString(obj.diaSemana)} - #{agendaPacienteController.getDateFormatted(obj.horaInicio)}
+      	
+    </p:column>
+					<p:column headerText="Psicologo">
+						#{obj.psicologo.pessoa.nome} #{obj.psicologo.pessoa.sobrenome}
+       
+    </p:column>
+
+					<p:column headerText="Valor">
+							 R$ #{agendaPacienteController.formatMoneyValue(obj.valorSessao + obj.psicologo.valorHora)}
+						   </p:column>
+
+					<p:column headerText="Horário">
+						<i class="pi pi-clock"></i> 
+							#{agendaPacienteController.getTimeFormatted(obj.horaInicio)}
+						~
+							#{agendaPacienteController.getTimeFormatted(obj.horaFim)}
+						</p:column>
+
+					<p:column headerText="Ações">
+						<p:commandButton icon="pi pi-times" value="Cancelar"
+							styleClass="ui-button-danger" style="margin-left: .5em" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+
+
+
+
+		</ui:define>
+	</ui:composition>
+	<div class="footer"></div>
+</h:body>
+</html>

@@ -12,38 +12,15 @@
 		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
 </h:head>
 <h:body>
-	<ui:composition template="./template.xhtml">
+	<ui:composition template="../../template.xhtml">
 		<ui:define name="nav">
-			<nav class="bg-gray-800">
-				<div class="relative flex items-center justify-between h-16">
-					<div class="hidden sm:block sm:ml-6">
-						<h:form>
-							<div class="flex space-x-4">
-								<div class="logo"></div>
-
-								<h:commandButton
-									class="text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-									aria-current="page" value="Agenda"
-									actionListener="#{agendaPsicologo.redirect('/agenda-paciente.xhtml')}"></h:commandButton>
-
-								<h:commandButton
-									class="bg-gray-900 cursor-pointer text-white px-3 py-2 rounded-md text-sm font-medium"
-									value="Editar Perfil"
-									actionListener="#{agendaPsicologo.redirect('/editar-informacoes-paciente.xhtml')}"></h:commandButton>
-							</div>
-
-						</h:form>
-					</div>
-					<h:commandButton
-						class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
-						role="menuitem" id="user-menu-item-2" value="Sair"></h:commandButton>
-
-				</div>
-			</nav>
+			<components:navegationBarPaciente></components:navegationBarPaciente>
 		</ui:define>
 		<ui:define name="content">
-			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
-
+			<div class="shadow-2xl flex flex-col justify-evenly align-center  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
+				<h2
+					class="justify-self-center self-center text-4xl antialiased italic font-mono">Meus
+					Dados</h2>
 
 				<p:growl id="growl" showDetail="true" />
 				<div class="flex flex-col">
@@ -53,14 +30,13 @@
 							style="max-width: 80px !important; max-height: 80px !important;"
 							src="img-usuario?nome=#{editarInformacoesPaciente.paciente.pessoa.id}.png" />
 						<div class="flex flex-row">
-							<div class="flex flex-col">
-								<h:outputText
-									value="#{editarInformacoesPaciente.paciente.pessoa.nome} #{editarInformacoesPaciente.paciente.pessoa.sobrenome}" />
-								<h:outputText
-									value="#{editarInformacoesPaciente.paciente.pessoa.cpf}" />
+							<div class="flex flex-col justify-center align-center">
+								<p>#{editarInformacoesPaciente.paciente.pessoa.nome}
+									#{editarInformacoesPaciente.paciente.pessoa.sobrenome}</p>
+								<p>#{editarInformacoesPaciente.paciente.pessoa.cpf}</p>
+								<p:commandButton icon="pi pi-pencil"
+									onclick="PF('dialogEditar').show()" />
 							</div>
-							<p:commandButton icon="pi pi-pencil"
-								onclick="PF('dialogEditar').show()" />
 						</div>
 						<div class="w-full">
 
@@ -153,7 +129,7 @@
 					</div>
 
 				</div>
-				
+
 
 				<h:form>
 					<p:dialog draggable="false" global="true" showEffect="fade"
@@ -252,48 +228,7 @@
 
 
 
-							<p:tab title="Telefone">
-								<h:form>
-									<div class="flex flex-row justify-content-between">
-										<div class="flex flex-col" style="width: 30%">
-											<h:outputText value="DDD: *" />
-											<p:inputText label="DDD"
-												value="#{editarInformacoesPaciente.telefone.ddd}" />
 
-										</div>
-										<div class="flex flex-col" style="width: 60%">
-											<h:outputText value="Numero *" />
-											<p:inputText label="Numero"
-												value="#{editarInformacoesPaciente.telefone.numero}" />
-										</div>
-
-									</div>
-									<p:commandButton value="Incluir"
-										class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-										style="background-color:rgb(17 24 39)!important;border:0px !important;" />
-								</h:form>
-								<h:form>
-									<p:dataTable
-										lazy="#{editarInformacoesPaciente.paciente.pessoa.telefones}"
-										value="#{editarInformacoesPaciente.paciente.pessoa.telefones}"
-										var="obj">
-										<p:column headerText="DDD">
-											<p:outputLabel value="#{obj.ddd}" />
-										</p:column>
-										<p:column headerText="Telefone">
-											<p:outputLabel value="#{obj.numero}" />
-										</p:column>
-										<p:column headerText="Ações">
-											<p:commandButton value="Excluir"
-												class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-												style="background-color:rgb(17 24 39)!important;border:0px !important;" />
-											<p:commandButton value="Editar"
-												class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-												style="background-color:rgb(17 24 39)!important;border:0px !important;" />
-										</p:column>
-									</p:dataTable>
-								</h:form>
-							</p:tab>
 
 						</p:tabView>
 						<center>
@@ -332,6 +267,6 @@
 
 
 		</ui:define>
-		</ui:composition>
+	</ui:composition>
 </h:body>
 </html>

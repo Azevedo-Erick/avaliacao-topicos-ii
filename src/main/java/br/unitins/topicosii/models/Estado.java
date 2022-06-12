@@ -1,13 +1,15 @@
 package br.unitins.topicosii.models;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 
 
 @Entity
 public class Estado extends DefaultEntity{
-
+	@NotNull
 	private String nome;
+	@NotNull
 	private String sigla;
 	public String getNome() {
 		return nome;

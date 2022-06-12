@@ -2,6 +2,7 @@ package br.unitins.topicosii.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,9 @@ public class DefaultEntity {
 
 	private LocalDateTime dataAlteracao;
 
+	@Column
+	private boolean ativo = true;
+	
 	@PrePersist
 	private void gerarDataCadastro() {
 		dataCadastro = LocalDateTime.now();
@@ -57,4 +61,14 @@ public class DefaultEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	
 }

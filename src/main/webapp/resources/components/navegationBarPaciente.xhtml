@@ -8,139 +8,134 @@
 <composite:interface>
 </composite:interface>
 <composite:implementation>
-			<nav id="nav-bar-retraida"
-				class="bg-gray-800 h-full flex  flex-col items-center justify-between h-full px-2">
-				<h:form>
-					<div class="flex flex-col justify-between items-center">
-						<div id="botao-nav-bar-retraida"
-							class="my-3 text-gray-300 flex   cursor-pointer hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-							<i class="pi pi-align-justify" style="font-size: 2rem"></i>
+	<nav id="nav-bar-retraida"
+		class="bg-gray-800 h-full flex  flex-col items-center justify-between h-full px-2">
+		<h:form>
+			<div class="flex flex-col justify-between items-center">
+				<div id="botao-nav-bar-retraida"
+					class="my-3 text-gray-300 flex   cursor-pointer hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+					<i class="pi pi-align-justify" style="font-size: 2rem"></i>
+				</div>
+				<div class="elementsWrapper">
+
+
+					<h:commandLink class="cursor-pointer mb-3" aria-current="page"
+						actionListener="#{templateController.redirect('/root/paciente/agenda-paciente.xhtml')}">
+						<div
+							class="bg-gray-900 p-2 rounded-md text-white   text-sm font-medium">
+							<i class="pi pi-calendar" style="font-size: 1.5rem"></i>
 						</div>
-						<div class="elementsWrapper">
-
-
-							<h:commandLink class="cursor-pointer mb-3" aria-current="page"
-								actionListener="#{agendaPsicologo.redirect('/agenda-paciente.xhtml')}">
-								<div
-									class="bg-gray-900 p-2 rounded-md text-white   text-sm font-medium">
-									<i class="pi pi-calendar" style="font-size: 1.5rem"></i>
-								</div>
-							</h:commandLink>
-
-							<h:commandLink class="cursor-pointer mb-3"
-								actionListener="#{agendaPsicologo.redirect('/editar-informacoes-paciente.xhtml')}">
-								<div
-									class="text-gray-300 flex   hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-									<i class="pi pi-pencil" style="font-size: 1.2rem"></i>
-								</div>
-							</h:commandLink>
-							<h:commandLink class="cursor-pointer mb-3"
-								actionListener="#{agendaPsicologo.redirect('/pagamentospendentes.xhtml')}">
-								<div
-									class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-									<i class="pi pi-paypal" style="font-size: 1.2rem"></i>
-								</div>
-							</h:commandLink>
-							<h:commandLink class="cursor-pointer mb-3"
-								actionListener="#{agendaPsicologo.redirect('/pagamentospendentes.xhtml')}">
-								<div
-									class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-									<i class="pi pi-history" style="font-size: 1.2rem"></i>
-								</div>
-							</h:commandLink>
-						</div>
-
-					</div>
-
-
-					<h:commandLink
-						class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
-						role="menuitem" id="user-menu-item-2">
-						<i class="pi pi-sign-out" style="font-size: 1.2rem"></i>
 					</h:commandLink>
 
-				</h:form>
-			</nav>
-
-			<nav id="nav-bar-expandida"
-				class="bg-gray-800 hidden flex flex-col items-center justify-between  h-full px-2 w-2/12">
-				<h:form>
-
-
-					<div class="flex flex-col justify-between items-center">
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/root/paciente/editar-informacoes-paciente.xhtml')}">
 						<div
-							class="my-3 text-gray-300 justify-between flex flex-row  items-center  hover:text-white   text-sm font-medium">
-							<p:graphicImage value="./resources/images/logo.svg" class="w-1/2"></p:graphicImage>
-							<div class="hover:bg-gray-700 rounded-md cursor-pointer  "
-								id="botao-nav-bar-expandida">
-								<i class="pi pi-align-right p-2" style="font-size: 1.7rem"></i>
-							</div>
-
+							class="text-gray-300 flex   hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<i class="pi pi-pencil" style="font-size: 1.2rem"></i>
 						</div>
-						<div class="elementsWrapper">
-
-
-							<h:commandLink class="cursor-pointer mb-3" aria-current="page"
-								actionListener="#{agendaPsicologo.redirect('/agenda-paciente.xhtml')}">
-								<div
-									class="bg-gray-900 p-2 rounded-md text-white   text-sm font-medium">
-									<p class="flex  items-center">
-										<i class="pi pi-calendar mr-2" style="font-size: 1.5rem"></i>
-										Agenda
-									</p>
-
-								</div>
-							</h:commandLink>
-
-							<h:commandLink class="cursor-pointer mb-3"
-								actionListener="#{agendaPsicologo.redirect('/editar-informacoes-paciente.xhtml')}">
-								<div
-									class="text-gray-300 flex   hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-									<p class="flex  items-center">
-										<i class="pi pi-pencil mr-2" style="font-size: 1.2rem"></i>Meus
-										dados
-									</p>
-								</div>
-							</h:commandLink>
-							<h:commandLink class="cursor-pointer mb-3"
-								actionListener="#{agendaPsicologo.redirect('/pagamentospendentes.xhtml')}">
-								<div
-									class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-									<p class="flex  items-center">
-										<i class="pi pi-paypal mr-2" style="font-size: 1.2rem"></i>
-										Pagamentos Pendentes
-									</p>
-								</div>
-							</h:commandLink>
-							<h:commandLink class="cursor-pointer mb-3"
-							
-								actionListener="#{agendaPsicologo.redirect('/pagamentospendentes.xhtml')}">
-								<div
-									class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
-									<p class="flex  items-center">
-										<i class="pi pi-history mr-2" style="font-size: 1.2rem"></i>
-										Histórico de Pagamentos
-									</p>
-								</div>
-							</h:commandLink>
+					</h:commandLink>
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/root/paciente/pagamentos-pendentes.xhtml')}">
+						<div
+							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<i class="pi pi-paypal" style="font-size: 1.2rem"></i>
 						</div>
+					</h:commandLink>
+					
+				</div>
 
+			</div>
+
+
+			<h:commandLink
+			actionListener="#{templateController.encerrarSessao()}"
+				class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
+				role="menuitem" id="user-menu-item-2">
+				<i class="pi pi-sign-out" style="font-size: 1.2rem"></i>
+			</h:commandLink>
+
+		</h:form>
+	</nav>
+
+	<nav id="nav-bar-expandida"
+		class="bg-gray-800 hidden flex flex-col items-center justify-between  h-full px-2 w-2/12">
+		<h:form>
+
+
+			<div class="flex flex-col justify-between items-center">
+				<div
+					class="my-3 text-gray-300 justify-between flex flex-row  items-center  hover:text-white   text-sm font-medium">
+					<p:graphicImage value="./resources/images/logo.svg" class="w-1/2"></p:graphicImage>
+					<div class="hover:bg-gray-700 rounded-md cursor-pointer  "
+						id="botao-nav-bar-expandida">
+						<i class="pi pi-align-right p-2" style="font-size: 1.7rem"></i>
 					</div>
 
-					<div class="flex flex-row space-beteween">
-						<p class="hover:text-white mr-3 text-sm text-gray-700">
-							Copyright©2022<br />Erick Azevedo
-						</p>
+				</div>
+				<div class="elementsWrapper">
 
-						<h:commandLink
-							class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
-							role="menuitem" id="user-menu-item-2">
-							<i class="pi pi-sign-out" style="font-size: 1.2rem"></i>
-						</h:commandLink>
-					</div>
 
-				</h:form>
-			</nav>
+					<h:commandLink class="cursor-pointer mb-3" aria-current="page"
+						actionListener="#{templateController.redirect('/agenda-paciente.xhtml')}">
+						<div
+							class="bg-gray-900 p-2 rounded-md text-white   text-sm font-medium">
+							<p class="flex  items-center">
+								<i class="pi pi-calendar mr-2" style="font-size: 1.5rem"></i>
+								Agenda
+							</p>
+
+						</div>
+					</h:commandLink>
+
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/editar-informacoes-paciente.xhtml')}">
+						<div
+							class="text-gray-300 flex   hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<p class="flex  items-center">
+								<i class="pi pi-pencil mr-2" style="font-size: 1.2rem"></i>Meus
+								dados
+							</p>
+						</div>
+					</h:commandLink>
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/pagamentospendentes.xhtml')}">
+						<div
+							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<p class="flex  items-center">
+								<i class="pi pi-paypal mr-2" style="font-size: 1.2rem"></i>
+								Pagamentos Pendentes
+							</p>
+						</div>
+					</h:commandLink>
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/pagamentospendentes.xhtml')}">
+						<div
+							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<p class="flex  items-center">
+								<i class="pi pi-history mr-2" style="font-size: 1.2rem"></i>
+								Histórico de Pagamentos
+							</p>
+						</div>
+					</h:commandLink>
+				</div>
+
+			</div>
+
+			<div class="flex flex-row space-beteween">
+				<p class="hover:text-white mr-3 text-sm text-gray-700">
+					Copyright©2022<br />Erick Azevedo
+				</p>
+
+				<h:commandLink
+					actionListener="#{templateController.encerrarSessao()}"
+					class="block cursor-pointer hover:bg-gray-700 hover:text-white rounded-md mr-3 px-4 py-2 text-sm text-gray-700"
+					role="menuitem" id="user-menu-item-2">
+					<i class="pi pi-sign-out" style="font-size: 1.2rem"></i>
+				</h:commandLink>
+			</div>
+
+		</h:form>
+	</nav>
 
 
 	<script>

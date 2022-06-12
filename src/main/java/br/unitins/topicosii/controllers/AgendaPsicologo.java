@@ -80,7 +80,36 @@ public class AgendaPsicologo implements Serializable {
 		this.valor = valor;
 	}
 
+	public boolean verificaDados() {
+		boolean retorno = true;
+		if(quantidadeSemanas==0) {
+			retorno = false;
+			Util.addErrorMessage("Há problemas com a quantidade de semanas");
+		}
+		if(pacienteSelecionado.getId() == 0){
+			retorno = false;
+			Util.addErrorMessage("Há problemas com o paciente selecionado");
+		}
+		if(diaSelecionadoParaConsulta==null){
+			retorno = false;
+			Util.addErrorMessage("Há problemas com o dia selecionado");
+		}
+		if(horarioSelecionado==null){
+			retorno = false;
+			Util.addErrorMessage("Há problemas com o horario selecionado");
+		}
+		if(valor==0){
+			retorno = false;
+			Util.addErrorMessage("Há problemas com valor selecionado");
+		}
+
+		return retorno;
+	}
+	
 	public List<Agendamento> gerarAgendamentos() {
+		if(!verificaDados()) {
+			return null;
+		}
 		// Primeira consulta gerada
 		LocalDate dataConsulta = null;
 		LocalDateTime dataHoraInicioConsulta = null;
@@ -152,6 +181,10 @@ public class AgendaPsicologo implements Serializable {
 	public void incluirAgendamentos() {
 		AgendamentoRepository repository = new AgendamentoRepository();
 		List<Agendamento> agendamentosGerados = this.gerarAgendamentos();
+		if(agendamentosGerados==null) {
+			Util.addErrorMessage("Não foi possível gerar os agendamentos");
+			return;
+		}
 		try {
 			for (int i = 0; i < agendamentosGerados.size(); i++) {
 				if (repository.checkInterval(agendamentosGerados.get(i).getHoraInicio().minus(1, ChronoUnit.MINUTES),
@@ -231,7 +264,7 @@ public class AgendaPsicologo implements Serializable {
 		model = new DefaultScheduleModel();
 		agendamento = new Agendamento();
 		for (Agendamento agendamento : this.getAgendamentos()) {
-			CustomScheduleEvent evento = new CustomScheduleEvent(
+			CustomScheduleEvent evento = new CustomScheduleEvent( "Consulta com " +
 					agendamento.getPaciente().getPessoa().getNome() + " "
 							+ agendamento.getPaciente().getPessoa().getSobrenome(),
 					agendamento.getHoraInicio(), agendamento.getHoraFim(), false, agendamento);
@@ -337,6 +370,7 @@ public class AgendaPsicologo implements Serializable {
 		
 		for (int i = 0; i < fimExpediente; i++) {
 			lista.add(horarioControle);
+			
 			horarioControle = horarioControle.plusMinutes(30);
 		}
 		return lista;

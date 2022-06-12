@@ -60,7 +60,7 @@ public class LoginController implements Serializable {
 			if (paciente != null) {
 				
 				Session.getInstance().set("pacienteLogado", paciente);
-				this.redirect("/agenda-paciente.xhtml");
+				this.redirect("/root/paciente/agenda-paciente.xhtml");
 			} else {
 				Util.addWarnMessage("Informações incorretas");
 			}
@@ -82,7 +82,7 @@ public class LoginController implements Serializable {
 			if (psicologo != null) {
 				System.out.println(psicologo.getPessoa().getNome());
 				Session.getInstance().set("psicologoLogado", psicologo);
-				this.redirect("/agenda-psicologo.xhtml");
+				this.redirect("/root/psicologo/agenda-psicologo.xhtml");
 			} else {
 				Util.addWarnMessage("Informações incorretas");
 			}

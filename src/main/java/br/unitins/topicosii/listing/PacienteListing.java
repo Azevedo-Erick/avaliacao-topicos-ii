@@ -16,7 +16,7 @@ public class PacienteListing extends Listing<Paciente>{
 	private static final long serialVersionUID = 1L;
 	private String filtro;
 	public PacienteListing() {
-		super("pacientelisting", new PacienteRepository());
+		super("/root/listings/listing-paciente", new PacienteRepository());
 	}
 	
 	@Override

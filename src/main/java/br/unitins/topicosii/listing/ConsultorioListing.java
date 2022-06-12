@@ -17,7 +17,7 @@ public class ConsultorioListing extends Listing<Consultorio>{
 	private static final long serialVersionUID = 1L;
 	private String filtro;
 	public ConsultorioListing() {
-		super("consultoriolisting", new ConsultorioRepository());
+		super("/root/listings/listing-consultorio", new ConsultorioRepository());
 	}
 	@Override
 	public void pesquisar() {

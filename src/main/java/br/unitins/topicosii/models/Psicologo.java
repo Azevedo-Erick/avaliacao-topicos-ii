@@ -7,18 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Psicologo extends DefaultEntity{
+	@NotNull
 	private String crp;
+	@NotNull
 	private float valorHora;
+	@NotNull
 	private String informacoesFormacao;
+	@NotNull
 	private LocalTime inicioExpediente;
+	@NotNull
 	private LocalTime fimExpediente;
-	
+	private Perfil perfil=Perfil.FUNCIONARIO;
 	@OneToOne
 	@JoinColumn(unique = true)
 	@Cascade(CascadeType.ALL)
@@ -76,6 +82,14 @@ public class Psicologo extends DefaultEntity{
 	}
 	public void setConsultorios(List<Consultorio> consultorios) {
 		this.consultorios = consultorios;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 	
 	

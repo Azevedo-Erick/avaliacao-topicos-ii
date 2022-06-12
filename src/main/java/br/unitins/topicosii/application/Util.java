@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -55,6 +56,11 @@ public class Util {
 		return hash(usuario.getId()+usuario.getSenha());
 	}
 	
+
+	public static String formatMoneyValues(Double price) {
+		 DecimalFormat formatter = new DecimalFormat("###,###,##0.00");
+		 return formatter.format(price);
+	}
 	public static boolean saveImageUsuario(InputStream inputStream, String imageType, int idUsuario) {
 		// Exemplo da maquina do janio: /home/janio/images/usuario
 		String diretorio = System.getProperty("user.home") + ImageServlet.PATH_IMAGES_USUARIO;

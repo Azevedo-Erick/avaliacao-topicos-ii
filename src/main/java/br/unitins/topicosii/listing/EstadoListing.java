@@ -16,7 +16,7 @@ public class EstadoListing extends Listing<Estado>{
 	private static final long serialVersionUID = 1L;
 	private String filtro;
 	public EstadoListing() {
-		super("estadolisting", new EstadoRepository());
+		super("/root/listings/listing-estado", new EstadoRepository());
 	}
 	@Override
 	public void pesquisar() {

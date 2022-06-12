@@ -16,7 +16,7 @@ public class PessoaListing extends Listing<Pessoa>{
 	private static final long serialVersionUID = 1L;
 	private String filtro;
 	public PessoaListing() {
-		super("pessoalisting", new PessoaRepository());
+		super("/root/listings/listing-pessoa", new PessoaRepository());
 	}
 	
 	@Override

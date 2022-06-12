@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Session;
+import br.unitins.topicosii.application.Util;
 import br.unitins.topicosii.models.Agendamento;
 import br.unitins.topicosii.models.DiasDaSemana;
 import br.unitins.topicosii.models.Paciente;
@@ -65,6 +66,8 @@ public class AgendaPacienteController implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+	public String formatMoneyValue(String value) {
+		return Util.formatMoneyValues(Double.parseDouble(value));
+	}
 
 }

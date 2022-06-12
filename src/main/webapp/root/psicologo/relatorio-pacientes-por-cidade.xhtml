@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="nav">
+			<components:navegationBarPsicologo></components:navegationBarPsicologo>
+		</ui:define>
+		<ui:define name="content">
+			<div class="shadow-2xl  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
+
+
+				<div class="flex flex-col">
+
+					<div class="flex flex-col items-center">
+						<img class="img-responsive"
+							style="max-width: 80px !important; max-height: 80px !important;"
+							src="img-usuario?nome=#{editarInformacoesPsicologo.psicologo.pessoa.id}.png" />
+						<div class="flex flex-row">
+							<div class="flex flex-col">
+								<h:outputText
+									value="#{editarInformacoesPsicologo.psicologo.pessoa.nome} #{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}" />
+								<h:outputText
+									value="#{editarInformacoesPsicologo.psicologo.pessoa.cpf}" />
+							</div>
+							<p:commandButton icon="pi pi-pencil"
+								onclick="PF('dialogEditar').show()" />
+						</div>
+						<div class="w-full">
+
+							<p:tabView>
+								<p:tab title="Pessoal">
+									<div class="flex flex-row justify-between">
+
+										<h:outputText
+											value="Nome: #{editarInformacoesPsicologo.psicologo.pessoa.nome} #{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}" />
+
+
+									</div>
+
+									<div class="flex flex-row justify-between my-3">
+
+										<h:outputText
+											value="CPF: #{editarInformacoesPsicologo.psicologo.pessoa.cpf}" />
+
+
+										<p:outputLabel
+											value="Data de nascimento: #{editarInformacoesPsicologo.psicologo.pessoa.dataNascimento}" />
+
+
+
+										<h:outputText
+											value="Email: #{editarInformacoesPsicologo.psicologo.pessoa.email}" />
+
+
+									</div>
+								</p:tab>
+								<p:tab title="Endereço">
+									<div class="flex flex-row justify-between ">
+										<div class="flex flex-col">
+											<h:outputText value="CEP:" />
+											<h:outputText
+												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cep}" />
+										</div>
+										<div class="flex flex-col">
+											<h:outputText value="Numero:" />
+											<h:outputText
+												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.numero}" />
+										</div>
+										<div class="flex flex-col  ">
+											<h:outputText value="Cidade:" />
+											<h:outputText
+												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cidade.nome}" />
+
+										</div>
+									</div>
+									<div class="flex flex-row justify-between my-3">
+										<div class="flex flex-col w-1/3">
+											<h:outputText value="Bairro:" />
+											<h:outputText
+												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.bairro}" />
+										</div>
+
+										<div class="flex flex-col w-3/5">
+											<h:outputText value="Rua:" />
+											<h:outputText
+												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.rua}" />
+										</div>
+									</div>
+
+
+
+									<div class="flex flex-col">
+										<h:outputText value="Complemento:" />
+										<h:outputText
+											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.complemento}" />
+									</div>
+
+								</p:tab>
+								<p:tab title="Profissional">
+									<div class="flex flex-col justify-between ">
+										<div class="flex flex-row justify-between ">
+
+											<div class="flex flex-col">
+												<h:outputText value="CRP:" />
+												<h:outputText
+													value="#{editarInformacoesPsicologo.psicologo.crp}" />
+											</div>
+											<div class="flex flex-col">
+												<h:outputText value="Informações Formação" />
+												<h:outputText
+													value="#{editarInformacoesPsicologo.psicologo.informacoesFormacao}" />
+											</div>
+											<div class="flex flex-col">
+												<h:outputText value="Valor Hora:" />
+												<h:outputText
+													value="#{editarInformacoesPsicologo.psicologo.valorHora}" />
+											</div>
+										</div>
+										<div class="flex flex-row justify-between ">
+											<div class="flex flex-col ">
+												<p:outputLabel
+													value="Inicio do expediente: #{editarInformacoesPsicologo.getHorarioExpedientePsicologo(true)}" />
+
+											</div>
+											<div class="flex flex-col ">
+												<p:outputLabel
+													value="Fim do expediente: #{editarInformacoesPsicologo.getHorarioExpedientePsicologo(false)}" />
+
+
+											</div>
+										</div>
+									</div>
+								</p:tab>
+								<p:tab title="Telefones">
+									<p:dataTable
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones}"
+										var="obj">
+										<p:column headerText="DDD">
+											<p:outputLabel value="#{obj.ddd}" />
+										</p:column>
+										<p:column headerText="Telefone">
+											<p:outputLabel value="#{obj.numero}" />
+										</p:column>
+									</p:dataTable>
+
+								</p:tab>
+
+							</p:tabView>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<h:form id="form-editar">
+				<p:dialog draggable="false" global="true" showEffect="fade"
+					hideEffect="fade" widgetVar="dialogEditar" responsive="true"
+					resizable="false" header="Editando informações" modal="true"
+					width="80vw">
+
+					<p:tabView>
+						<p:tab title="Pessoal">
+							<div class="flex flex-row justify-between">
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Primeiro nome: *" />
+									<p:inputText label="Primeiro nome:"
+									
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.nome}">
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+
+								<div class="flex flex-col w-3/5">
+									<h:outputText value="Sobrenome: *" />
+									<p:inputText label="Sobrenome"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+							</div>
+							<div class="flex flex-col w-1/5">
+								<h:outputText value="Imagem de perfil:" />
+								<h:form enctype="multipart/form-data">
+									<p:fileUpload mode="simple" multiple="false"
+										listener="#{editarInformacoesPsicologo.upload}" />
+								</h:form>
+							</div>
+							<div class="flex flex-row justify-between my-3">
+								<div class="flex flex-col w-1/5">
+									<h:outputText value="CPF: *" />
+									<p:inputText label="CPF"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.cpf}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+								<div class="flex flex-col w-1/4">
+									<p:outputLabel value="Data de nascimento" />
+									<p:datePicker
+										listener="#{editarInformacoesPsicologo.onDateSelect}"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.dataNascimento}" >
+										<p:ajax event="keyup" process="@this"  /></p:datePicker>
+								</div>
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Email: *" />
+									<p:inputText label="Email:"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.email}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+							</div>
+						</p:tab>
+						<p:tab title="Endereço">
+							<div class="flex flex-row justify-between ">
+								<div class="flex flex-col">
+									<h:outputText value="CEP: *" />
+									<p:inputText label="CEP" id="inputTextCep"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cep}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+								<div class="flex flex-col">
+									<h:outputText value="Numero: *" />
+									<p:inputText label="Numero:"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.numero}">
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+								<div class="flex flex-col  ">
+									<h:outputText value="Cidade: *" />
+									<div class="ui-inputgroup h-10">
+										<p:inputText label="Nome:" readonly="true"
+											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cidade.nome}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+										<p:commandButton icon="pi pi-search"
+											style="background-color:rgb(17 24 39)!important;border:0px !important;"
+											class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+											actionListener="#{editarInformacoesPsicologo.abrirCidadeListing()}">
+											<p:ajax event="dialogReturn"
+												listener="#{editarInformacoesPsicologo.obterCidadeListing}"
+												update="@form" />
+										</p:commandButton>
+									</div>
+								</div>
+							</div>
+							<div class="flex flex-row justify-between my-3">
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Bairro: *" />
+									<p:inputText label="Bairro:"
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.bairro}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+
+								<div class="flex flex-col w-3/5">
+									<h:outputText value="Rua: *" />
+									<p:inputText label="Rua" class=""
+										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.rua}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+							</div>
+
+
+
+							<div class="flex flex-col">
+								<h:outputText value="Complemento: *" />
+								<p:inputText label="Complemento"
+									value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.complemento}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+							</div>
+
+						</p:tab>
+						<p:tab title="Profissional">
+							<div class="flex flex-col justify-between ">
+								<div class="flex flex-row justify-between ">
+									<div class="flex flex-col">
+										<h:outputText value="CRP: *" />
+										<p:inputText label="CRP"
+											value="#{editarInformacoesPsicologo.psicologo.crp}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+									</div>
+									<div class="flex flex-col">
+										<h:outputText value="Informações Formação *" />
+										<p:inputText label="Informações Formação:"
+											value="#{editarInformacoesPsicologo.psicologo.informacoesFormacao}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+									</div>
+									<div class="flex flex-col">
+										<h:outputText value="Valor Hora:*" />
+										<p:inputText label="Valor Hora:"
+											value="#{editarInformacoesPsicologo.psicologo.valorHora}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+									</div>
+								</div>
+								<div class="flex flex-row justify-between ">
+									<div class="flex flex-col ">
+										<p:outputLabel value="Início do expediente" />
+										<p:selectOneMenu
+											value="#{editarInformacoesPsicologo.psicologo.inicioExpediente}"
+											effect="fold">
+											<f:selectItem itemLabel="Selecione o horário" itemValue="" />
+											<f:selectItems
+												value="#{editarInformacoesPsicologo.listaHorarios}" />
+										</p:selectOneMenu>
+
+									</div>
+									<div class="flex flex-col ">
+										<p:outputLabel value="Fim do expediente" />
+										<p:selectOneMenu
+											value="#{editarInformacoesPsicologo.psicologo.fimExpediente}"
+											effect="fold">
+											<f:selectItem itemLabel="Selecione o horário" itemValue="" />
+											<f:selectItems
+												value="#{editarInformacoesPsicologo.listaHorarios}" />
+										</p:selectOneMenu>
+
+									</div>
+
+								</div>
+								<p:autoComplete
+									value="#{editarInformacoesPsicologo.psicologo.consultorios}"
+									var="obj" itemLabel="#{obj.nome}" itemValue="#{obj}"
+									multiple="true" converter="#{consultorioConverter}"
+									completeMethod="#{editarInformacoesPsicologo.completeConsultorio}"
+									forceSelection="true" maxResults="3" dropdown="true"
+									moreText="... mais resultados" scrollHeight="250">
+									<p:ajax event="itemSelect" process="@this" />
+								</p:autoComplete>
+							</div>
+						</p:tab>
+
+						<p:tab title="Telefone">
+
+							<div class="flex flex-row justify-content-between">
+								<div class="flex flex-col" style="width: 30%">
+									<h:outputText value="DDD: *" />
+									<p:inputText label="DDD"
+										value="#{editarInformacoesPsicologo.telefone.ddd}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+
+								</div>
+								<div class="flex flex-col" style="width: 60%">
+									<h:outputText value="Celular: *" />
+									<p:inputText label="Celular:"
+										value="#{editarInformacoesPsicologo.telefone.numero}" >
+										<p:ajax event="keyup" process="@this"  /></p:inputText>
+								</div>
+							</div>
+							<p:commandButton value="Salvar" update="@form"
+								actionListener="#{editarInformacoesPsicologo.adicionarTelefone()}" /> 
+
+							<p:dataTable
+								value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones}"
+								var="obj">
+								<p:column headerText="DDD">
+									<p:outputLabel value="#{obj.ddd}" />
+								</p:column>
+								<p:column headerText="Telefone">
+									<p:outputLabel value="#{obj.numero}" />
+								</p:column>
+								<p:column headerText="Ações">
+									<p:commandButton value="Editar"
+										actionListener="#{editarInformacoesPsicologo.editarTelefone(obj)}" />
+									<p:commandButton value="Excluir"
+										actionListener="#{editarInformacoesPsicologo.removerTelefone(obj)}" />
+
+								</p:column>
+							</p:dataTable>
+
+						</p:tab>
+
+					</p:tabView>
+					<center>
+						<p:commandButton value="Atualizar"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							onclick="PF('dialogConfirmar').show()"
+							class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium" />
+					</center>
+				</p:dialog>
+			</h:form>
+
+			<h:form>
+				<p:dialog draggable="false" global="true" showEffect="fade"
+					hideEffect="fade" widgetVar="dialogConfirmar" responsive="true"
+					resizable="false" header="Autentique-se" modal="true" width="350">
+
+
+					<div class="flex flex-col mb-4">
+						<h:outputText value="Confirme sua senha *" />
+
+						<p:inputText label="Insira sua senha" id="senha"
+							value="#{editarInformacoesPsicologo.senha}" required="true	"></p:inputText>
+					</div>
+					<f:facet name="footer">
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-button-danger ui-button-flat"
+							onclick="PF('dialog').hide()" />
+						<p:commandButton value="Confirmar"
+							action="#{editarInformacoesPsicologo.salvar()}"
+							styleClass="rounded-button ui-button-success"
+							process="@this senha :form-editar"
+							update=":form-editar @this senha" />
+						<!--  process="@this @form" -->
+
+					</f:facet>
+				</p:dialog>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+	<div class="footer"></div>
+
+</h:body>
+</html>

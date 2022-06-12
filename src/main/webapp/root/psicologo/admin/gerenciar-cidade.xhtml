@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="../../../template.xhtml">
+		<ui:define name="nav">
+			<components:navegationBarPsicologo></components:navegationBarPsicologo>
+		</ui:define>
+		<ui:define name="content">
+			<div
+				class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
+
+				<h:form class="flex flex-column">
+					<p:panel header="Cadastro de cidade">
+						<p:growl id="growl" showDetail="true" />
+						<div></div>
+						<div>
+							<div class="flex flex-column">
+								<h:outputText value="Nome: *" />
+								<div class="ui-inputgroup">
+									<p:inputText label="Nome:"
+										value="#{gerenciarCidade.entity.nome}" />
+									<p:commandButton icon="pi pi-search"
+										actionListener="#{gerenciarCidade.abrirCidadeListing()}">
+										<p:ajax event="dialogReturn"
+											listener="#{gerenciarCidade.obterCidadeListing}"
+											update="@form" />
+									</p:commandButton>
+								</div>
+							</div>
+
+							<div class="flex flex-column">
+								<h:outputText value="Estado *" />
+								<p:selectOneMenu id="option"
+									value="#{gerenciarCidade.entity.estado.id}">
+									<f:selectItems value="#{gerenciarCidade.estados}" var="obj"
+										itemValue="#{obj.id}"></f:selectItems>
+
+								</p:selectOneMenu>
+							</div>
+						</div>
+						<f:facet name="footer">
+							<center>
+								<p:commandButton value="Salvar" update="@form"
+									actionListener="#{gerenciarCidade.incluir()}"
+									icon="pi pi-pencil" styleClass="ui-button-success" />
+								<p:commandButton value="Excluir" update="@form"
+									actionListener="#{gerenciarCidade.excluir()}"
+									icon="pi pi-trash" styleClass="ui-button-warning"
+									disabled="#{gerenciarCidade.entity.id==null}" />
+								<p:commandButton value="Limpar" update="@form"
+									actionListener="#{gerenciarCidade.limpar()}" icon="pi pi-times"
+									styleClass="ui-button-danger"
+									disabled="#{gerenciarCidade.entity.id==null}" />
+							</center>
+
+						</f:facet>
+					</p:panel>
+				</h:form>
+
+
+			</div>
+
+
+		</ui:define>
+	</ui:composition>
+	<div class="footer"></div>
+
+</h:body>
+</html>

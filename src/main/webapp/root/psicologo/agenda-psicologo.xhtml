@@ -12,21 +12,18 @@
 		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
 </h:head>
 <h:body>
-	<ui:composition template="./template.xhtml">
+	<ui:composition template="../../template.xhtml">
 		<ui:define name="nav">
 			<components:navegationBarPsicologo></components:navegationBarPsicologo>
 		</ui:define>
 		<ui:define name="content">
-			<div class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
-
-
-
 				<p:commandButton value="Marcar consulta"
 					class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 text-sm font-medium"
 					onclick="PF('dialogMarcarConsulta').show()"
 					style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
+			<div class="shadow-2xl  flex justify-center align-center shadow-gray-700 w-11/12 p-5 overflow-y-visible h-11/12  my-6">
 				
-				<h:form id="agendamento">
+				<h:form id="agendamento" class="w-full">
 					<p:growl id="growl" showDetail="true" />
 					<p:schedule id="agenda" value="#{agendaPsicologo.model}"
 						styleClass="agenda " widgetVar="agenda"
@@ -95,7 +92,8 @@
 						class="flex flex-col content-center justify-center items-center">
 						<p:outputLabel value="Dia da consulta" />
 
-						<p:selectOneButton
+						<p:selectOneButton 
+						required="true" requiredMessage="Você precisa selecionar o dia da consulta"
 							value="#{agendaPsicologo.diaSelecionadoParaConsulta}">
 							<f:selectItems value="#{agendaPsicologo.dia}" var="day"
 								itemLabel="#{day.label}" itemValue="#{day}" />
@@ -107,7 +105,7 @@
 								<div class="flex flex-col">
 									<p:outputLabel value="Paciente:" />
 									<div class="ui-inputgroup my-2">
-										<p:inputText disabled="true" readonly="true"
+										<p:inputText disabled="true" required="true" requiredMessage="Você precisa selecionar o paciente" readonly="true"
 											class="bg-gray-800 h-10 "
 											value="#{agendaPsicologo.pacienteSelecionado.pessoa.nome} #{agendaPsicologo.pacienteSelecionado.pessoa.sobrenome}" />
 										<p:commandButton icon="pi pi-search"
@@ -122,21 +120,21 @@
 									<div
 										class="flex flex-col w-full justify-self-center self-center">
 										<p:outputLabel value="Valor" />
-										<p:inputNumber value="#{agendaPsicologo.valor}" />
+										<p:inputNumber value="#{agendaPsicologo.valor}" required="true" requiredMessage="Você precisa inserir o valor"/>
 									</div>
 								</div>
 							</div>
 							<div class="flex flex-col ">
 								<div class="flex flex-col my-2">
 									<p:outputLabel value="Quantidade de semanas: " />
-									<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}" />
+									<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}" required="true" requiredMessage="Você precisa inserir a quantidade de semanas"/>
 								</div>
 								<div class="flex flex-col ">
 									<p:outputLabel value="Horário" />
 									<p:selectOneMenu value="#{agendaPsicologo.horarioSelecionado}"
-										effect="fold">
+										effect="fold" required="true" requiredMessage="Você precisa inserir o horário de consulta">
 										<f:selectItem itemLabel="Selecione o horário" itemValue="" />
-										<f:selectItems value="#{agendaPsicologo.listaHorarios}" />
+										<f:selectItems value="#{agendaPsicologo.listaHorarios}" itemLabel="#{localobj}" var="obj" itemValue="#{obj}" />
 									</p:selectOneMenu>
 									
 								</div>

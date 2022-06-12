@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="nav">
+			<components:navegationBarPaciente></components:navegationBarPaciente>
+		</ui:define>
+		<ui:define name="content">
+
+
+
+			<p:growl id="growl" />
+			<div
+				class="shadow-2xl flex flex-col align-center justify-evenly shadow-gray-700 p-5 h-11/12 w-10/12 my-6 ">
+				<h2
+					class="justify-self-center self-center text-4xl antialiased italic font-mono">Pagamentos
+					Pendentes</h2>
+				<h:form class="overflow-y-scroll h-9/12">
+					<p:panel>
+						<p:dataTable var="obj" size="large"
+							value="#{pagamentosPendentesController.registrosPagaveis}">
+
+							<p:column headerText="Psicologo">
+						#{obj.getAgendamento().getPsicologo().getPessoa().getNome()} #{obj.getAgendamento().getPsicologo().getPessoa().getSobrenome()}
+      	
+</p:column>
+							<p:column headerText="Data">
+								<h:outputText value="#{obj.getAgendamento().getHoraInicio()}">
+
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+							</p:column>
+
+							<p:column headerText="Valor">
+						 R$ #{pagamentosPendentesController.formatMoneyValue(obj.getAgendamento().getPsicologo().getValorHora() + obj.getAgendamento().getValorSessao()) }
+						</p:column>
+
+
+							<p:column headerText="Ações">
+								<p:commandButton
+									icon="#{pagamentosPendentesController.checkIfContainsToStyleButton(obj)[1]}"
+									value="Pagar"
+									actionListener="#{pagamentosPendentesController.adicionarParaPagamento(obj)}"
+									update="@form"
+									styleClass="#{pagamentosPendentesController.checkIfContainsToStyleButton(obj)[0]}"
+									style="margin-left: .5em" />
+							</p:column>
+						</p:dataTable>
+						<f:facet name="footer">
+
+							<p:commandButton onclick="PF('dialogPagar').show()"
+								icon="pi pi-credit-card"
+								disabled="#{pagamentosPendentesController.listaParaPagamento.size()==0}"
+								value="Pagar: R$ #{pagamentosPendentesController.formatMoneyValue(pagamentosPendentesController.getTotalPagar())}"
+								styleClass="ui-button-success" />
+						</f:facet>
+					</p:panel>
+				</h:form>
+			</div>
+
+			<p:dialog widgetVar="dialogPagar"
+				header="Selecione o meio de pagamento" draggable="true"
+				resizable="false" responsive="true" maxHeight="500px" width="600px"
+				closable="true" modal="true">
+				<h:form>
+					<p:panel>
+						<p:commandButton value="Cartão"
+							disabled="#{pagamentosPendentesController.instanceOfCartao()}"
+							update="@form"
+							actionListener="#{pagamentosPendentesController.setTipoPagamento(pagamentosPendentesController.getMeioPagamento(1))}" />
+						<p:commandButton value="Pix"
+							disabled="#{pagamentosPendentesController.instanceOfPix()}"
+							update="@form" process="@this"
+							actionListener="#{pagamentosPendentesController.setTipoPagamento(pagamentosPendentesController.getMeioPagamento(2))}" />
+
+
+
+						<p:panel id="panel"
+							rendered="#{pagamentosPendentesController.instanceOfCartao()}">
+							<p:outputLabel>Pagando com Cartão</p:outputLabel>
+
+							<div class="w-full space-between flex flex-col">
+								<div class="flex flex-row w-1/2 space-between">
+									<div class="flex flex-col mr-4">
+										<p:outputLabel value="Nome do titular"></p:outputLabel>
+										<p:inputText
+											value="#{pagamentosPendentesController.pixPagamento.chavePix}"></p:inputText>
+									</div>
+									<div class="flex flex-col">
+										<p:outputLabel value="Numero da conta"></p:outputLabel>
+										<p:inputText
+											value="#{pagamentosPendentesController.pixPagamento.chavePix}"></p:inputText>
+									</div>
+								</div>
+								<div class="flex flex-row w-1/2 space-between">
+									<div class="flex flex-col mr-4">
+										<p:outputLabel value="Código de verificação"></p:outputLabel>
+										<p:inputText
+											value="#{pagamentosPendentesController.pixPagamento.chavePix}"></p:inputText>
+									</div>
+									<div class="flex flex-col">
+										<p:outputLabel value="Vencimento"></p:outputLabel>
+										<p:inputText
+											value="#{pagamentosPendentesController.pixPagamento.chavePix}"></p:inputText>
+									</div>
+								</div>
+							</div>
+						</p:panel>
+						<p:panel
+							rendered="#{pagamentosPendentesController.instanceOfPix()}">
+							<p:outputLabel>Pagando com Pix</p:outputLabel>
+							<div class="flex flex-col">
+								<p:selectOneButton
+									value="#{pagamentosPendentesController.pixPagamento.tipopix}">
+									<f:selectItems
+										value="#{pagamentosPendentesController.tiposPix}" var="obj"
+										itemLabel="#{obj.label}" itemValue="#{obj}" />
+
+								</p:selectOneButton>
+								<p:inputText
+									value="#{pagamentosPendentesController.pixPagamento.chavePix}"></p:inputText>
+
+							</div>
+						</p:panel>
+				
+						<f:facet name="footer">
+							<div class="flex flex-row justify-between">
+								<div class="flex flex-col justify-start justify-items-start">
+									<p class="flex justify-start justify-items-start">Insira
+										sua senha</p>
+									<p:password toggleMask="true" redisplay="true"
+										disabled="#{pagamentosPendentesController.tipoPagamento.id==null} " />
+								</div>
+								<p:commandButton icon="pi pi-credit-card" value="Pagar"
+									update="growl"
+									actionListener="#{pagamentosPendentesController.pagar()}"
+									styleClass="ui-button-success" style="margin-left: .5em" />
+							</div>
+						</f:facet>
+					</p:panel>
+				</h:form>
+			</p:dialog>
+
+
+		</ui:define>
+	</ui:composition>
+	<div class="footer"></div>
+
+</h:body>
+</html>

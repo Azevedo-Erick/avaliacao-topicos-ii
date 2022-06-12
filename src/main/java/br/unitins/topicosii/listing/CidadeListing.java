@@ -6,10 +6,7 @@ import javax.inject.Named;
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
 import br.unitins.topicosii.models.Cidade;
-import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.respository.CidadeRepository;
-import br.unitins.topicosii.respository.PacienteRepository;
-import br.unitins.topicosii.respository.PessoaRepository;
 
 @Named
 @ViewScoped
@@ -19,7 +16,7 @@ public class CidadeListing extends Listing<Cidade>{
 	private static final long serialVersionUID = 1L;
 	private String filtro;
 	public CidadeListing() {
-		super("cidadelisting", new CidadeRepository());
+		super("/root/listings/listing-cidade", new CidadeRepository());
 	}
 	@Override
 	public void pesquisar() {

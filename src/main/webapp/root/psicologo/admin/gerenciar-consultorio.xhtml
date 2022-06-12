@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:components="http://java.sun.com/jsf/composite/components">
+<h:head>
+	<title>Login</title>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="../../../template.xhtml">
+		<ui:define name="nav">
+			<components:navegationBarPsicologo></components:navegationBarPsicologo>
+		</ui:define>
+		<ui:define name="content">
+			<div
+				class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
+				<h:form>
+					<p:panel header="Gerenciando Consultorios">
+						<p:growl id="growl" showDetail="true" />
+						<div class="flex align-items-center justify-content-center"
+							style="width: 100%; margin: 5px 0 0">
+							<p
+								style="font-weight: bold; font-size: 24px; text-transform: uppercase;"></p>
+						</div>
+
+						<div class="flex flex-row">
+							<div class="flex flex-column" style="width: 50%">
+								<h:outputText value="Nome: *" />
+								<div class="ui-inputgroup">
+									<p:inputText label="Nome:"
+										value="#{gerenciarConsultorio.entity.nome}" />
+									<p:commandButton icon="pi pi-search"
+										actionListener="#{gerenciarConsultorio.abrirConsultorioListing()}">
+										<p:ajax event="dialogReturn"
+											listener="#{gerenciarConsultorio.obterConsultorioListing}"
+											update="@form" />
+									</p:commandButton>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="flex flex-row">
+							<div class="flex flex-column">
+								<h:outputText value="CEP: *" />
+								<p:inputText label="CEP" class="inputTextCep"
+									value="#{gerenciarConsultorio.entity.endereco.cep}" />
+
+							</div>
+							<div class="flex flex-column">
+								<h:outputText value="Numero: *" />
+								<p:inputText label="Numero:"
+									value="#{gerenciarConsultorio.entity.endereco.numero}" />
+							</div>
+						</div>
+						<div class="flex flex-column">
+							<h:outputText value="Bairro: *" />
+							<p:inputText label="Bairro:"
+								value="#{gerenciarConsultorio.entity.endereco.bairro}" />
+						</div>
+
+						<div class="flex flex-column">
+							<h:outputText value="Rua: *" />
+							<p:inputText label="Rua"
+								value="#{gerenciarConsultorio.entity.endereco.rua}" />
+						</div>
+
+
+
+						<div class="flex flex-column">
+							<h:outputText value="Complemento: *" />
+							<p:inputText label="Complemento"
+								value="#{gerenciarConsultorio.entity.endereco.complemento}" />
+						</div>
+
+						<div class="flex flex-column">
+							<h:outputText value="Cidade *" />
+							<div class="ui-inputgroup">
+								<p:inputText
+									value="#{gerenciarConsultorio.entity.endereco.cidade.nome}"
+									readonly="true" />
+								<p:commandButton icon="pi pi-search"
+									actionListener="#{gerenciarConsultorio.abrirCidadeListing()}">
+									<p:ajax event="dialogReturn"
+										listener="#{gerenciarConsultorio.obterCidadeListing}"
+										update="@form" />
+								</p:commandButton>
+							</div>
+
+						</div>
+						<div class="flex flex-column">
+							<h:outputText value="Estado *" />
+							<p:inputText
+								value="#{gerenciarConsultorio.entity.endereco.cidade.estado.nome}"
+								readonly="true" />
+						</div>
+
+						<f:facet name="footer">
+							<center>
+								<p:commandButton value="Salvar" update="@form"
+									actionListener="#{gerenciarConsultorio.salvar()}"
+									icon="pi pi-pencil" styleClass="ui-button-success" />
+								<p:commandButton value="Excluir" update="@form"
+									actionListener="#{gerenciarConsultorio.excluir()}"
+									icon="pi pi-trash" styleClass="ui-button-warning"
+									disabled="#{gerenciarConsultorio.entity.id==null}" />
+								<p:commandButton value="Limpar" update="@form"
+									actionListener="#{gerenciarConsultorio.limpar()}"
+									icon="pi pi-times" styleClass="ui-button-danger"
+									disabled="#{gerenciarConsultorio.entity.id==null}" />
+							</center>
+						</f:facet>
+
+					</p:panel>
+				</h:form>
+
+
+
+
+			</div>
+
+			<p:dialog header="Detalhes do consultorio" widgetVar="dialog"
+				minHeight="40" width="350" draggable="false" closable="false"
+				showEffect="fade" modal="true">
+
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+	<div class="footer"></div>
+
+</h:body>
+</html>
