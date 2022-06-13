@@ -20,180 +20,167 @@
 			<div
 				class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
 				<h:form>
-
-					<p:panel header="Cadastro de cidade">
-						<p:tabView>
-							<p:tab title="Pessoal">
-								<div class="flex flex-row justify-between">
-									<div class="flex flex-col w-1/3">
-										<h:outputText value="Primeiro nome: *" />
-										<p:inputText label="Primeiro nome:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.nome}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-
-									<div class="flex flex-col w-3/5">
-										<h:outputText value="Sobrenome: *" />
-										<p:inputText label="Sobrenome"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
+					<p:growl id="growl"></p:growl>
+					<p:commandButton icon="pi pi-search" value="Buscar Pessoa"
+						styleClass="ui-button-warning"
+						actionListener="#{gerenciarPaciente.abrirPessoaListing}">
+						<p:ajax event="dialogReturn"
+							listener="#{gerenciarPaciente.obterPessoaListing}" update="@form" />
+					</p:commandButton>
+					<p:commandButton icon="pi pi-search" value="Buscar Paciente"
+						styleClass="ui-button-warning"
+						actionListener="#{gerenciarPaciente.abrirPacienteListing}">
+						<p:ajax event="dialogReturn"
+							listener="#{gerenciarPaciente.obterPacienteListing}"
+							update="@form" />
+					</p:commandButton>
+					<p:tabView>
+						<p:tab title="Pessoal">
+							<div class="flex flex-row justify-between">
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Primeiro nome: *" />
+									<p:inputText label="Primeiro nome:"
+										value="#{gerenciarPaciente.paciente.pessoa.nome}" />
 								</div>
+
+								<div class="flex flex-col w-3/5">
+									<h:outputText value="Sobrenome: *" />
+									<p:inputText label="Sobrenome"
+										value="#{gerenciarPaciente.paciente.pessoa.sobrenome}" />
+								</div>
+							</div>
+
+							<div class="flex flex-row justify-between my-3">
 								<div class="flex flex-col w-1/5">
-									<h:outputText value="Imagem de perfil:" />
-									<h:form enctype="multipart/form-data">
-										<p:fileUpload mode="simple" multiple="false"
-											listener="#{editarInformacoesPsicologo.upload}" />
-									</h:form>
+									<h:outputText value="CPF: *" />
+									<p:inputText label="CPF"
+										value="#{gerenciarPaciente.paciente.pessoa.cpf}" />
 								</div>
-								<div class="flex flex-row justify-between my-3">
-									<div class="flex flex-col w-1/5">
-										<h:outputText value="CPF: *" />
-										<p:inputText label="CPF"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.cpf}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-									<div class="flex flex-col w-1/4">
-										<p:outputLabel value="Data de nascimento" />
-										<p:datePicker
-											listener="#{editarInformacoesPsicologo.onDateSelect}"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.dataNascimento}">
-											<p:ajax event="keyup" process="@this" />
-										</p:datePicker>
-									</div>
-									<div class="flex flex-col w-1/3">
-										<h:outputText value="Email: *" />
-										<p:inputText label="Email:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.email}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
+								<div class="flex flex-col w-1/4">
+									<p:outputLabel value="Data de nascimento" />
+									<p:datePicker
+										value="#{gerenciarPaciente.paciente.pessoa.dataNascimento}" />
 								</div>
-							</p:tab>
-							<p:tab title="Endereço">
-								<div class="flex flex-row justify-between ">
-									<div class="flex flex-col">
-										<h:outputText value="CEP: *" />
-										<p:inputText label="CEP" id="inputTextCep"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cep}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-									<div class="flex flex-col">
-										<h:outputText value="Numero: *" />
-										<p:inputText label="Numero:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.numero}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-									<div class="flex flex-col  ">
-										<h:outputText value="Cidade: *" />
-										<div class="ui-inputgroup h-10">
-											<p:inputText label="Nome:" readonly="true"
-												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cidade.nome}">
-												<p:ajax event="keyup" process="@this" />
-											</p:inputText>
-											<p:commandButton icon="pi pi-search"
-												style="background-color:rgb(17 24 39)!important;border:0px !important;"
-												class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-												actionListener="#{editarInformacoesPsicologo.abrirCidadeListing()}">
-												<p:ajax event="dialogReturn"
-													listener="#{editarInformacoesPsicologo.obterCidadeListing}"
-													update="@form" />
-											</p:commandButton>
-										</div>
-									</div>
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Email: *" />
+									<p:inputText label="Email:"
+										value="#{gerenciarPaciente.paciente.pessoa.email}" />
 								</div>
-								<div class="flex flex-row justify-between my-3">
-									<div class="flex flex-col w-1/3">
-										<h:outputText value="Bairro: *" />
-										<p:inputText label="Bairro:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.bairro}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-
-									<div class="flex flex-col w-3/5">
-										<h:outputText value="Rua: *" />
-										<p:inputText label="Rua" class=""
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.rua}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-								</div>
-
-
-
+							</div>
+						</p:tab>
+						<p:tab title="Endereço">
+							<div class="flex flex-row justify-between ">
 								<div class="flex flex-col">
-									<h:outputText value="Complemento: *" />
-									<p:inputText label="Complemento"
-										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.complemento}">
+									<h:outputText value="CEP: *" />
+									<p:inputText label="CEP" id="inputTextCep"
+										value="#{gerenciarPaciente.paciente.pessoa.endereco.cep}" />
+								</div>
+								<div class="flex flex-col">
+									<h:outputText value="Numero: *" />
+									<p:inputText label="Numero:"
+										value="#{gerenciarPaciente.paciente.pessoa.endereco.numero}" />
+								</div>
+								<div class="flex flex-col  ">
+									<h:outputText value="Cidade: *" />
+									<div class="ui-inputgroup h-10">
+
+										<p:autoComplete
+											value="#{gerenciarPaciente.paciente.pessoa.endereco.cidade}"
+											var="obj" itemLabel="#{obj.nome }" itemValue="#{obj}"
+											converter="#{cidadeConverter}"
+											completeMethod="#{gerenciarPaciente.completeCidade}"
+											forceSelection="true" maxResults="3" dropdown="true"
+											moreText="... mais resultados" scrollHeight="250">
+											<p:ajax event="itemSelect" process="@this" />
+										</p:autoComplete>
+
+									</div>
+								</div>
+							</div>
+							<div class="flex flex-row justify-between my-3">
+								<div class="flex flex-col w-1/3">
+									<h:outputText value="Bairro: *" />
+									<p:inputText label="Bairro:"
+										value="#{gerenciarPaciente.paciente.pessoa.endereco.bairro}" />
+								</div>
+
+								<div class="flex flex-col w-3/5">
+									<h:outputText value="Rua: *" />
+									<p:inputText label="Rua" class=""
+										value="#{gerenciarPaciente.paciente.pessoa.endereco.rua}" />
+								</div>
+							</div>
+
+
+
+							<div class="flex flex-col">
+								<h:outputText value="Complemento: *" />
+								<p:inputText label="Complemento"
+									value="#{gerenciarPaciente.paciente.pessoa.endereco.complemento}" />
+							</div>
+
+						</p:tab>
+
+						<p:tab title="Telefone">
+
+							<div class="flex flex-row justify-between w-full">
+								<div class="flex flex-col w-3/12">
+									<h:outputText value="DDD: *" />
+									<p:inputText label="DDD"
+										value="#{gerenciarPaciente.telefone.ddd}">
+										<p:ajax event="keyup" process="@this" />
+									</p:inputText>
+
+								</div>
+								<div class="flex flex-col w-5/12">
+									<h:outputText value="Celular: *" />
+									<p:inputText label="Celular:"
+										value="#{gerenciarPaciente.telefone.numero}">
 										<p:ajax event="keyup" process="@this" />
 									</p:inputText>
 								</div>
-
-							</p:tab>
-
-							<p:tab title="Telefone">
-
-								<div class="flex flex-row justify-content-between">
-									<div class="flex flex-col" style="width: 30%">
-										<h:outputText value="DDD: *" />
-										<p:inputText label="DDD"
-											value="#{editarInformacoesPsicologo.telefone.ddd}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-
-									</div>
-									<div class="flex flex-col" style="width: 60%">
-										<h:outputText value="Celular: *" />
-										<p:inputText label="Celular:"
-											value="#{editarInformacoesPsicologo.telefone.numero}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-								</div>
 								<p:commandButton value="Salvar" update="@form"
-									actionListener="#{editarInformacoesPsicologo.adicionarTelefone()}" />
+									actionListener="#{gerenciarPaciente.adicionarTelefone()}" />
+							</div>
 
-								<p:dataTable
-									value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones}"
-									var="obj">
-									<p:column headerText="DDD">
-										<p:outputLabel value="#{obj.ddd}" />
-									</p:column>
-									<p:column headerText="Telefone">
-										<p:outputLabel value="#{obj.numero}" />
-									</p:column>
-									<p:column headerText="Ações">
-										<p:commandButton value="Editar"
-											actionListener="#{editarInformacoesPsicologo.editarTelefone(obj)}" />
-										<p:commandButton value="Excluir"
-											actionListener="#{editarInformacoesPsicologo.removerTelefone(obj)}" />
+							<p:dataTable size="small"
+								value="#{gerenciarPaciente.paciente.pessoa.telefones}" var="obj">
+								<p:column headerText="DDD">
+									<p:outputLabel value="#{obj.ddd}" />
+								</p:column>
+								<p:column headerText="Telefone">
+									<p:outputLabel value="#{obj.numero}" />
+								</p:column>
+								<p:column headerText="Ações">
+									<p:commandButton value="Editar"
+										actionListener="#{gerenciarPaciente.editarTelefone(obj)}" />
+									<p:commandButton value="Excluir"
+										actionListener="#{gerenciarPaciente.removerTelefone(obj)}" />
 
-									</p:column>
-								</p:dataTable>
+								</p:column>
+							</p:dataTable>
 
-							</p:tab>
+						</p:tab>
+					</p:tabView>
+					<div>
 
-						</p:tabView>
-						<f:facet name="footer">
-							<p:commandButton value="Salvar" update="@form"
-								actionListener="#{gerenciarCidade.incluir()}"
-								icon="pi pi-pencil" styleClass="ui-button-success" />
-							<p:commandButton value="Excluir" update="@form"
-								actionListener="#{gerenciarCidade.excluir()}" icon="pi pi-trash"
-								styleClass="ui-button-warning"
-								disabled="#{gerenciarCidade.entity.id==null}" />
-							<p:commandButton value="Limpar" update="@form"
-								actionListener="#{gerenciarCidade.limpar()}" icon="pi pi-times"
-								styleClass="ui-button-danger"
-								disabled="#{gerenciarCidade.entity.id==null}" />
-						</f:facet>
-					</p:panel>
+						<p:commandButton value="Salvar"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							update="growl" process="@form"
+							class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+							actionListener="#{gerenciarPaciente.incluir()}" />
+						<p:commandButton value="Excluir"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							update="growl" process="@form "
+							class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+							actionListener="#{gerenciarPaciente.excluir()}" />
+						<p:commandButton value="Limpar"
+							style="background-color:rgb(17 24 39)!important;border:0px !important;"
+							update="growl" process="@form "
+							class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+							actionListener="#{gerenciarPaciente.limpar()}" />
+					</div>
+
 				</h:form>
 
 			</div>

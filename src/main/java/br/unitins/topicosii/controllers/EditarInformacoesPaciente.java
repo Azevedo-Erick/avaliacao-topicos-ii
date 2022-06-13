@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -18,9 +20,11 @@ import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Session;
 import br.unitins.topicosii.application.Util;
 import br.unitins.topicosii.application.VersionException;
+import br.unitins.topicosii.models.Cidade;
 import br.unitins.topicosii.models.Endereco;
 import br.unitins.topicosii.models.Paciente;
 import br.unitins.topicosii.models.Telefone;
+import br.unitins.topicosii.respository.CidadeRepository;
 import br.unitins.topicosii.respository.PacienteRepository;
 
 @Named
@@ -33,16 +37,24 @@ public class EditarInformacoesPaciente implements Serializable{
 	private String senha;
 	private InputStream fotoInputStream = null;
 	private boolean autenticar() {
+		if(senha==null || senha =="") {
+			Util.addErrorMessage("Insira uma senha");
+			return false;
+		}
 		PacienteRepository repo = new PacienteRepository();
 		String senhaOriginal = null;
 		try {
-			senhaOriginal = repo.findById(this.paciente.getId()).getPessoa().getSenha();
+			senhaOriginal = repo.findByEmail(this.paciente).getPessoa().getSenha();
 		} catch (Exception e) {
-
+			Util.addErrorMessage("Não foi possível autenticar a senha no banco de dados");
 		}
-		String SenhaConfirmacaoComHash = Util.hash(this.paciente.getPessoa().getId().toString(), senha);
+		String SenhaConfirmacaoComHash = Util.hash(this.paciente.getPessoa().getId().toString(), this.getSenha());
 		if (senhaOriginal != null) {
 			try {
+				System.out.println(this.getSenha());
+				System.out.println(senhaOriginal);
+				System.out.println(SenhaConfirmacaoComHash);
+				System.out.println(senhaOriginal.equals(SenhaConfirmacaoComHash));
 				if (senhaOriginal.equals(SenhaConfirmacaoComHash)) {
 					return true;
 				}
@@ -63,10 +75,8 @@ public class EditarInformacoesPaciente implements Serializable{
 				return;
 			}
 		}
-		System.out.println(this.getFotoInputStream());
 		try {
 			if (autenticar()) {
-				System.out.println(this.paciente.getPessoa().getNome());
 				Paciente pacienteAtualizado = repository.save(this.paciente);
 				Session.getInstance().set("pacienteLogado", pacienteAtualizado);
 				this.setPaciente(null);
@@ -156,5 +166,14 @@ public class EditarInformacoesPaciente implements Serializable{
 	}
 	public void removerTelefone(Telefone tel) {
 		this.getPaciente().getPessoa().getTelefones().remove(tel);
+	}
+	public List<Cidade> completeCidade(String filtro) {
+		CidadeRepository repo = new CidadeRepository();
+		try {
+			return repo.findByNome(filtro, 4);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Cidade>();
+		}
 	}
 }

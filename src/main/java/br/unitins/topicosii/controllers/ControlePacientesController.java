@@ -17,6 +17,7 @@ import br.unitins.topicosii.listing.EstadoListing;
 import br.unitins.topicosii.models.Cidade;
 import br.unitins.topicosii.models.Estado;
 import br.unitins.topicosii.models.Paciente;
+import br.unitins.topicosii.respository.CidadeRepository;
 import br.unitins.topicosii.respository.PacienteRepository;
 @Named
 @ViewScoped

@@ -17,125 +17,19 @@
 			<components:navegationBarPaciente></components:navegationBarPaciente>
 		</ui:define>
 		<ui:define name="content">
-			<div class="shadow-2xl flex flex-col justify-evenly align-center  shadow-gray-700 rounded-lg p-5 w-10/12 my-6">
+			<div
+				class="shadow-2xl flex flex-col justify-evenly align-center  shadow-gray-700 p-5 w-10/12 my-6">
 				<h2
 					class="justify-self-center self-center text-4xl antialiased italic font-mono">Meus
 					Dados</h2>
-
+				<img class="justify-self-center self-center"
+					style="width: 200px !important;"
+					src="http://localhost:8080/Topicos2-A2/img-usuario?nome=#{editarInformacoesPaciente.paciente.pessoa.id}.png" />
 				<p:growl id="growl" showDetail="true" />
 				<div class="flex flex-col">
 
-					<div class="flex flex-col items-center">
-						<img class="img-responsive"
-							style="max-width: 80px !important; max-height: 80px !important;"
-							src="img-usuario?nome=#{editarInformacoesPaciente.paciente.pessoa.id}.png" />
-						<div class="flex flex-row">
-							<div class="flex flex-col justify-center align-center">
-								<p>#{editarInformacoesPaciente.paciente.pessoa.nome}
-									#{editarInformacoesPaciente.paciente.pessoa.sobrenome}</p>
-								<p>#{editarInformacoesPaciente.paciente.pessoa.cpf}</p>
-								<p:commandButton icon="pi pi-pencil"
-									onclick="PF('dialogEditar').show()" />
-							</div>
-						</div>
-						<div class="w-full">
 
-							<p:tabView>
-								<p:tab title="Pessoal">
-									<div class="flex flex-row justify-between">
-
-										<h:outputText
-											value="Nome: #{editarInformacoesPaciente.paciente.pessoa.nome} #{editarInformacoesPaciente.paciente.pessoa.sobrenome}" />
-
-
-									</div>
-
-									<div class="flex flex-row justify-between my-3">
-
-										<h:outputText
-											value="CPF: #{editarInformacoesPaciente.paciente.pessoa.cpf}" />
-
-
-										<p:outputLabel
-											value="Data de nascimento: #{editarInformacoesPaciente.paciente.pessoa.dataNascimento}" />
-
-
-
-										<h:outputText
-											value="Email: #{editarInformacoesPaciente.paciente.pessoa.email}" />
-
-
-									</div>
-								</p:tab>
-								<p:tab title="Endereço">
-									<div class="flex flex-row justify-between ">
-										<div class="flex flex-col">
-											<h:outputText value="CEP:" />
-											<h:outputText
-												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.cep}" />
-										</div>
-										<div class="flex flex-col">
-											<h:outputText value="Numero:" />
-											<h:outputText
-												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.numero}" />
-										</div>
-										<div class="flex flex-col  ">
-											<h:outputText value="Cidade:" />
-											<h:outputText
-												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.cidade.nome}" />
-
-										</div>
-									</div>
-									<div class="flex flex-row justify-between my-3">
-										<div class="flex flex-col w-1/3">
-											<h:outputText value="Bairro:" />
-											<h:outputText
-												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.bairro}" />
-										</div>
-
-										<div class="flex flex-col w-3/5">
-											<h:outputText value="Rua:" />
-											<h:outputText
-												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.rua}" />
-										</div>
-									</div>
-
-
-
-									<div class="flex flex-col">
-										<h:outputText value="Complemento:" />
-										<h:outputText
-											value="#{editarInformacoesPaciente.paciente.pessoa.endereco.complemento}" />
-									</div>
-
-								</p:tab>
-
-								<p:tab title="Telefones">
-									<!-- <p:dataTable
-										value="#{editarInformacoesPaciente.paciente.pessoa.telefones}"
-										var="obj">
-										<p:column headerText="DDD">
-											<p:outputLabel value="#{obj.ddd}" />
-										</p:column>
-										<p:column headerText="Telefone">
-											<p:outputLabel value="#{obj.numero}" />
-										</p:column>
-									</p:dataTable> -->
-
-								</p:tab>
-
-							</p:tabView>
-						</div>
-					</div>
-
-				</div>
-
-
-				<h:form>
-					<p:dialog draggable="false" global="true" showEffect="fade"
-						hideEffect="fade" widgetVar="dialogEditar" responsive="true"
-						resizable="false" header="Editando informações" modal="true"
-						width="80vw">
+					<h:form>
 						<p:tabView>
 							<p:tab title="Pessoal">
 								<div class="flex flex-row justify-between">
@@ -185,16 +79,17 @@
 									<div class="flex flex-col  ">
 										<h:outputText value="Cidade: *" />
 										<div class="ui-inputgroup h-10">
-											<p:inputText label="Nome:" readonly="true"
-												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.cidade.nome}" />
-											<p:commandButton icon="pi pi-search"
-												style="background-color:rgb(17 24 39)!important;border:0px !important;"
-												class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-												actionListener="#{controlePacientesController.abrirCidadeListing()}">
-												<p:ajax event="dialogReturn"
-													listener="#{controlePacientesController.obterCidadeListing}"
-													update="@form" />
-											</p:commandButton>
+
+											<p:autoComplete
+												value="#{editarInformacoesPaciente.paciente.pessoa.endereco.cidade}"
+												var="obj" itemLabel="#{obj.nome }" itemValue="#{obj}"
+												converter="#{cidadeConverter}"
+												completeMethod="#{editarInformacoesPaciente.completeCidade}"
+												forceSelection="true" maxResults="3" dropdown="true"
+												moreText="... mais resultados" scrollHeight="250">
+												<p:ajax event="itemSelect" process="@this" />
+											</p:autoComplete>
+
 										</div>
 									</div>
 								</div>
@@ -221,51 +116,88 @@
 								</div>
 
 							</p:tab>
+							<p:tab title="Imagem de Perfil">
+								<div class="flex flex-col justify-between ">
+									<p:commandButton onclick="PF('dialog').show()"
+										value="Alterar imagem"></p:commandButton>
+								</div>
 
+							</p:tab>
+<p:tab title="Telefone">
 
+								<div class="flex flex-row justify-between w-full">
+									<div class="flex flex-col w-3/12">
+										<h:outputText value="DDD: *" />
+										<p:inputText label="DDD"
+											value="#{editarInformacoesPaciente.telefone.ddd}">
+											<p:ajax event="keyup" process="@this" />
+										</p:inputText>
 
+									</div>
+									<div class="flex flex-col w-5/12">
+										<h:outputText value="Celular: *" />
+										<p:inputText label="Celular:"
+											value="#{editarInformacoesPaciente.telefone.numero}">
+											<p:ajax event="keyup" process="@this" />
+										</p:inputText>
+									</div>
+									<p:commandButton value="Salvar" update="@form"
+										actionListener="#{editarInformacoesPaciente.adicionarTelefone()}" />
+								</div>
 
+								<p:dataTable size="small"
+									value="#{editarInformacoesPaciente.paciente.pessoa.telefones}"
+									var="obj">
+									<p:column headerText="DDD">
+										<p:outputLabel value="#{obj.ddd}" />
+									</p:column>
+									<p:column headerText="Telefone">
+										<p:outputLabel value="#{obj.numero}" />
+									</p:column>
+									<p:column headerText="Ações">
+										<p:commandButton value="Editar"
+											actionListener="#{editarInformacoesPaciente.editarTelefone(obj)}" />
+										<p:commandButton value="Excluir"
+											actionListener="#{editarInformacoesPaciente.removerTelefone(obj)}" />
 
+									</p:column>
+								</p:dataTable>
 
-
-
-
+							</p:tab>
 						</p:tabView>
-						<center>
+						<div>
+							<div class="flex flex-col mb-4">
+								<h:outputText value="Confirme sua senha *" />
+
+								<p:password requiredMessage="Insasfasdira umaa senha"
+									value="#{editarInformacoesPaciente.senha}" required="true">
+								</p:password>
+							</div>
 							<p:commandButton value="Salvar"
 								style="background-color:rgb(17 24 39)!important;border:0px !important;"
+								update="growl" process="@form form-imagem"
 								class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
 								actionListener="#{editarInformacoesPaciente.salvar()}" />
-						</center>
-					</p:dialog>
-				</h:form>
-				<h:form>
-					<p:dialog draggable="false" global="true" showEffect="fade"
-						hideEffect="fade" widgetVar="dialogConfirmar" responsive="true"
-						resizable="false" header="Autentique-se" modal="true" width="350">
-
-
-						<div class="flex flex-col mb-4">
-							<h:outputText value="Confirme sua senha *" />
-
-							<p:inputText label="Insira sua senha"
-								value="#{editarInformacoesPaciente.senha}" required="true	"></p:inputText>
 						</div>
-						<f:facet name="footer">
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-button-danger ui-button-flat"
-								onclick="PF('dialog').hide()" />
-							<p:commandButton value="Confirmar"
-								actionListener="#{editarInformacoesPaciente.salvar()}"
-								update="@form" styleClass="rounded-button ui-button-success" />
 
-						</f:facet>
+					</h:form>
+				</div>
+				<p:dialog widgetVar="dialog" modal="true" resizable="false"
+					draggable="false">
+					<h:form id="form-imagem">
+						<h:outputText value="Imagem de perfil:" />
+						<h:form enctype="multipart/form-data">
+							<p:fileUpload mode="advanced" multiple="false" global="false"
+								id="fileUpload" listener="#{editarInformacoesPaciente.upload}"
+								update="fileUpload  @form" skinSimple="true">
 
-					</p:dialog>
-				</h:form>
+							</p:fileUpload>
+						</h:form>
+
+					</h:form>
+				</p:dialog>
+
 			</div>
-
-
 		</ui:define>
 	</ui:composition>
 </h:body>

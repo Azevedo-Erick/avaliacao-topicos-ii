@@ -54,6 +54,27 @@ public class PacienteRepository extends Repository<Paciente>{
 			throw new RepositoryException("Erro ao buscar email e senha");
 		}
 	}
+	public Paciente findByEmail(Paciente paciente) throws RepositoryException {
+		try {
+			StringBuffer jpsql = new StringBuffer();
+			jpsql.append("SELECT ");
+			jpsql.append("u ");
+			jpsql.append("FROM ");
+			jpsql.append("Paciente u ");
+			jpsql.append("WHERE ");
+			jpsql.append("u.pessoa.email = :email ");
+			Query query = getEntityManager().createQuery(jpsql.toString());
+			
+			query.setParameter("email", paciente.getPessoa().getEmail());
+			return (Paciente)query.getSingleResult();
+		}catch (NoResultException e){
+			System.out.println("Erro ao fazer o login");
+			return null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao buscar email e senha");
+		}
+	}
 	
 	public List<Paciente> findAll() throws RepositoryException{
 		try {

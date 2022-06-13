@@ -9,7 +9,7 @@ import br.unitins.topicosii.models.Cidade;
 import br.unitins.topicosii.models.Consultorio;
 
 public class CidadeRepository extends Repository<Cidade>{
-	public List<Cidade> findByNome(String nome) throws RepositoryException{
+	public List<Cidade> findByNome(String nome, Integer maxResults) throws RepositoryException{
 		try {
 			StringBuffer jpsql = new StringBuffer();
 			jpsql.append("SELECT ");
@@ -19,7 +19,10 @@ public class CidadeRepository extends Repository<Cidade>{
 			jpsql.append("WHERE ");
 			jpsql.append("c.nome like :nome");
 			
+			
 			Query query = getEntityManager().createQuery(jpsql.toString());
+			if (maxResults != null)
+				query.setMaxResults(maxResults);
 			query.setParameter("nome", "%" + nome + "%");
 			
 			return query.getResultList();
@@ -27,6 +30,9 @@ public class CidadeRepository extends Repository<Cidade>{
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao executar o findByNome");
 		}
+	}
+	public List<Cidade> findByNome(String nome) throws RepositoryException{
+		 return this.findByNome(nome, null);
 	}
 	
 	

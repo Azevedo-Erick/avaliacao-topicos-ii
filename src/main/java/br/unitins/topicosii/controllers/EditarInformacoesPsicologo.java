@@ -28,6 +28,7 @@ import br.unitins.topicosii.models.Consultorio;
 import br.unitins.topicosii.models.Endereco;
 import br.unitins.topicosii.models.Psicologo;
 import br.unitins.topicosii.models.Telefone;
+import br.unitins.topicosii.respository.CidadeRepository;
 import br.unitins.topicosii.respository.ConsultorioRepository;
 import br.unitins.topicosii.respository.PsicologoRepository;
 
@@ -241,4 +242,15 @@ public class EditarInformacoesPsicologo implements Serializable {
 			return new ArrayList<Consultorio>();
 		}
 	}
+	
+	public List<Cidade> completeCidade(String filtro) {
+		CidadeRepository repo = new CidadeRepository();
+		try {
+			return repo.findByNome(filtro, 4);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Cidade>();
+		}
+	}
+	
 }
