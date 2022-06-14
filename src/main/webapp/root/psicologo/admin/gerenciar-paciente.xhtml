@@ -38,15 +38,15 @@
 						<p:tab title="Pessoal">
 							<div class="flex flex-row justify-between">
 								<div class="flex flex-col w-1/3">
-									<h:outputText value="Primeiro nome: *" />
+									<h:outputText value="Nome: *" />
 									<p:inputText label="Primeiro nome:"
-										value="#{gerenciarPaciente.paciente.pessoa.nome}" />
+										value="#{gerenciarPaciente.entity.pessoa.nome}" />
 								</div>
 
 								<div class="flex flex-col w-3/5">
 									<h:outputText value="Sobrenome: *" />
 									<p:inputText label="Sobrenome"
-										value="#{gerenciarPaciente.paciente.pessoa.sobrenome}" />
+										value="#{gerenciarPaciente.entity.pessoa.sobrenome}" />
 								</div>
 							</div>
 
@@ -54,17 +54,17 @@
 								<div class="flex flex-col w-1/5">
 									<h:outputText value="CPF: *" />
 									<p:inputText label="CPF"
-										value="#{gerenciarPaciente.paciente.pessoa.cpf}" />
+										value="#{gerenciarPaciente.entity.pessoa.cpf}" />
 								</div>
 								<div class="flex flex-col w-1/4">
 									<p:outputLabel value="Data de nascimento" />
 									<p:datePicker
-										value="#{gerenciarPaciente.paciente.pessoa.dataNascimento}" />
+										value="#{gerenciarPaciente.entity.pessoa.dataNascimento}" />
 								</div>
 								<div class="flex flex-col w-1/3">
 									<h:outputText value="Email: *" />
 									<p:inputText label="Email:"
-										value="#{gerenciarPaciente.paciente.pessoa.email}" />
+										value="#{gerenciarPaciente.entity.pessoa.email}" />
 								</div>
 							</div>
 						</p:tab>
@@ -73,19 +73,19 @@
 								<div class="flex flex-col">
 									<h:outputText value="CEP: *" />
 									<p:inputText label="CEP" id="inputTextCep"
-										value="#{gerenciarPaciente.paciente.pessoa.endereco.cep}" />
+										value="#{gerenciarPaciente.entity.pessoa.endereco.cep}" />
 								</div>
 								<div class="flex flex-col">
 									<h:outputText value="Numero: *" />
 									<p:inputText label="Numero:"
-										value="#{gerenciarPaciente.paciente.pessoa.endereco.numero}" />
+										value="#{gerenciarPaciente.entity.pessoa.endereco.numero}" />
 								</div>
 								<div class="flex flex-col  ">
 									<h:outputText value="Cidade: *" />
 									<div class="ui-inputgroup h-10">
 
 										<p:autoComplete
-											value="#{gerenciarPaciente.paciente.pessoa.endereco.cidade}"
+											value="#{gerenciarPaciente.entity.pessoa.endereco.cidade}"
 											var="obj" itemLabel="#{obj.nome }" itemValue="#{obj}"
 											converter="#{cidadeConverter}"
 											completeMethod="#{gerenciarPaciente.completeCidade}"
@@ -101,13 +101,13 @@
 								<div class="flex flex-col w-1/3">
 									<h:outputText value="Bairro: *" />
 									<p:inputText label="Bairro:"
-										value="#{gerenciarPaciente.paciente.pessoa.endereco.bairro}" />
+										value="#{gerenciarPaciente.entity.pessoa.endereco.bairro}" />
 								</div>
 
 								<div class="flex flex-col w-3/5">
 									<h:outputText value="Rua: *" />
 									<p:inputText label="Rua" class=""
-										value="#{gerenciarPaciente.paciente.pessoa.endereco.rua}" />
+										value="#{gerenciarPaciente.entity.pessoa.endereco.rua}" />
 								</div>
 							</div>
 
@@ -116,7 +116,7 @@
 							<div class="flex flex-col">
 								<h:outputText value="Complemento: *" />
 								<p:inputText label="Complemento"
-									value="#{gerenciarPaciente.paciente.pessoa.endereco.complemento}" />
+									value="#{gerenciarPaciente.entity.pessoa.endereco.complemento}" />
 							</div>
 
 						</p:tab>
@@ -144,7 +144,7 @@
 							</div>
 
 							<p:dataTable size="small"
-								value="#{gerenciarPaciente.paciente.pessoa.telefones}" var="obj">
+								value="#{gerenciarPaciente.entity.pessoa.telefones}" var="obj">
 								<p:column headerText="DDD">
 									<p:outputLabel value="#{obj.ddd}" />
 								</p:column>

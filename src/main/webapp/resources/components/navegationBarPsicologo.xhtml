@@ -56,7 +56,7 @@
 						</h:commandLink>
 
 						<h:commandLink class="cursor-pointer mb-3"
-							actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-cidade.xhtml')}">
+							actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-estado.xhtml')}">
 							<div
 								class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
 
@@ -75,13 +75,30 @@
 
 							</div>
 						</h:commandLink>
-
 						<h:commandLink class="cursor-pointer mb-3"
-							actionListener="#{templateController.redirect('/root/psicologo/pagamentospendentes.xhtml')}">
+							actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-paciente.xhtml')}">
 							<div
 								class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
 
-								<i class="pi pi-id-card mr-2" style="font-size: 1.2rem"></i>
+								<i class="pi pi-heart mr-2" style="font-size: 1.2rem"></i>
+
+							</div>
+						</h:commandLink>
+						<h:commandLink class="cursor-pointer mb-3"
+							actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-psicologo.xhtml')}">
+							<div
+								class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+
+								<i class="pi pi-star mr-2" style="font-size: 1.2rem"></i>
+
+							</div>
+						</h:commandLink>
+						<h:commandLink class="cursor-pointer mb-3"
+							actionListener="#{templateController.redirect('/root/psicologo/gerenciar-cidade.xhtml')}">
+							<div
+								class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+
+								<i class="pi pi-map-marker mr-2" style="font-size: 1.2rem"></i>
 
 							</div>
 						</h:commandLink>
@@ -181,7 +198,7 @@
 
 
 					<h:commandLink class="cursor-pointer mb-3"
-						actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-pessoas.xhtml')}">
+						actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-pessoa.xhtml')}">
 						<div
 							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
 							<p class="flex  items-center">
@@ -190,13 +207,34 @@
 							</p>
 						</div>
 					</h:commandLink>
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-paciente.xhtml')}">
+						<div
+							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<p class="flex  items-center">
+								<i class="pi pi-heart mr-2" style="font-size: 1.2rem"></i>
+								Gerenciar Pacientes
+							</p>
+						</div>
+					</h:commandLink>
+					<h:commandLink class="cursor-pointer mb-3"
+						actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-psicologo.xhtml')}">
+						<div
+							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
+							<p class="flex  items-center">
+								<i class="pi pi-star mr-2" style="font-size: 1.2rem"></i>
+								Gerenciar Psicologos
+							</p>
+						</div>
+					</h:commandLink>
+
 
 					<h:commandLink class="cursor-pointer mb-3"
 						actionListener="#{templateController.redirect('/root/psicologo/admin/gerenciar-cidade.xhtml')}">
 						<div
 							class="text-gray-300 flex  hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium">
 							<p class="flex  items-center">
-								<i class="pi pi-id-card mr-2" style="font-size: 1.2rem"></i>
+								<i class="pi pi-map-marker mr-2" style="font-size: 1.2rem"></i>
 								Gerenciar cidades
 							</p>
 						</div>

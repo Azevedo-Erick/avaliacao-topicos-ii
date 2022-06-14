@@ -40,7 +40,7 @@ public class GerenciarPaciente extends Controller<Paciente> implements Serializa
 	public Paciente getEntity() {
 		if (entity == null)
 			entity = new Paciente();
-		return null;
+		return entity;
 	}
 	
 	public void abrirPessoaListing() {
@@ -84,6 +84,9 @@ public class GerenciarPaciente extends Controller<Paciente> implements Serializa
 	}
 	public void removerTelefone(Telefone tel) {
 		this.getPaciente().getPessoa().getTelefones().remove(tel);
+	}
+	public void editarTelefone() {
+		this.setTelefone(telefone);
 	}
 
 	public Paciente getPaciente() {

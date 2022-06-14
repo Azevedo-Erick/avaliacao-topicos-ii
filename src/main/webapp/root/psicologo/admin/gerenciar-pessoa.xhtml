@@ -21,185 +21,187 @@
 				class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
 
 				<h:form>
-					<p:panel>
+					<div class="flex flex-col justify-evenly h-full">
+						<h2
+							class="justify-self-center self-center text-4xl antialiased italic font-mono">Gerencia
+							de Pessoas</h2>
+						<img class="justify-self-center self-center"
+							style="width: 200px !important;"
+							src="http://localhost:8080/Topicos2-A2/img-usuario?nome=#{gerenciarPessoa.entity.id}.png" />
+						<p:panel>
 
-						<p:tabView>
-							<p:tab title="Pessoal">
-								<div class="flex flex-row justify-between">
-									<div class="flex flex-col w-1/3">
-										<h:outputText value="Primeiro nome: *" />
-										<p:inputText label="Primeiro nome:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.nome}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
+							<p:tabView>
+								<p:tab title="Pessoal">
+									<div class="flex flex-row justify-between">
+										<div class="flex flex-col w-1/3">
+											<h:outputText value="Primeiro nome: *" />
+											<div class="ui-inputgroup">
+												<p:inputText label="Primeiro nome:"
+													value="#{gerenciarPessoa.entity.nome}">
+													
+												</p:inputText>
+												<p:commandButton icon="pi pi-search"
+												process="@this"
+													actionListener="#{gerenciarPessoa.abrirPessoaListing()}">
+													<p:ajax event="dialogReturn"
+														listener="#{gerenciarPessoa.obterPessoaListing}"
+														update="@form"
+														process="@this" />
+												</p:commandButton>
+											</div>
+										</div>
 
-									<div class="flex flex-col w-3/5">
-										<h:outputText value="Sobrenome: *" />
-										<p:inputText label="Sobrenome"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-								</div>
-								<div class="flex flex-col w-1/5">
-									<h:outputText value="Imagem de perfil:" />
-									<h:form enctype="multipart/form-data">
-										<p:fileUpload mode="simple" multiple="false"
-											listener="#{editarInformacoesPsicologo.upload}" />
-									</h:form>
-								</div>
-								<div class="flex flex-row justify-between my-3">
-									<div class="flex flex-col w-1/5">
-										<h:outputText value="CPF: *" />
-										<p:inputText label="CPF"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.cpf}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-									<div class="flex flex-col w-1/4">
-										<p:outputLabel value="Data de nascimento" />
-										<p:datePicker
-											listener="#{editarInformacoesPsicologo.onDateSelect}"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.dataNascimento}">
-											<p:ajax event="keyup" process="@this" />
-										</p:datePicker>
-									</div>
-									<div class="flex flex-col w-1/3">
-										<h:outputText value="Email: *" />
-										<p:inputText label="Email:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.email}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-								</div>
-							</p:tab>
-							<p:tab title="Endereço">
-								<div class="flex flex-row justify-between ">
-									<div class="flex flex-col">
-										<h:outputText value="CEP: *" />
-										<p:inputText label="CEP" id="inputTextCep"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cep}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-									<div class="flex flex-col">
-										<h:outputText value="Numero: *" />
-										<p:inputText label="Numero:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.numero}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-									<div class="flex flex-col  ">
-										<h:outputText value="Cidade: *" />
-										<div class="ui-inputgroup h-10">
-											<p:inputText label="Nome:" readonly="true"
-												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cidade.nome}">
-												<p:ajax event="keyup" process="@this" />
+										<div class="flex flex-col w-3/5">
+											<h:outputText value="Sobrenome: *" />
+											<p:inputText label="Sobrenome"
+												value="#{gerenciarPessoa.entity.sobrenome}">
+												
 											</p:inputText>
-											<p:commandButton icon="pi pi-search"
-												style="background-color:rgb(17 24 39)!important;border:0px !important;"
-												class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-												actionListener="#{editarInformacoesPsicologo.abrirCidadeListing()}">
-												<p:ajax event="dialogReturn"
-													listener="#{editarInformacoesPsicologo.obterCidadeListing}"
-													update="@form" />
-											</p:commandButton>
 										</div>
 									</div>
-								</div>
-								<div class="flex flex-row justify-between my-3">
-									<div class="flex flex-col w-1/3">
-										<h:outputText value="Bairro: *" />
-										<p:inputText label="Bairro:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.bairro}">
-											<p:ajax event="keyup" process="@this" />
+						
+									<div class="flex flex-row justify-between my-3">
+										<div class="flex flex-col w-1/5">
+											<h:outputText value="CPF: *" />
+											<p:inputText label="CPF"
+												value="#{gerenciarPessoa.entity.cpf}">
+												
+											</p:inputText>
+										</div>
+										<div class="flex flex-col w-1/4">
+											<p:outputLabel value="Data de nascimento" />
+											<p:datePicker listener="#{gerenciarPessoa.onDateSelect}"
+												value="#{gerenciarPessoa.entity.dataNascimento}">
+												
+											</p:datePicker>
+										</div>
+										<div class="flex flex-col w-1/3">
+											<h:outputText value="Email: *" />
+											<p:inputText label="Email:"
+												value="#{gerenciarPessoa.entity.email}">
+												
+											</p:inputText>
+										</div>
+									</div>
+								</p:tab>
+								<p:tab title="Endereço">
+									<div class="flex flex-row justify-between ">
+										<div class="flex flex-col">
+											<h:outputText value="CEP: *" />
+											<p:inputText label="CEP" id="inputTextCep"
+												value="#{gerenciarPessoa.entity.endereco.cep}">
+												
+											</p:inputText>
+										</div>
+										<div class="flex flex-col">
+											<h:outputText value="Numero: *" />
+											<p:inputText label="Numero:"
+												value="#{gerenciarPessoa.entity.endereco.numero}">
+											
+											</p:inputText>
+										</div>
+										<div class="flex flex-col  ">
+											<h:outputText value="Cidade: *" />
+											<div class="ui-inputgroup h-10">
+												<p:inputText label="Nome:" readonly="true"
+													value="#{gerenciarPessoa.entity.endereco.cidade.nome}">
+													
+												</p:inputText>
+												<p:commandButton icon="pi pi-search"
+													style="background-color:rgb(17 24 39)!important;border:0px !important;"
+													class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
+													actionListener="#{gerenciarPessoa.abrirCidadeListing()}"
+													process="@this"
+													>
+													<p:ajax event="dialogReturn"
+														listener="#{gerenciarPessoa.obterCidadeListing}"
+														update="@form" />
+												</p:commandButton>
+											</div>
+										</div>
+									</div>
+									<div class="flex flex-row justify-between my-3">
+										<div class="flex flex-col w-1/3">
+											<h:outputText value="Bairro: *" />
+											<p:inputText label="Bairro:"
+												value="#{gerenciarPessoa.entity.endereco.bairro}">
+												
+											</p:inputText>
+										</div>
+
+										<div class="flex flex-col w-3/5">
+											<h:outputText value="Rua: *" />
+											<p:inputText label="Rua" class=""
+												value="#{gerenciarPessoa.entity.endereco.rua}">
+												
+											</p:inputText>
+										</div>
+									</div>
+
+
+
+									<div class="flex flex-col">
+										<h:outputText value="Complemento: *" />
+										<p:inputText label="Complemento"
+											value="#{gerenciarPessoa.entity.endereco.complemento}">
+											
 										</p:inputText>
 									</div>
 
-									<div class="flex flex-col w-3/5">
-										<h:outputText value="Rua: *" />
-										<p:inputText label="Rua" class=""
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.rua}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
+								</p:tab>
+
+								<p:tab title="Telefone">
+
+									<div class="flex flex-row justify-content-between">
+										<div class="flex flex-col" style="width: 30%">
+											<h:outputText value="DDD: *" />
+											<p:inputText label="DDD"
+												value="#{gerenciarPessoa.telefone.ddd}">
+												
+											</p:inputText>
+
+										</div>
+										<div class="flex flex-col" style="width: 60%">
+											<h:outputText value="Celular: *" />
+											<p:inputText label="Celular:"
+												value="#{gerenciarPessoa.telefone.numero}">
+												
+											</p:inputText>
+										</div>
 									</div>
-								</div>
+									<p:commandButton value="Salvar" update="@form"
+										actionListener="#{gerenciarPessoa.adicionarTelefone()}" />
 
 
 
-								<div class="flex flex-col">
-									<h:outputText value="Complemento: *" />
-									<p:inputText label="Complemento"
-										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.complemento}">
-										<p:ajax event="keyup" process="@this" />
-									</p:inputText>
-								</div>
+								</p:tab>
 
-							</p:tab>
-
-
-							<p:tab title="Telefone">
-
-								<div class="flex flex-row justify-content-between">
-									<div class="flex flex-col" style="width: 30%">
-										<h:outputText value="DDD: *" />
-										<p:inputText label="DDD"
-											value="#{editarInformacoesPsicologo.telefone.ddd}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-
-									</div>
-									<div class="flex flex-col" style="width: 60%">
-										<h:outputText value="Celular: *" />
-										<p:inputText label="Celular:"
-											value="#{editarInformacoesPsicologo.telefone.numero}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-								</div>
-								<p:commandButton value="Salvar" update="@form"
-									actionListener="#{editarInformacoesPsicologo.adicionarTelefone()}" />
-
-								<p:dataTable
-									value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones}"
-									var="obj">
-									<p:column headerText="DDD">
-										<p:outputLabel value="#{obj.ddd}" />
-									</p:column>
-									<p:column headerText="Telefone">
-										<p:outputLabel value="#{obj.numero}" />
-									</p:column>
-									<p:column headerText="Ações">
-										<p:commandButton value="Editar"
-											actionListener="#{editarInformacoesPsicologo.editarTelefone(obj)}" />
-										<p:commandButton value="Excluir"
-											actionListener="#{editarInformacoesPsicologo.removerTelefone(obj)}" />
-
-									</p:column>
-								</p:dataTable>
-
-							</p:tab>
-
-						</p:tabView>
-						<f:facet name="footer">
-							<p:commandButton value="Atualizar"
-								style="background-color:rgb(17 24 39)!important;border:0px !important;"
-								onclick="PF('dialogConfirmar').show()"
-								class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium" />
-						</f:facet>
-					</p:panel>
+							</p:tabView>
+							<f:facet name="footer">
+								<p:commandButton value="Salvar"
+									style="background-color:rgb(17 24 39)!important;border:0px !important;"
+									onclick="PF('dialogConfirmar').show()"
+										actionListener="#{gerenciarPessoa.incluir()}"
+									class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium" />
+							<p:commandButton value="Excluir"
+									style="background-color:rgb(17 24 39)!important;border:0px !important;"
+									onclick="PF('dialogConfirmar').show()"
+										actionListener="#{gerenciarPessoa.excluir()}"
+									class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium" />
+							<p:commandButton value="Limpar"
+									style="background-color:rgb(17 24 39)!important;border:0px !important;"
+									onclick="PF('dialogConfirmar').show()"
+										actionListener="#{gerenciarPessoa.limpar()}"
+									class="bg-gray-800 mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium" />
+							</f:facet>
+						</p:panel>
+					</div>
 				</h:form>
 
 
 
 			</div>
 
-			<p:dialog header="Detalhes da pessoa" widgetVar="dialog"
-				minHeight="40" width="350" draggable="false" closable="false"
-				showEffect="fade" modal="true">
-
-			</p:dialog>
 
 		</ui:define>
 	</ui:composition>

@@ -17,12 +17,13 @@
 			<components:navegationBarPsicologo></components:navegationBarPsicologo>
 		</ui:define>
 		<ui:define name="content">
-				<p:commandButton value="Marcar consulta"
-					class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 text-sm font-medium"
-					onclick="PF('dialogMarcarConsulta').show()"
-					style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
-			<div class="shadow-2xl  flex justify-center align-center shadow-gray-700 w-11/12 p-5 overflow-y-visible h-11/12  my-6">
-				
+			<p:commandButton value="Marcar consulta"
+				class="bg-gray-800 hover:bg-gray-400 hover:text-white text-white px-3 py-2 text-sm font-medium"
+				onclick="PF('dialogMarcarConsulta').show()"
+				style="position:fixed;bottom:20px;right:20px;z-index:9999;background-color:rgb(17 24 39)!important;border:0px !important;" />
+			<div
+				class="shadow-2xl  flex justify-center align-center shadow-gray-700 w-11/12 p-5 overflow-y-visible h-11/12  my-6">
+
 				<h:form id="agendamento" class="w-full">
 					<p:growl id="growl" showDetail="true" />
 					<p:schedule id="agenda" value="#{agendaPsicologo.model}"
@@ -45,15 +46,29 @@
 			<p:dialog header="Detalhes" widgetVar="dialogEditarConsulta"
 				id="dialogEditarConsulta" draggable="false" minHeight="40"
 				height="70vh" width="900" modal="true" showEffect="fade">
-				<h:form id="form-editar">
-					<div class="flex flex-col">
-						<p:outputLabel>Paciente: #{agendaPsicologo.event.data.paciente.pessoa.nome} #{agendaPsicologo.event.data.paciente.pessoa.sobrenome}</p:outputLabel>
-						<p:outputLabel>Data: #{agendaPsicologo.event.data.horaInicio}</p:outputLabel>
-						<p:outputLabel>Inicio:  #{agendaPsicologo.event.data.horaInicio}</p:outputLabel>
-						<p:outputLabel>Fim:  #{agendaPsicologo.event.data.horaFim}</p:outputLabel>
-						<p:outputLabel>Valor:  #{agendaPsicologo.event.data.valorSessao}</p:outputLabel>
+				<h:form id="form-editar" class="h-full">
+					<div class="flex flex-col justify-between h-full">
+						<div class="w-full flex-row justify-between flex">
+							<div>
+								<div class="flex flex-col">
+									<p:outputLabel>Paciente: #{agendaPsicologo.event.data.paciente.pessoa.nome} #{agendaPsicologo.event.data.paciente.pessoa.sobrenome}</p:outputLabel>
+									<p:outputLabel>Valor: R$ #{agendaPsicologo.event.data.valorSessao + agendaPsicologo.event.data.psicologo.valorHora}</p:outputLabel>
+								</div>
+							</div>
+							<div class="flex flex-col">
+								<p:outputLabel>Data: #{agendaPsicologo.event.data.horaInicio}</p:outputLabel>
+
+								<p>Inicio: #{agendaPsicologo.event.data.horaInicio}</p>
+								<p>Fim: #{agendaPsicologo.event.data.horaFim}</p>
+
+							</div>
+
+						</div>
+<div>
+						<hr class="my-4 border" />
+						
 						<p:outputLabel>Conclusões do Psicologo:  </p:outputLabel>
-						<p:textEditor secure='false'
+						<p:textEditor secure='false' height="250"
 							disabled="#{agendaPsicologo.event.data.cancelado==true}"
 							value="#{agendaPsicologo.event.data.descricao}">
 							<f:facet name="toolbar">
@@ -68,15 +83,18 @@
 								</span>
 							</f:facet>
 						</p:textEditor>
-						<div class="flex flex-row">
+</div>
+						<div class="flex flex-row align-items-center justify-center w-full">
+						<div class="justify-between flex flex-row w-3/6">
 							<p:commandButton value="Cancelar"
-								disabled="#{agendaPsicologo.event.data.cancelado==true}"
+								disabled="#{agendaPsicologo.event.data.cancelado==true}" styleClass="ui-button-raised ui-button-warning"  icon="pi pi-exclamation-triangle"
 								actionListener="#{agendaPsicologo.cancelarAgendamento()}"></p:commandButton>
 							<p:commandButton value="Concluir"
-								disabled="#{agendaPsicologo.event.data.cancelado==true}"
+								disabled="#{agendaPsicologo.event.data.cancelado==true}" styleClass="ui-button-raised ui-button-success" icon="pi pi-dollar"
 								actionListener="#{agendaPsicologo.concluirAgendamento()}"></p:commandButton>
-							<p:commandButton value="Excluir"
+							<p:commandButton value="Excluir" styleClass="ui-button-raised ui-button-danger" icon="pi pi-ban"
 								actionListener="#{agendaPsicologo.excluirAgendamento()}"></p:commandButton>
+						</div>
 						</div>
 					</div>
 				</h:form>
@@ -92,8 +110,8 @@
 						class="flex flex-col content-center justify-center items-center">
 						<p:outputLabel value="Dia da consulta" />
 
-						<p:selectOneButton 
-						required="true" requiredMessage="Você precisa selecionar o dia da consulta"
+						<p:selectOneButton required="true"
+							requiredMessage="Você precisa selecionar o dia da consulta"
 							value="#{agendaPsicologo.diaSelecionadoParaConsulta}">
 							<f:selectItems value="#{agendaPsicologo.dia}" var="day"
 								itemLabel="#{day.label}" itemValue="#{day}" />
@@ -105,8 +123,9 @@
 								<div class="flex flex-col">
 									<p:outputLabel value="Paciente:" />
 									<div class="ui-inputgroup my-2">
-										<p:inputText disabled="true" required="true" requiredMessage="Você precisa selecionar o paciente" readonly="true"
-											class="bg-gray-800 h-10 "
+										<p:inputText disabled="true" required="true"
+											requiredMessage="Você precisa selecionar o paciente"
+											readonly="true" class="bg-gray-800 h-10 "
 											value="#{agendaPsicologo.pacienteSelecionado.pessoa.nome} #{agendaPsicologo.pacienteSelecionado.pessoa.sobrenome}" />
 										<p:commandButton icon="pi pi-search"
 											class="bg-gray-800 h-10 text-white px-2 py-2 rounded-md text-sm font-medium "
@@ -120,23 +139,29 @@
 									<div
 										class="flex flex-col w-full justify-self-center self-center">
 										<p:outputLabel value="Valor" />
-										<p:inputNumber value="#{agendaPsicologo.valor}" required="true" requiredMessage="Você precisa inserir o valor"/>
+										<p:inputNumber value="#{agendaPsicologo.valor}"
+											required="true"
+											requiredMessage="Você precisa inserir o valor" />
 									</div>
 								</div>
 							</div>
 							<div class="flex flex-col ">
 								<div class="flex flex-col my-2">
 									<p:outputLabel value="Quantidade de semanas: " />
-									<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}" required="true" requiredMessage="Você precisa inserir a quantidade de semanas"/>
+									<p:inputNumber value="#{agendaPsicologo.quantidadeSemanas}"
+										required="true"
+										requiredMessage="Você precisa inserir a quantidade de semanas" />
 								</div>
 								<div class="flex flex-col ">
 									<p:outputLabel value="Horário" />
 									<p:selectOneMenu value="#{agendaPsicologo.horarioSelecionado}"
-										effect="fold" required="true" requiredMessage="Você precisa inserir o horário de consulta">
+										effect="fold" required="true"
+										requiredMessage="Você precisa inserir o horário de consulta">
 										<f:selectItem itemLabel="Selecione o horário" itemValue="" />
-										<f:selectItems value="#{agendaPsicologo.listaHorarios}" itemLabel="#{localobj}" var="obj" itemValue="#{obj}" />
+										<f:selectItems value="#{agendaPsicologo.listaHorarios}"
+											itemLabel="#{localobj}" var="obj" itemValue="#{obj}" />
 									</p:selectOneMenu>
-									
+
 								</div>
 							</div>
 

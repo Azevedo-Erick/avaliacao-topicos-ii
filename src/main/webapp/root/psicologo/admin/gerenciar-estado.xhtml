@@ -20,22 +20,34 @@
 			<div
 				class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
 
-				<h:form class="flex flex-column">
+				<h:form class="flex flex-col">
 					<p:panel header="Gerencia de Estados">
-						<p:growl id="growl" showDetail="true" />
-		
+						<p:growl id="growl" showDetail="false" />
 
-						<div class="flex flex-column">
-							<h:outputText value="Nome: *" />
-							<div class="ui-inputgroup">
-								<p:inputText label="Nome:"
-									value="#{gerenciarEstado.entity.nome}" />
-								<p:commandButton icon="pi pi-search"
-									actionListener="#{gerenciarEstado.abrirCidadeListing()}">
-									<p:ajax event="dialogReturn"
-										listener="#{gerenciarEstado.obterCidadeListing}"
-										update="@form" />
-								</p:commandButton>
+						<div class="flex flex-col">
+							<div class="flex flex-col">
+								<h:outputText value="Nome: *" />
+								<div class="ui-inputgroup">
+									<p:inputText 
+									required="true"
+									requiredMessage="O nome não pode ser vazio"
+										value="#{gerenciarEstado.entity.nome}" />
+									<p:commandButton icon="pi pi-search"
+										actionListener="#{gerenciarEstado.abrirEstadoListing()}">
+										<p:ajax event="dialogReturn"
+											listener="#{gerenciarEstado.obterEstadoListing}"
+											update="@form" />
+									</p:commandButton>
+								</div>
+							</div>
+							<div class="flex flex-col">
+								<h:outputText value="Sigla: *" />
+								<div class="ui-inputgroup">
+									<p:inputText
+									required="true"
+									requiredMessage="A sigla não pode ser vazia"
+										value="#{gerenciarEstado.entity.sigla}" />
+								</div>
 							</div>
 						</div>
 						<f:facet name="footer">

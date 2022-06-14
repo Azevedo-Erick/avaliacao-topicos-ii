@@ -21,6 +21,19 @@
 				class="shadow-2xl  shadow-gray-700  p-5 overflow-y-visible h-11/12 w-11/12 my-6">
 
 				<h:form>
+				<p:commandButton icon="pi pi-search" value="Buscar Pessoa"
+						styleClass="ui-button-warning"
+						actionListener="#{gerenciarPsicologo.abrirPessoaListing}">
+						<p:ajax event="dialogReturn"
+							listener="#{gerenciarPsicologo.obterPessoaListing}" update="@form" />
+					</p:commandButton>
+					<p:commandButton icon="pi pi-search" value="Buscar Psicologo"
+						styleClass="ui-button-warning"
+						actionListener="#{gerenciarPsicologo.abrirPsicologoListing}">
+						<p:ajax event="dialogReturn"
+							listener="#{gerenciarPsicologo.obterPsicologoListing}"
+							update="@form" />
+					</p:commandButton>
 					<p:panel>
 
 						<p:tabView>
@@ -29,7 +42,7 @@
 									<div class="flex flex-col w-1/3">
 										<h:outputText value="Primeiro nome: *" />
 										<p:inputText label="Primeiro nome:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.nome}">
+											value="#{gerenciarPsicologo.entity.pessoa.nome}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
@@ -37,38 +50,32 @@
 									<div class="flex flex-col w-3/5">
 										<h:outputText value="Sobrenome: *" />
 										<p:inputText label="Sobrenome"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.sobrenome}">
+											value="#{gerenciarPsicologo.entity.pessoa.sobrenome}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
 								</div>
-								<div class="flex flex-col w-1/5">
-									<h:outputText value="Imagem de perfil:" />
-									<h:form enctype="multipart/form-data">
-										<p:fileUpload mode="simple" multiple="false"
-											listener="#{editarInformacoesPsicologo.upload}" />
-									</h:form>
-								</div>
+							
 								<div class="flex flex-row justify-between my-3">
 									<div class="flex flex-col w-1/5">
 										<h:outputText value="CPF: *" />
 										<p:inputText label="CPF"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.cpf}">
+											value="#{gerenciarPsicologo.entity.pessoa.cpf}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
 									<div class="flex flex-col w-1/4">
 										<p:outputLabel value="Data de nascimento" />
 										<p:datePicker
-											listener="#{editarInformacoesPsicologo.onDateSelect}"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.dataNascimento}">
+											listener="#{gerenciarPsicologo.onDateSelect}"
+											value="#{gerenciarPsicologo.entity.pessoa.dataNascimento}">
 											<p:ajax event="keyup" process="@this" />
 										</p:datePicker>
 									</div>
 									<div class="flex flex-col w-1/3">
 										<h:outputText value="Email: *" />
 										<p:inputText label="Email:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.email}">
+											value="#{gerenciarPsicologo.entity.pessoa.email}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
@@ -79,14 +86,14 @@
 									<div class="flex flex-col">
 										<h:outputText value="CEP: *" />
 										<p:inputText label="CEP" id="inputTextCep"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cep}">
+											value="#{gerenciarPsicologo.entity.pessoa.endereco.cep}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
 									<div class="flex flex-col">
 										<h:outputText value="Numero: *" />
 										<p:inputText label="Numero:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.numero}">
+											value="#{gerenciarPsicologo.entity.pessoa.endereco.numero}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
@@ -94,15 +101,15 @@
 										<h:outputText value="Cidade: *" />
 										<div class="ui-inputgroup h-10">
 											<p:inputText label="Nome:" readonly="true"
-												value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.cidade.nome}">
+												value="#{gerenciarPsicologo.entity.pessoa.endereco.cidade.nome}">
 												<p:ajax event="keyup" process="@this" />
 											</p:inputText>
 											<p:commandButton icon="pi pi-search"
 												style="background-color:rgb(17 24 39)!important;border:0px !important;"
 												class="bg-gray-800  mr-3 hover:bg-gray-400 hover:text-white text-white px-3 py-2 rounded-md text-sm font-medium"
-												actionListener="#{editarInformacoesPsicologo.abrirCidadeListing()}">
+												actionListener="#{gerenciarPsicologo.abrirCidadeListing()}">
 												<p:ajax event="dialogReturn"
-													listener="#{editarInformacoesPsicologo.obterCidadeListing}"
+													listener="#{gerenciarPsicologo.obterCidadeListing}"
 													update="@form" />
 											</p:commandButton>
 										</div>
@@ -112,7 +119,7 @@
 									<div class="flex flex-col w-1/3">
 										<h:outputText value="Bairro: *" />
 										<p:inputText label="Bairro:"
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.bairro}">
+											value="#{gerenciarPsicologo.entity.pessoa.endereco.bairro}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
@@ -120,7 +127,7 @@
 									<div class="flex flex-col w-3/5">
 										<h:outputText value="Rua: *" />
 										<p:inputText label="Rua" class=""
-											value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.rua}">
+											value="#{gerenciarPsicologo.entity.pessoa.endereco.rua}">
 											<p:ajax event="keyup" process="@this" />
 										</p:inputText>
 									</div>
@@ -131,7 +138,7 @@
 								<div class="flex flex-col">
 									<h:outputText value="Complemento: *" />
 									<p:inputText label="Complemento"
-										value="#{editarInformacoesPsicologo.psicologo.pessoa.endereco.complemento}">
+										value="#{gerenciarPsicologo.entity.pessoa.endereco.complemento}">
 										<p:ajax event="keyup" process="@this" />
 									</p:inputText>
 								</div>
@@ -143,21 +150,21 @@
 										<div class="flex flex-col">
 											<h:outputText value="CRP: *" />
 											<p:inputText label="CRP"
-												value="#{editarInformacoesPsicologo.psicologo.crp}">
+												value="#{gerenciarPsicologo.entity.crp}">
 												<p:ajax event="keyup" process="@this" />
 											</p:inputText>
 										</div>
 										<div class="flex flex-col">
 											<h:outputText value="Informações Formação *" />
 											<p:inputText label="Informações Formação:"
-												value="#{editarInformacoesPsicologo.psicologo.informacoesFormacao}">
+												value="#{gerenciarPsicologo.entity.informacoesFormacao}">
 												<p:ajax event="keyup" process="@this" />
 											</p:inputText>
 										</div>
 										<div class="flex flex-col">
 											<h:outputText value="Valor Hora:*" />
 											<p:inputText label="Valor Hora:"
-												value="#{editarInformacoesPsicologo.psicologo.valorHora}">
+												value="#{gerenciarPsicologo.entity.valorHora}">
 												<p:ajax event="keyup" process="@this" />
 											</p:inputText>
 										</div>
@@ -166,32 +173,32 @@
 										<div class="flex flex-col ">
 											<p:outputLabel value="Início do expediente" />
 											<p:selectOneMenu
-												value="#{editarInformacoesPsicologo.psicologo.inicioExpediente}"
+												value="#{gerenciarPsicologo.entity.inicioExpediente}"
 												effect="fold">
 												<f:selectItem itemLabel="Selecione o horário" itemValue="" />
 												<f:selectItems
-													value="#{editarInformacoesPsicologo.listaHorarios}" />
+													value="#{gerenciarPsicologo.listaHorarios}" />
 											</p:selectOneMenu>
 
 										</div>
 										<div class="flex flex-col ">
 											<p:outputLabel value="Fim do expediente" />
 											<p:selectOneMenu
-												value="#{editarInformacoesPsicologo.psicologo.fimExpediente}"
+												value="#{gerenciarPsicologo.entity.fimExpediente}"
 												effect="fold">
 												<f:selectItem itemLabel="Selecione o horário" itemValue="" />
 												<f:selectItems
-													value="#{editarInformacoesPsicologo.listaHorarios}" />
+													value="#{gerenciarPsicologo.listaHorarios}" />
 											</p:selectOneMenu>
 
 										</div>
 
 									</div>
 									<p:autoComplete
-										value="#{editarInformacoesPsicologo.psicologo.consultorios}"
+										value="#{gerenciarPsicologo.entity.consultorios}"
 										var="obj" itemLabel="#{obj.nome}" itemValue="#{obj}"
 										multiple="true" converter="#{consultorioConverter}"
-										completeMethod="#{editarInformacoesPsicologo.completeConsultorio}"
+										completeMethod="#{gerenciarPsicologo.completeConsultorio}"
 										forceSelection="true" maxResults="3" dropdown="true"
 										moreText="... mais resultados" scrollHeight="250">
 										<p:ajax event="itemSelect" process="@this" />
@@ -199,48 +206,7 @@
 								</div>
 							</p:tab>
 
-							<p:tab title="Telefone">
-
-								<div class="flex flex-row justify-content-between">
-									<div class="flex flex-col" style="width: 30%">
-										<h:outputText value="DDD: *" />
-										<p:inputText label="DDD"
-											value="#{editarInformacoesPsicologo.telefone.ddd}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-
-									</div>
-									<div class="flex flex-col" style="width: 60%">
-										<h:outputText value="Celular: *" />
-										<p:inputText label="Celular:"
-											value="#{editarInformacoesPsicologo.telefone.numero}">
-											<p:ajax event="keyup" process="@this" />
-										</p:inputText>
-									</div>
-								</div>
-								<p:commandButton value="Salvar" update="@form"
-									actionListener="#{editarInformacoesPsicologo.adicionarTelefone()}" />
-
-								<p:dataTable
-									value="#{editarInformacoesPsicologo.psicologo.pessoa.telefones}"
-									var="obj">
-									<p:column headerText="DDD">
-										<p:outputLabel value="#{obj.ddd}" />
-									</p:column>
-									<p:column headerText="Telefone">
-										<p:outputLabel value="#{obj.numero}" />
-									</p:column>
-									<p:column headerText="Ações">
-										<p:commandButton value="Editar"
-											actionListener="#{editarInformacoesPsicologo.editarTelefone(obj)}" />
-										<p:commandButton value="Excluir"
-											actionListener="#{editarInformacoesPsicologo.removerTelefone(obj)}" />
-
-									</p:column>
-								</p:dataTable>
-
-							</p:tab>
-
+							
 						</p:tabView>
 						<f:facet name="footer">
 							<p:commandButton value="Atualizar"
@@ -251,15 +217,7 @@
 					</p:panel>
 				</h:form>
 
-
-
 			</div>
-
-			<p:dialog header="Detalhes do Psicologo" widgetVar="dialog"
-				minHeight="40" width="350" draggable="false" closable="false"
-				showEffect="fade" modal="true">
-
-			</p:dialog>
 
 		</ui:define>
 	</ui:composition>

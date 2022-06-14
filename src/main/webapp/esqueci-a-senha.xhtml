@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Login</title>
+	<link rel="stylesheet" href="./resources/css/reset.css" />
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/primeflex@3.1.0/primeflex.css" />
+</h:head>
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="content">
+			<div
+				class="bg-gray-800  flex justify-center items-center h-screen w-screen   ">
+				<div
+					class="flex bg-slate-200   p-5  min-w-fit flex-col my-6">
+					<p:commandButton icon="pi pi-arrow-circle-left" width="30px"
+						onclick="window.history.go(-1); return false;" />
+					<div class="flex flex-row">
+
+						<div class="  p-5 ">
+							<p:tabView>
+								<p:tab title="Não tenho código">
+									<h:form>
+										<p:growl id="growlCodigo" showDetail="false" />
+										<div class="flex flex-col space-between w-full h-full">
+											<div class="flex flex-col p-5">
+												<p:outputLabel value="Digite seu email "></p:outputLabel>
+												<p:inputText placeholder="Digite seu email ..."
+													required="true"
+													value="#{esqueceuSenhaCodigoController.emailParaRecuperarSenha}" />
+											</div>
+
+											<div class="flex flex-row space-between w-full  p-5">
+												<p:commandButton value="Enviar" process="@form"
+													update="@form growlCodigo"
+													actionListener="#{esqueceuSenhaCodigoController.enviarEmail()}" />
+											</div>
+										</div>
+									</h:form>
+								</p:tab>
+								<p:tab title="Tenho código">
+									<h:form>
+										<p:growl id="growlForm" showDetail="true" />
+										<div class="flex flex-col p-5">
+											<div class="flex flex-col">
+												<p:outputLabel
+													value="Digite o código enviado para seu email"></p:outputLabel>
+												<p:inputText value="#{esqueceuSenhaCodigoController.codigo}"
+													placeholder="Código..." />
+											</div>
+											<div class="flex flex-col py-5">
+												<p:outputLabel value="Digite sua nova senha"></p:outputLabel>
+												<p:inputText
+													value="#{esqueceuSenhaCodigoController.novaSenha}"
+													placeholder="Digite sua nova senha ..." />
+											</div>
+											<div class="flex flex-col">
+												<p:outputLabel value="Confirme sua nova senha"></p:outputLabel>
+												<p:inputText
+													value="#{esqueceuSenhaCodigoController.confirmacaoNovaSenha}"
+													placeholder="Confirme sua nova senha ..." />
+											</div>
+
+											<p:commandButton value="Confirmar"
+												actionListener="#{esqueceuSenhaCodigoController.alterarSenha()}"
+												process="@form" update="@form growlForm " />
+										</div>
+
+
+
+									</h:form>
+								</p:tab>
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+
+</h:body>
+</html>

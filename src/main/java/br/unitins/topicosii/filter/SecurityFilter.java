@@ -37,6 +37,7 @@ public class SecurityFilter implements Filter {
 		// Se não houver sessão redireciona para a pagina de login
 		if (psicologoLogado == null && pacienteLogado == null) {
 			((HttpServletResponse) response).sendRedirect("/Topicos2-A2/login.xhtml");
+			return;
 
 		}
 		boolean hasPermissionToAcess = false;

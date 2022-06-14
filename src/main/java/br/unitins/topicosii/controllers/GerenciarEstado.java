@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
-import br.unitins.topicosii.listing.CidadeListing;
+import br.unitins.topicosii.listing.EstadoListing;
 import br.unitins.topicosii.models.Estado;
 import br.unitins.topicosii.respository.EstadoRepository;
 
@@ -30,7 +30,7 @@ public class GerenciarEstado extends Controller<Estado> implements Serializable{
 	}
 	
 	public void abrirEstadoListing() {
-		CidadeListing listing = new CidadeListing();
+		EstadoListing listing = new EstadoListing();
 		listing.open();
 	}
 

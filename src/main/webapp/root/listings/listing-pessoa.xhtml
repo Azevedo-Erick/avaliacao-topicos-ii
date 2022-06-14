@@ -11,38 +11,38 @@
   </h:head>
   <h:body>
     <h:form>
-      <p:panel header="Pesquisa de Pessoas">
+      <p:panel header="Pesquisa de  Pessoas">
         <div class="p-grid ui-fluid">
           <div class="p-col-12 p-md-4">
             <div class="ui-inputgroup">
               <p:inputText
                 id="itNomePesquisa"
-                value="#{pacienteListing.filtro}"
+                value="#{pessoaListing.filtro}"
                 placeholder="Informe um nome ..."
               />
               <p:commandButton
                 value="Pesquisar"
-                actionListener="#{pacienteListing.pesquisar}"
+                actionListener="#{pessoaListing.pesquisar}"
                 process="@this itNomePesquisa"
                 update="dataTable"
               />
             </div>
           </div>
         </div>
-        <p:dataTable id="dataTable" value="#{pacienteListing.list}" var="obj">
+        <p:dataTable id="dataTable" value="#{pessoaListing.list}" var="obj">
           <p:column headerText="Nome">
-            <p:outputLabel value="#{obj.pessoa.nome} #{obj.pessoa.sobrenome}" />
+            <p:outputLabel value="#{obj.nome} #{obj.sobrenome}" />
           </p:column>
           <p:column headerText="Email">
-            <p:outputLabel value="#{obj.pessoa.email}" />
+            <p:outputLabel value="#{obj.email}" />
           </p:column>
           <p:column headerText="Data de nascimento">
-            <p:outputLabel value="#{obj.pessoa.dataNascimento}" />
+            <p:outputLabel value="#{obj.dataNascimento}" />
           </p:column>
           <p:column headerText="Ação">
             <p:commandButton
               value="Selecionar"
-              actionListener="#{pacienteListing.select(obj.id)}"
+              actionListener="#{pessoaListing.select(obj.id)}"
               process="@this"
               update="@form"
             />

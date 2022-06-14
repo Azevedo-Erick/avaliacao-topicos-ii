@@ -24,6 +24,7 @@ public enum Perfil {
 		
 		
 		if (id == 1 || id == 2) {
+			paginasComPermissao.add(baseUrl+"listings/listing-consultorio.xhtml");
 			paginasComPermissao.add(baseUrl+"listings/listing-paciente.xhtml");
 			paginasComPermissao.add(baseUrl+"listings/listing-psicologo.xhtml");
 			paginasComPermissao.add(baseUrl+"listings/listing-pessoa.xhtml");

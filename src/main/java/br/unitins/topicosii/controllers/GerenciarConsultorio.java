@@ -3,6 +3,9 @@ package br.unitins.topicosii.controllers;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
 import org.primefaces.event.SelectEvent;
 
 import br.unitins.topicosii.application.RepositoryException;
@@ -14,6 +17,8 @@ import br.unitins.topicosii.models.Consultorio;
 import br.unitins.topicosii.respository.CidadeRepository;
 import br.unitins.topicosii.respository.ConsultorioRepository;
 
+@Named
+@ViewScoped
 public class GerenciarConsultorio extends Controller<Consultorio> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
