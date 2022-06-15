@@ -86,11 +86,11 @@ public class PsicologoRepository extends Repository<Psicologo>{
 			jpsql.append("SELECT ");
 			jpsql.append("p ");
 			jpsql.append("FROM ");
-			jpsql.append("Psicologo p");
+			jpsql.append("Psicologo p ");
 			jpsql.append("WHERE ");
-			jpsql.append("p.pessoa_id = :id");
+			jpsql.append("p.pessoa.nome like :nome");
 			Query query = getEntityManager().createQuery(jpsql.toString());
-			query.setParameter("id",pessoa.getId());
+			query.setParameter("nome", "%"+nome+"%");
 			
 			return  query.getResultList();
 		}catch (Exception e) {

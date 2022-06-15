@@ -13,6 +13,7 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.hibernate.type.LocalDateTimeType;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
@@ -374,5 +375,21 @@ public class AgendaPsicologo implements Serializable {
 			horarioControle = horarioControle.plusMinutes(30);
 		}
 		return lista;
+	}
+	
+	public String formatMoneyValue(Double value) {
+		return Util.formatMoneyValues(value);
+		
+	}
+	
+	public String formatTime(String time) {
+		if(!time.equals(""))
+			return Util.getTimeFormatted(LocalDateTime.parse(time) );
+		return "";
+	}
+	public String formatDate(String date) {
+		if(!date.equals(""))
+			return Util.getDateFormatted(LocalDateTime.parse(date));
+		return "";
 	}
 }

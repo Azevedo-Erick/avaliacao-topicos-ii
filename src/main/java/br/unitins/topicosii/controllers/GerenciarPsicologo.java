@@ -10,31 +10,39 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 
+import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.listing.PessoaListing;
 import br.unitins.topicosii.listing.PsicologoListing;
+import br.unitins.topicosii.models.Consultorio;
 import br.unitins.topicosii.models.Estado;
+import br.unitins.topicosii.models.Perfil;
 import br.unitins.topicosii.models.Pessoa;
 import br.unitins.topicosii.models.Psicologo;
+import br.unitins.topicosii.respository.ConsultorioRepository;
 import br.unitins.topicosii.respository.PsicologoRepository;
 
 @Named
 @ViewScoped
 public class GerenciarPsicologo extends Controller<Psicologo> implements Serializable {
 
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private List<LocalTime> listaHorarios;
-
+	private List<Perfil> perfis;
 	public GerenciarPsicologo() {
 		super(new PsicologoRepository());
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	@Override
 	public Psicologo getEntity() {
 		if (entity == null) {
-			
 			entity = new Psicologo();
 			entity.setPessoa(new Pessoa());
+			this.entity.getPessoa().setNome("NOME");
 		}
 		return entity;
 	}
@@ -79,4 +87,28 @@ public class GerenciarPsicologo extends Controller<Psicologo> implements Seriali
 		}
 		return lista;
 	}
+
+	public List<Perfil> getPerfis() {
+		if(perfis==null) {
+			this.setPerfis(new ArrayList<Perfil>());
+			for(Perfil perfil:Perfil.values()) {
+				this.getPerfis().add(perfil);
+			}
+		}
+		return perfis;
+	}
+
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+	public List<Consultorio> completeConsultorio(String filtro) {
+		ConsultorioRepository repo = new ConsultorioRepository();
+		try {
+			return repo.findByNome(filtro, 4);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Consultorio>();
+		}
+	}
+	
 }

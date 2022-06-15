@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -90,4 +92,14 @@ public class Util {
 
 		return true;
 	}
+	
+	public static String getDateFormatted(LocalDateTime date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+		return formatter.format(date);
+	}
+	public static String getTimeFormatted(LocalDateTime date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm");
+		return formatter.format(date);
+	}
+
 }

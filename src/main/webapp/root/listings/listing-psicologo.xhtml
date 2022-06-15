@@ -31,13 +31,13 @@
         </div>
         <p:dataTable id="dataTable" value="#{psicologoListing.list}" var="obj">
           <p:column headerText="Nome">
-            <p:outputLabel value="#{obj.nome} #{obj.sobrenome}" />
+            <p:outputLabel value="#{obj.pessoa.nome} #{obj.pessoa.sobrenome}" />
           </p:column>
           <p:column headerText="Email">
-            <p:outputLabel value="#{obj.email}" />
+            <p:outputLabel value="#{obj.pessoa.email}" />
           </p:column>
           <p:column headerText="Data de nascimento">
-            <p:outputLabel value="#{obj.dataNascimento}" />
+            <p:outputLabel value="#{obj.pessoa.dataNascimento}" />
           </p:column>
           <p:column headerText="Ação">
             <p:commandButton

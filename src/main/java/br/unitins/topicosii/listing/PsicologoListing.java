@@ -1,11 +1,15 @@
 package br.unitins.topicosii.listing;
 
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
 import br.unitins.topicosii.application.RepositoryException;
 import br.unitins.topicosii.application.Util;
 import br.unitins.topicosii.models.Psicologo;
-import br.unitins.topicosii.respository.PessoaRepository;
 import br.unitins.topicosii.respository.PsicologoRepository;
 
+@Named
+@ViewScoped
 public class PsicologoListing extends Listing<Psicologo>{
 
 
